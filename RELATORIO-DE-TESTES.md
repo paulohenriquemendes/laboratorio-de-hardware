@@ -1,0 +1,64 @@
+# Verificação para uso em aula
+
+Data: 16/10/2026. Ambiente: Windows, Microsoft Edge 155.0.4283.45, Playwright. Renderização automatizada com SwiftShader (software). Servidor local: http://127.0.0.1:4180.
+
+## Resultado
+
+- 30 testes automatizados de regras e integridade: aprovados.
+- Percurso completo pelas seis bancadas usando teclado: aprovado.
+- Todas as alternativas de diagnóstico, reparo e desafios conceituais: exercitadas. Por caso, foram testadas duas respostas incorretas e uma correta em cada uma das três categorias.
+- O turno com quatro erros práticos em cada caso terminou com 540/900 pontos, exatamente o esperado. Erros conceituais não alteraram a pontuação prática.
+- O teste de regras confirmou máximo de 900 e mínimo de 30 por caso, sem creditar pontos antes da validação.
+- Oito grupos adicionais de verificação no navegador: aprovados.
+- Nenhum erro de execução, console ou requisição nas execuções aprovadas.
+- Compilação de produção aprovada.
+
+## Cobertura
+
+| Área | Evidência verificada |
+|---|---|
+| Personagem | WASD, setas, animação ao andar, teclas opostas, parada após perder foco |
+| Câmera | Teclas Q/R, arraste e limite junto à parede |
+| Colisão | Mesa e limite da sala durante a navegação; todas as seis mesas, quatro limites e armários nos testes de geometria |
+| Interação | E e botão; bloqueio à distância; pausa do movimento com painel ou desafios abertos |
+| Investigação | Diagnóstico bloqueado antes dos dois testes; teste concluído não pode ser repetido |
+| Reparos | Todas as alternativas; feedback de erro; pontuação somente após teste final; revisão sem duplicar pontos |
+| Conceitos | Seis perguntas com tentativas, explicações, conclusão persistida e pontuação prática preservada |
+| Salvamento | Recarga após uma pista, após diagnóstico, após reparo, após entrega e após desafio |
+| Recuperação | JSON inválido, registros nulos/inconsistentes, dados antigos e armazenamento bloqueado |
+| Reinício | Cancelar mantém progresso; confirmar limpa e persiste; disponível também no celular |
+| Teclado nos menus | Botão ativado por Espaço; Esc fecha; retorno à caminhada sem ignorar a primeira tecla |
+| Resumo | Download do arquivo e conferência da pontuação; metas atualizadas |
+| Telas | 1366×768, 1024×768, 1920×1080, 390×844 e 844×390; capturas sem transbordamento horizontal |
+| Toque | Emulação pelo protocolo do navegador: pressionar, segurar, soltar, interagir, testar e reiniciar |
+
+## Correções realizadas
+
+- Um evento de fechamento de diálogo podia apagar uma tecla recém-pressionada. A limpeza foi movida para o cancelamento síncrono, e o percurso completo foi repetido com sucesso.
+- As teclas de navegação e Espaço deixaram de ser interceptadas pelo jogo enquanto um diálogo está aberto.
+- Progresso salvo passou a validar coerência entre etapas, descartar índices inválidos e duplicados e recuperar cada caso independentemente.
+- Armários passaram a integrar as colisões.
+- Materiais de status passaram a ser compartilhados, evitando novas alocações a cada atualização.
+- A indisponibilidade do armazenamento passa a ser informada desde a abertura.
+- O botão de reinício também ficou acessível pelo painel Desafios em telas de toque.
+
+## Reproduzir
+
+Com o servidor ativo na porta 4180, execute nesta pasta:
+
+```powershell
+npm test
+npm run build
+```
+
+Também é possível executar separadamente `npm run test:unit`, `npm run test:e2e` e `npm run test:robustness`. Os testes de navegador usam contextos isolados e não apagam o progresso do perfil normal do usuário. Capturas e relatórios JSON ficam em `test-results/`.
+
+## Limites da verificação
+
+Esta é uma bateria ampla, não uma prova de ausência de todos os defeitos possíveis. Não foram realizados testes em Firefox, Safari, celulares físicos, leitores de tela, GPUs antigas, WebGL indisponível ou em todos os computadores do laboratório. Resoluções de projetor foram simuladas; não houve teste em projetor físico. O cenário 3D requer WebGL. Antes da aula, abra o jogo no equipamento que será utilizado para confirmar desempenho e compatibilidade.
+
+A publicação no GitHub Pages usa um repositório independente. O projeto pc-lab não foi modificado.
+
+## Verificação adicional para publicação — 16/10/2026
+
+A suíte completa foi repetida sobre os arquivos compilados, servidos no caminho `/oficina-3d/`, equivalente ao GitHub Pages. Foram adicionadas sete verificações: recursos relativos corretos; ausência de requisições a dependências externas; cliques duplos sem duplicação; piso de 30 pontos após 12 erros; revisão sem nova pontuação; download de resumo parcial; carregamento de turno perfeito com 900 pontos e três metas concluídas. A verificação de turno perfeito usa dados preparados para testar a integração entre salvamento, pontuação e interface. O percurso das seis bancadas é exercitado separadamente pela suíte completa.

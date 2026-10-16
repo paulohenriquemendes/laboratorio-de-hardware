@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {cases,fresh,restoreProgress,scoreOf,blocked} from './src/cases.js';
+import {challenges,goals} from './src/challenges.js';
+for(let i=0;i<cases.length;i++)test(`Bancada ${i+1}: conteúdo e índices de resposta válidos`,()=>{
+ const c=cases[i],q=challenges[i];assert.equal(c.tests.length,2);assert.equal(c.options.length,3);assert.equal(c.repairs.length,3);for(const str of [c.title,c.symptom,c.explain,c.validation,...c.tests.flat(),...c.options,...c.repairs,q.question,q.explanation,q.hint,...q.options])assert.ok(str.trim().length>5);assert.ok(c.options[c.answer]);assert.ok(c.repairs[c.repair]);assert.ok(q.options[q.answer]);assert.equal(new Set(c.options).size,3);
+});
+test('Partidas novas não compartilham referências',()=>{const a=fresh(),b=fresh();a[0].tests.push(0);assert.deepEqual(b[0].tests,[]);assert.deepEqual(a[1].tests,[])});
+test('Pontuação só entra após validação, tem teto de 900 e piso de 30 por caso',()=>{const p=fresh();p[0].diagnosed=true;p[0].repaired=true;assert.equal(scoreOf(p),0);p.forEach(c=>c.validated=true);assert.equal(scoreOf(p),900);p.forEach(c=>c.errors=4);assert.equal(scoreOf(p),540);p.forEach(c=>c.errors=1000);assert.equal(scoreOf(p),180)});
+for(const raw of [null,'','{broken','null','{}','[]','[null,null,null,null,null,null]','true'])test(`Armazenamento inválido recuperado: ${raw}`,()=>assert.deepEqual(restoreProgress(raw),fresh()));
+test('Dados antigos compatíveis preservam reparos sem inventar desafios',()=>{const p=fresh();p.forEach(c=>{c.tests=[0,1];c.diagnosed=true;c.repaired=true;c.validated=true;delete c.challenge;delete c.challengeErrors});assert.equal(scoreOf(restoreProgress(JSON.stringify(p))),900);assert.ok(restoreProgress(JSON.stringify(p)).every(c=>!c.challenge))});
+test('Corrupção em um caso não apaga os demais',()=>{const p=fresh();p[0].tests=[0];p[1].errors=-1;assert.deepEqual(restoreProgress(JSON.stringify(p))[0].tests,[0]);assert.deepEqual(restoreProgress(JSON.stringify(p))[1],fresh()[1])});
+for(const mutation of [p=>p.tests=[0,0],p=>p.tests=[2],p=>p.errors=1.5,p=>p.errors=-3,p=>p.errors=1e25,p=>p.repaired=true,p=>p.validated=true,p=>{p.tests=[0];p.diagnosed=true}])test('Estados inconsistentes não desbloqueiam fases',()=>{const p=fresh();mutation(p[0]);const r=restoreProgress(JSON.stringify(p));assert.equal(r[0].diagnosed,false);assert.equal(r[0].validated,false);assert.ok(r[0].tests.length<2)});
+test('Desafio não pode estar concluído antes da entrega',()=>{const p=fresh();p[0].challenge=true;assert.equal(restoreProgress(JSON.stringify(p))[0].challenge,false)});
+test('Metas distinguem pontuação, reparos e conceitos',()=>{const p=fresh();p[0].validated=true;p[0].challenge=true;p[1].validated=true;p[1].errors=1;assert.deepEqual(goals(p).map(g=>g.value),[2,1,1])});
+test('Todas as mesas bloqueiam interior e permitem circulação externa',()=>{for(const x of [-6,0,6])for(const z of [-3.8,3.8]){for(const dx of [-1.9,0,1.9])for(const dz of [-1.1,0,1.1])assert.equal(blocked(x+dx,z+dz),true);assert.equal(blocked(x,z+1.3),false);assert.equal(blocked(x+2.1,z),false)}});
+test('Quatro limites e armários impedem passagem; corredor permanece livre',()=>{for(const p of [[10.6,0],[-10.6,0],[0,7.6],[0,-7.6],[-9,-7.3],[-7.5,-7.3]])assert.equal(blocked(...p),true);for(let x=-10;x<=10;x+=.25)assert.equal(blocked(x,0),false);assert.equal(blocked(0,7.4),false)});

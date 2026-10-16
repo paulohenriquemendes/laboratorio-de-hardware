@@ -1,0 +1,3 @@
+import { chromium } from 'playwright';
+const browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=swiftshader']});
+const page=await browser.newPage({viewport:{width:1440,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});await page.goto('http://127.0.0.1:4180');await page.click('#start');await page.waitForTimeout(500);await page.screenshot({path:'test-results/initial.png'});console.log(JSON.stringify({state:await page.evaluate(()=>window.oficina.state),errors}));await browser.close();
