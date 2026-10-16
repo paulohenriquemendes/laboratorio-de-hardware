@@ -21,17 +21,17 @@ Use Edge ou outro navegador com WebGL disponível. Os testes automatizados foram
 ## Atividade
 
 1. Exploração (5 min): experimentar WASD/setas, Q/R, câmera por arraste e interação E.
-2. Investigação (15–20 min): realizar os seis atendimentos, explicando a hipótese antes de selecionar a resposta. Os dois testes são necessários para liberar o diagnóstico.
+2. Investigação (15–20 min): realizar os 20 atendimentos, explicando a hipótese antes de selecionar a resposta. Os dois testes são necessários para liberar o diagnóstico.
 3. Conceitos (5–10 min): após cada entrega, responder ao desafio conceitual. O retorno explica o raciocínio e permite tentar novamente, sem reduzir a pontuação prática.
 4. Discussão (5–10 min): abrir **Desafios**, conferir metas e baixar o resumo. Cada aluno pode apresentar o arquivo e justificar suas decisões.
 
 ## Metas
 
-- **Oficina recuperada:** seis reparos com validação final.
-- **Diagnóstico de primeira:** seis casos sem erro de diagnóstico ou reparo. Esta meta requer uma nova partida se o aluno quiser recuperar um caso em que errou.
-- **Conceitos na prática:** seis desafios conceituais respondidos corretamente.
+- **Oficina recuperada:** 20 reparos com validação final.
+- **Diagnóstico de primeira:** 20 computadores sem erro de diagnóstico ou reparo. Esta meta requer uma nova partida se o aluno quiser recuperar um caso em que errou.
+- **Conceitos na prática:** 20 desafios conceituais respondidos corretamente.
 
-Pontuação prática: até 150 por caso, menos 15 por tentativa incorreta de diagnóstico/reparo, com mínimo de 30. Só é creditada na validação final. Total: 900. Desafios conceituais registram tentativas separadamente. O resumo local não constitui avaliação supervisionada nem é enviado automaticamente ao professor.
+Pontuação prática: até 150 por caso, menos 15 por tentativa incorreta de diagnóstico/reparo, com mínimo de 30. Só é creditada na validação final. Total: 3000. Desafios conceituais registram tentativas separadamente. O resumo local não constitui avaliação supervisionada nem é enviado automaticamente ao professor.
 
 ## Perguntas para discussão
 
@@ -45,3 +45,9 @@ Pontuação prática: até 150 por caso, menos 15 por tentativa incorreta de dia
 ## Limites da simulação
 
 Os testes são escolhas com resultados simulados; não medem hardware real. O jogo não representa desmontagem manual, manuseio de instrumentos ou todos os defeitos possíveis. Os cenários são deliberadamente delimitados para ensinar diagnóstico. Procedimentos reais devem seguir instruções do fabricante e orientação do professor; nunca abrir fontes de alimentação durante a atividade.
+
+## Disposição do laboratório
+
+São cinco bancadas compartilhadas, com quatro computadores por bancada: dois de cada lado. O lado A tem PCs 01–10 e o lado B tem PCs 11–20. Todos são interativos. Os seis tipos de defeito são distribuídos entre as 20 máquinas para prática; não são 20 tipos novos. A pontuação máxima é 3000. O botão **Ver laboratório** mostra a disposição completa e pausa a caminhada. Use **Voltar ao técnico** para retomar.
+
+O progresso usa a chave `oficina3d.lab20.v1`. Na primeira abertura, os seis registros antigos são migrados quando disponíveis, sem apagar a chave anterior. Cada computador mantém seu progresso independente.

@@ -32,7 +32,7 @@ O servidor usa exclusivamente a porta 4180 e falha se ela estiver ocupada. Não 
 
 ## Objetivo
 
-Concluir os seis atendimentos. Em cada bancada, execute os dois testes, interprete as evidências, escolha um diagnóstico, aplique o reparo adequado e execute o teste final para entregar o computador. A pontuação só é creditada na validação final: 150 pontos por caso, menos 15 por tentativa incorreta, com mínimo de 30. O máximo do turno é 900 pontos. Testes não custam pontos.
+Concluir os 20 atendimentos. Em cada bancada, execute os dois testes, interprete as evidências, escolha um diagnóstico, aplique o reparo adequado e execute o teste final para entregar o computador. A pontuação só é creditada na validação final: 150 pontos por caso, menos 15 por tentativa incorreta, com mínimo de 30. O máximo do turno é 3000 pontos. Testes não custam pontos.
 
 Os casos abordam fonte, RAM, refrigeração, armazenamento, bateria CMOS e cabo Ethernet. Os procedimentos são simulações educativas; não há desmontagem real de fontes.
 
@@ -45,7 +45,7 @@ npm run build
 npm test
 ```
 
-O teste usa Playwright com Microsoft Edge instalado. Percorre fisicamente as seis bancadas usando o teclado, verifica bloqueio de interação distante, colisões de mesas e paredes, animação de caminhada, câmera, suspensão da caminhada durante inspeção, desbloqueio por pistas, tentativas erradas, reparos, validação, pontuação, persistência após recarregar, ajuda, reinício e ausência de erros de console/rede. Capturas e relatório são gerados em `test-results/`.
+O teste usa Playwright com Microsoft Edge instalado. Percorre fisicamente as 20 computadores usando o teclado, verifica bloqueio de interação distante, colisões de mesas e paredes, animação de caminhada, câmera, suspensão da caminhada durante inspeção, desbloqueio por pistas, tentativas erradas, reparos, validação, pontuação, persistência após recarregar, ajuda, reinício e ausência de erros de console/rede. Capturas e relatório são gerados em `test-results/`.
 
 `npm run build` gera os arquivos estáticos em `dist/`. O workflow `.github/workflows/pages.yml` testa as regras, compila e publica o conteúdo de `dist/` no GitHub Pages a cada push em `main`.
 
@@ -67,3 +67,9 @@ npm run test:production
 ```
 
 Os sete testes adicionais de produção verificam caminhos dos recursos, ausência de dependências externas durante o jogo, cliques duplos, piso de pontuação, revisão, relatório parcial e metas de um turno perfeito.
+
+## Disposição do laboratório
+
+São cinco bancadas compartilhadas, com quatro computadores por bancada: dois de cada lado. O lado A tem PCs 01–10 e o lado B tem PCs 11–20. Todos são interativos. Os seis tipos de defeito são distribuídos entre as 20 máquinas para prática; não são 20 tipos novos. A pontuação máxima é 3000. O botão **Ver laboratório** mostra a disposição completa e pausa a caminhada. Use **Voltar ao técnico** para retomar.
+
+O progresso usa a chave `oficina3d.lab20.v1`. Na primeira abertura, os seis registros antigos são migrados quando disponíveis, sem apagar a chave anterior. Cada computador mantém seu progresso independente.

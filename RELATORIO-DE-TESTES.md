@@ -62,3 +62,11 @@ A publicação no GitHub Pages usa um repositório independente. O projeto pc-la
 ## Verificação adicional para publicação — 16/10/2026
 
 A suíte completa foi repetida sobre os arquivos compilados, servidos no caminho `/oficina-3d/`, equivalente ao GitHub Pages. Foram adicionadas sete verificações: recursos relativos corretos; ausência de requisições a dependências externas; cliques duplos sem duplicação; piso de 30 pontos após 12 erros; revisão sem nova pontuação; download de resumo parcial; carregamento de turno perfeito com 900 pontos e três metas concluídas. A verificação de turno perfeito usa dados preparados para testar a integração entre salvamento, pontuação e interface. O percurso das seis bancadas é exercitado separadamente pela suíte completa.
+
+## Laboratório com 20 computadores — atualização de 16/10/2026
+
+A disposição foi substituída por cinco bancadas compartilhadas, com quatro computadores por bancada (dois por face). São dez PCs no lado A e dez no lado B, com cadeiras, corredores, janelas, quadro de aula e vista geral. Todas as 20 máquinas são interativas, com seis tipos de defeito distribuídos entre elas.
+
+A suíte de regras agora contém 46 testes, incluindo contagem de bancadas, PCs por lado, corredores livres, colisões, seleção por ponto de acesso e migração dos seis registros anteriores. O teste de percurso passou a visitar os 20 PCs pelos dois corredores, executar todas as opções de diagnóstico/reparo/conceito e verificar persistência, resumo, metas e a pontuação esperada de 1800/3000 para quatro erros práticos por máquina. O modo de vista geral pausa a movimentação e o progresso antigo é migrado para uma chave própria, preservando o original.
+
+As seções anteriores documentam a versão inicial de seis computadores. Para a versão atual, a quantidade é 20 e a pontuação máxima é 3000.
