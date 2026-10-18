@@ -1,3 +1,4 @@
+import {extraChallenges} from './additional-cases.js';
 import {cases} from './cases.js';
 const challengeTypes = [
  {topic:'Alimentação e segurança',question:'Antes de instalar a nova fonte, qual verificação é essencial?',options:['Escolher apenas pela cor e pelo tamanho da ventoinha','Conferir potência, conectores e compatibilidade com o equipamento','Abrir a fonte antiga para reaproveitar peças'],answer:1,explanation:'A fonte precisa atender à carga do sistema e ter formato e conectores compatíveis. Não abra fontes: capacitores podem reter carga mesmo desconectados.',hint:'O componente precisa encaixar e alimentar o conjunto corretamente. Aparência não garante compatibilidade.'},
@@ -7,7 +8,7 @@ const challengeTypes = [
  {topic:'Firmware e relógio',question:'Qual relação explica a perda da hora ao retirar o computador da tomada?',options:['A bateria alimenta o processador durante o uso','A bateria aumenta a velocidade do SSD','A bateria mantém o relógio de tempo real quando falta alimentação externa'],answer:2,explanation:'A bateria sustenta o RTC sem alimentação externa. A forma de preservar configurações varia entre placas; neste equipamento, a bateria esgotada provocou o aviso no POST.',hint:'Diferencie a alimentação do computador inteiro da pequena alimentação de reserva do relógio.'},
  {topic:'Rede e teste controlado',question:'O cabo conhecido como bom funcionou na mesma porta. O que esse teste indica?',options:['A falha acompanha o cabo original, isolando o problema físico','É necessário reinstalar o sistema operacional','O roteador inteiro está necessariamente defeituoso'],answer:0,explanation:'Mantendo computador e porta e trocando apenas o cabo, o teste identifica a variável ligada à falha. LED apagado sozinho não bastaria para condenar o cabo.',hint:'A conclusão deve se apoiar na troca controlada, e não apenas no primeiro sintoma.'}
 ];
-export const challenges=cases.map(c=>challengeTypes[c.type]);
+export const challenges=[...challengeTypes,...extraChallenges];
 export function goals(progress){return [
  {name:'Laboratório recuperado',value:progress.filter(p=>p.validated).length,total:cases.length,description:'Conclua e valide os 20 reparos.'},
  {name:'Diagnóstico de primeira',value:progress.filter(p=>p.validated&&p.errors===0).length,total:cases.length,description:'Entregue cada caso sem erro de diagnóstico ou reparo. Reinicie o turno para uma nova tentativa.'},

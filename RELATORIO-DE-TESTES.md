@@ -70,3 +70,11 @@ A disposição foi substituída por cinco bancadas compartilhadas, com quatro co
 A suíte de regras agora contém 46 testes, incluindo contagem de bancadas, PCs por lado, corredores livres, colisões, seleção por ponto de acesso e migração dos seis registros anteriores. O teste de percurso passou a visitar os 20 PCs pelos dois corredores, executar todas as opções de diagnóstico/reparo/conceito e verificar persistência, resumo, metas e a pontuação esperada de 1800/3000 para quatro erros práticos por máquina. O modo de vista geral pausa a movimentação e o progresso antigo é migrado para uma chave própria, preservando o original.
 
 As seções anteriores documentam a versão inicial de seis computadores. Para a versão atual, a quantidade é 20 e a pontuação máxima é 3000.
+
+## Leitura e casos exclusivos — 18/10/2026
+
+Foram adicionados painéis claros e opacos, fonte base de 16 px, ampliação para 18,88 px nos textos principais, passos do atendimento, respostas identificadas por letras, evidências com título e glossário contextual. O caderno permanece acessível após confirmar o diagnóstico. A ampliação é uma preferência da sessão.
+
+Os PCs 07–20 agora têm conteúdos próprios, incluindo vídeo, boot, conexão SATA, teclado, USB frontal, DHCP, DNS, conflito de IP, espaço em disco, saída de áudio, driver gráfico, compatibilidade de RAM, obstrução de ventoinha e aplicativos de inicialização. A tabela completa está em CASOS-DO-LABORATORIO.md. A suíte de regras tem 47 testes e verifica a unicidade de títulos, sintomas, testes, diagnósticos, validações e perguntas.
+
+O teste específico de leitura verifica ampliação, etapa atual, permanência de evidências, ausência de transbordamento horizontal no celular, separação dos botões de ampliar/fechar e migração. Na migração, somente os seis casos cujo conteúdo permaneceu igual mantêm seus resultados. As chaves antigas não são apagadas; os novos casos iniciam pendentes.

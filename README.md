@@ -70,6 +70,10 @@ Os sete testes adicionais de produção verificam caminhos dos recursos, ausênc
 
 ## Disposição do laboratório
 
-São cinco bancadas compartilhadas, com quatro computadores por bancada: dois de cada lado. O lado A tem PCs 01–10 e o lado B tem PCs 11–20. Todos são interativos. Os seis tipos de defeito são distribuídos entre as 20 máquinas para prática; não são 20 tipos novos. A pontuação máxima é 3000. O botão **Ver laboratório** mostra a disposição completa e pausa a caminhada. Use **Voltar ao técnico** para retomar.
+São cinco bancadas compartilhadas, com quatro computadores por bancada: dois de cada lado. O lado A tem PCs 01–10 e o lado B tem PCs 11–20. Todos são interativos. Cada um dos 20 computadores possui sintomas, testes, diagnóstico, reparo e desafio conceitual próprios. A pontuação máxima é 3000. O botão **Ver laboratório** mostra a disposição completa e pausa a caminhada. Use **Voltar ao técnico** para retomar.
 
-O progresso usa a chave `oficina3d.lab20.v1`. Na primeira abertura, os seis registros antigos são migrados quando disponíveis, sem apagar a chave anterior. Cada computador mantém seu progresso independente.
+O progresso usa a chave `oficina3d.unique20.v1`. Na migração, os seis casos originais são preservados e os PCs 07–20, cujo conteúdo mudou, começam pendentes. As chaves anteriores não são apagadas. Cada computador mantém seu progresso independente.
+
+## Leitura das informações
+
+As fichas usam fundo claro e opaco, texto de 16 px, opção **A+ Ampliar texto**, etapas do atendimento e caderno de evidências consultável durante o reparo. O glossário explica as siglas presentes no caso. As respostas são identificadas por letras e o retorno de erro aparece em um bloco próprio. A ampliação vale para os painéis durante a sessão.

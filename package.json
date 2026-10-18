@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 4180 --strictPort",
     "build": "vite build",
-    "test": "node --test unit.test.mjs && node tests.mjs && node robustness.mjs",
+    "test": "node --test unit.test.mjs && node tests.mjs && node robustness.mjs && node reading.test.mjs",
     "test:unit": "node --test unit.test.mjs",
     "test:e2e": "node tests.mjs",
     "test:robustness": "node robustness.mjs",
-    "test:production": "node production.mjs"
+    "test:production": "node production.mjs",
+    "test:reading": "node reading.test.mjs"
   },
   "dependencies": {
     "three": "^0.180.0",

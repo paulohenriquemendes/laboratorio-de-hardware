@@ -20,3 +20,5 @@ test('Todas as estações acessíveis, sem seleção através da bancada',()=>{s
 test('Corredores e quatro limites do laboratório',()=>{for(let z=-19;z<=19;z+=.2)for(const x of [-3.9,3.9])assert.equal(blocked(x,z),false);for(const p of [[8,0],[-8,0],[0,20],[0,-20]])assert.equal(blocked(...p),true)});
 test('Migração de seis casos preserva resultados e cria 14 computadores pendentes',()=>{const old=fresh().slice(0,6);old[0]={...old[0],tests:[0,1],diagnosed:true,repaired:true,validated:true};const p=restoreProgress(JSON.stringify(old));assert.equal(p.length,20);assert.equal(p[0].validated,true);assert.ok(p.slice(6).every(v=>!v.validated))});
 
+
+test('Vinte casos e desafios distintos, sem repetição de conteúdo',()=>{assert.equal(cases.length,20);assert.equal(challenges.length,20);for(const field of ['title','symptom','validation'])assert.equal(new Set(cases.map(c=>c[field])).size,20);assert.equal(new Set(cases.map(c=>c.options[c.answer])).size,20);assert.equal(new Set(cases.map(c=>JSON.stringify(c.tests))).size,20);assert.equal(new Set(challenges.map(c=>c.question)).size,20)});
