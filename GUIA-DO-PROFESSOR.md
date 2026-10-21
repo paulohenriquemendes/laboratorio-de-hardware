@@ -1,4 +1,6 @@
-# Roteiro para a aula — Oficina 3D
+> Versão atual: 40 computadores, 40 casos e máximo de 6000 pontos. Cinco bancadas centrais (20 PCs) e dez PCs voltados para cada parede lateral. O endereço público e o nome técnico do repositório permanecem os mesmos.
+
+# Roteiro para a aula — Laboratório de Hardware
 
 Público: alunos de arquitetura e manutenção de computadores. Duração sugerida: 30–45 minutos, em duplas ou individualmente.
 
@@ -55,3 +57,9 @@ O progresso usa a chave `oficina3d.unique20.v1`. Na migração, os seis casos or
 ## Leitura das informações
 
 As fichas usam fundo claro e opaco, texto de 16 px, opção **A+ Ampliar texto**, etapas do atendimento e caderno de evidências consultável durante o reparo. O glossário explica as siglas presentes no caso. As respostas são identificadas por letras e o retorno de erro aparece em um bloco próprio. A ampliação vale para os painéis durante a sessão.
+
+## Expansão de 21/10/2026
+
+Os 20 casos anteriores foram mantidos e mais 20 casos foram adicionados. O teto de pontuação agora é 6000. Os PCs validados passam a ter gabinete e moldura do monitor verdes, além de etiqueta ✓ REVISADO. Essa indicação aparece após o teste final de reparo; a pergunta conceitual continua disponível. A cor é restaurada ao recarregar e volta ao estado pendente ao reiniciar o turno.
+
+O salvamento atual usa `laboratorioHardware40.v1`; os 20 registros da versão anterior são migrados sem apagar sua chave. A marca em SVG combina monitor, circuito, letra H e verificação.

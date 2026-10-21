@@ -78,3 +78,11 @@ Foram adicionados painéis claros e opacos, fonte base de 16 px, ampliação par
 Os PCs 07–20 agora têm conteúdos próprios, incluindo vídeo, boot, conexão SATA, teclado, USB frontal, DHCP, DNS, conflito de IP, espaço em disco, saída de áudio, driver gráfico, compatibilidade de RAM, obstrução de ventoinha e aplicativos de inicialização. A tabela completa está em CASOS-DO-LABORATORIO.md. A suíte de regras tem 47 testes e verifica a unicidade de títulos, sintomas, testes, diagnósticos, validações e perguntas.
 
 O teste específico de leitura verifica ampliação, etapa atual, permanência de evidências, ausência de transbordamento horizontal no celular, separação dos botões de ampliar/fechar e migração. Na migração, somente os seis casos cujo conteúdo permaneceu igual mantêm seus resultados. As chaves antigas não são apagadas; os novos casos iniciam pendentes.
+
+## Laboratório de Hardware — expansão de 21/10/2026
+
+Novo nome e logotipo SVG original. A sala mantém os 20 computadores centrais e acrescenta 10 voltados para a parede A e 10 voltados para a parede B. Todos os 40 casos e questões conceituais são distintos. Pontuação máxima: 6000.
+
+A suíte de regras agora tem 68 testes e inclui posicionamento, orientação das fileiras laterais, colisões, corredores, unicidade dos casos e migração dos 20 registros anteriores. O percurso automatizado foi ampliado para as 40 estações, utilizando os quatro corredores e testando as alternativas certas e erradas. O resultado esperado com quatro erros práticos por computador é 3600/6000.
+
+`npm run test:expansion` verifica nome, migração, gabinete verde após validação, persistência do estado visual, manutenção de vizinhos pendentes e remoção do verde ao reiniciar. O estado de revisão também possui etiqueta textual ✓ REVISADO e não depende só da cor. A câmera geral foi ajustada ao tamanho ampliado da sala.

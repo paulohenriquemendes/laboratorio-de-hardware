@@ -11,7 +11,8 @@
     "test:e2e": "node tests.mjs",
     "test:robustness": "node robustness.mjs",
     "test:production": "node production.mjs",
-    "test:reading": "node reading.test.mjs"
+    "test:reading": "node reading.test.mjs",
+    "test:expansion": "node expansion.test.mjs"
   },
   "dependencies": {
     "three": "^0.180.0",
