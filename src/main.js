@@ -6,11 +6,11 @@ import {challenges,goals} from './challenges.js';
 const $=s=>document.querySelector(s),key='oficina3d.unique20.v1';
 let progress=fresh(),storageAvailable=true;try{const saved=localStorage.getItem(key);if(saved!==null)progress=restoreProgress(saved);else{const previous=restoreProgress(localStorage.getItem('oficina3d.lab20.v1') ?? localStorage.getItem('oficina3d.progress.v1'));progress=previous.map((p,i)=>i<6?p:fresh()[i])}}catch{storageAvailable=false}
 let current=-1,near=-1,started=false,angle=0,walk=0,drag=null,overview=false;
-const keys=new Set(),scene=new THREE.Scene();scene.background=new THREE.Color('#152937');scene.fog=new THREE.Fog('#152937',40,80);
+const keys=new Set(),scene=new THREE.Scene();scene.background=new THREE.Color('#142d25');scene.fog=new THREE.Fog('#142d25',40,80);
 const renderer=new THREE.WebGLRenderer({canvas:$('#world'),antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.3;
 const camera=new THREE.PerspectiveCamera(48,innerWidth/innerHeight,.1,80);
 scene.add(new THREE.HemisphereLight(0xc8f4ff,0x31403c,2.4));const sun=new THREE.DirectionalLight(0xffe6bb,3);sun.position.set(-7,13,5);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-23,right:23,top:23,bottom:-23});sun.shadow.bias=-.001;scene.add(sun);
-const mat=c=>new THREE.MeshStandardMaterial({color:c,roughness:.7});const materials={floor:mat('#667b83'),wall:mat('#405963'),wood:mat('#c9d4d8'),dark:mat('#243640'),metal:mat('#53636b'),mint:mat('#66dac1'),orange:mat('#efa65c'),screen: new THREE.MeshStandardMaterial({color:'#63cdbb',emissive:'#1e7b71',emissiveIntensity:.55})};
+const mat=c=>new THREE.MeshStandardMaterial({color:c,roughness:.7});const materials={floor:mat('#667b83'),wall:mat('#456559'),wood:mat('#c9d4d8'),dark:mat('#243640'),metal:mat('#53636b'),mint:mat('#008241'),orange:mat('#ed8b23'),screen: new THREE.MeshStandardMaterial({color:'#63cdbb',emissive:'#1e7b71',emissiveIntensity:.55})};
 function box(w,h,d,m,x,y,z,parent=scene){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),typeof m==='string'?mat(m):m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;}
 function label(text,w=512,h=128,color='#bbefe4',bg='#203943'){const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.fillStyle=color;ctx.font=`600 ${Math.floor(h*.43)}px Segoe UI`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,w/2,h/2);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return new THREE.MeshBasicMaterial({map:t});}
 // Five shared benches; two workstations on each face, ten on each side.
@@ -25,7 +25,7 @@ box(7,1.7,.1,'#e4eeeb',0,1.9,-19.8);
 box(6.5,.8,.03,label('ARQUITETURA + MANUTENÇÃO',1024,128,'#23454c','#e4eeeb'),0,2,-19.72);
 for(const z of [-15,-7,1,9,16]){box(.06,1.6,3.2,'#a2cfda',-8.08,2.4,z);box(.1,1.6,.06,materials.dark,-8.04,2.4,z);box(.1,.06,3.2,materials.dark,-8.04,2.4,z);}
 for(const x of [-5.8,5.8])box(.07,.012,36,materials.mint,x,.01,0);
-const beacons=[];const finishedRing=mat('#55948a'),inactiveScreen=mat('#263f4f'),chairMat=mat('#3f7791');
+const beacons=[];const finishedRing=mat('#55948a'),inactiveScreen=mat('#263f4f'),chairMat=mat('#2a7050');
 for(const b of benches){
  box(b.width,.16,b.depth,materials.wood,0,1.1,b.z);
  for(const x of [-1.65,1.65])for(const z of [-2.35,2.35])box(.1,1,.1,materials.dark,x,.5,b.z+z);
@@ -44,11 +44,23 @@ for(const s of stations){const g=new THREE.Group();g.position.set(s.x,0,s.z);g.r
  const ring=new THREE.Mesh(new THREE.TorusGeometry(.32,.025,8,24),materials.mint);ring.rotation.x=-Math.PI/2;ring.position.set(s.useX,.03,s.z);scene.add(ring);
  const marker=new THREE.Mesh(new THREE.PlaneGeometry(.7,.3),label('PC '+String(s.id).padStart(2,'0'),256,96));marker.position.set(s.x,2.55,s.z);scene.add(marker);beacons.push({ring,marker,screen});
 }
-// Visible technician, with independently animated limbs.
+// Student uniform, stylized from the requested Ceará school palette.
 const player=new THREE.Group();player.position.set(spawn.x,0,spawn.z);scene.add(player);
-box(.57,.66,.32,materials.mint,0,1.14,0,player);box(.59,.15,.35,materials.dark,0,.83,0,player);box(.2,.19,.03,'#f0cb79',.15,1.18,-.18,player);
-const head=box(.4,.43,.39,'#c48c68',0,1.72,0,player);box(.44,.14,.43,materials.dark,0,1.96,0,player);box(.46,.05,.18,materials.dark,0,1.91,-.23,player);for(const x of [-.11,.11])box(.05,.05,.02,'#17252b',x,1.77,-.2,player);
-const limbs=[];for(const side of [-1,1]){const arm=new THREE.Group();arm.position.set(side*.39,1.41,0);player.add(arm);box(.2,.45,.23,materials.mint,0,-.19,0,arm);box(.17,.23,.18,'#c48c68',0,-.5,0,arm);const leg=new THREE.Group();leg.position.set(side*.17,.8,0);player.add(leg);box(.23,.62,.27,materials.dark,0,-.3,0,leg);box(.25,.16,.4,'#13242c',0,-.69,-.05,leg);limbs.push({arm,leg,side});}
+const uniform={shirt:mat('#ffffff'),green:mat('#008241'),trim:mat('#ed8b23'),shoes:mat('#111413'),hair:mat('#2c211b')};
+box(.57,.66,.32,uniform.shirt,0,1.14,0,player);
+box(.59,.15,.35,uniform.green,0,.83,0,player);
+// Collar is visible from both the following camera and the front.
+const collar=new THREE.Mesh(new THREE.TorusGeometry(.18,.035,8,24),uniform.green);collar.rotation.x=Math.PI/2;collar.position.set(0,1.48,0);player.add(collar);
+for(const side of [-1,1]){const lapel=box(.13,.13,.035,uniform.green,side*.09,1.42,-.18,player);lapel.rotation.z=side*.3;box(.035,.55,.34,uniform.trim,side*.28,1.16,0,player);}
+box(.1,.12,.025,uniform.green,.15,1.27,-.18,player);
+const head=box(.4,.43,.39,'#c48c68',0,1.72,0,player);box(.42,.12,.41,uniform.hair,0,1.95,0,player);box(.42,.2,.08,uniform.hair,0,1.8,.17,player);
+for(const x of [-.11,.11])box(.05,.05,.02,'#17252b',x,1.77,-.2,player);
+const limbs=[];for(const side of [-1,1]){
+ const arm=new THREE.Group();arm.position.set(side*.39,1.41,0);player.add(arm);
+ box(.2,.31,.23,uniform.shirt,0,-.13,0,arm);box(.205,.045,.235,uniform.trim,0,-.28,0,arm);box(.205,.06,.235,uniform.green,0,-.33,0,arm);box(.17,.26,.18,'#c48c68',0,-.49,0,arm);
+ const leg=new THREE.Group();leg.position.set(side*.17,.8,0);player.add(leg);box(.23,.62,.27,uniform.green,0,-.3,0,leg);box(.018,.59,.035,uniform.trim,side*.12,-.3,0,leg);box(.25,.16,.4,uniform.shoes,0,-.69,-.05,leg);
+ limbs.push({arm,leg,side});
+}
 function toast(s){$('#toast').textContent=s;$('#toast').style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').style.display='none',3500)}
 function save(){try{localStorage.setItem(key,JSON.stringify(progress))}catch{storageAvailable=false}updateHUD()}
 function updateHUD(){if(!storageAvailable)$('#save').textContent='Armazenamento indisponível: progresso só nesta sessão';const done=progress.filter(p=>p.validated).length;$('#progress').textContent=`${done} / 20 reparos`;$('#score').textContent=`${scoreOf(progress)} pts`;$('#joblist').innerHTML=cases.map((c,i)=>`<div class="job ${progress[i].validated?'done':''}"><span class="num">${progress[i].validated?'✓':String(i+1).padStart(2,'0')}</span><div>${c.title}<small>${progress[i].validated?'✓ Validado':'Bancada '+stations[i].bench+' · Lado '+(stations[i].side<0?'A':'B')}</small></div></div>`).join('');beacons.forEach((b,i)=>{b.ring.material=progress[i].validated?finishedRing:materials.mint;b.screen.material=progress[i].validated?materials.screen:inactiveScreen});}
@@ -83,7 +95,7 @@ renderer.render(scene,camera);}
 function renderClassroom(){
  const list=goals(progress);$('#classContent').innerHTML=list.map(g=>`<div class="clue"><b>${g.value===g.total?'✓ ':''}${g.name} · ${g.value}/${g.total}</b><p>${g.description}</p><progress value="${g.value}" max="${g.total}" aria-label="${g.name}"></progress></div>`).join('')+`<p>Prática: <b>${scoreOf(progress)} / 3000 pontos</b>. Desafios conceituais não alteram essa pontuação.</p><p class="hint">Converse com um colega: qual evidência descartou cada hipótese? Qual teste confirmou o reparo? Este resumo é local e não é enviado ao professor automaticamente.</p>`;
 }
-$('#mapButton').onclick=()=>{keys.clear();overview=!overview;$('#mapButton').textContent=overview?'Voltar ao técnico':'Ver laboratório';$('#mapButton').setAttribute('aria-pressed',String(overview))};
+$('#mapButton').onclick=()=>{keys.clear();overview=!overview;$('#mapButton').textContent=overview?'Voltar ao aluno':'Ver laboratório';$('#mapButton').setAttribute('aria-pressed',String(overview))};
 $('#classroomButton').onclick=()=>{keys.clear();renderClassroom();$('#classroom').showModal()};
 $('#closeClass').onclick=()=>$('#classroom').close();
 $('#restartClass').onclick=()=>$('#reset').click();
