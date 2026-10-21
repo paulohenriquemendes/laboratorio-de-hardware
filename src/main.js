@@ -23,7 +23,7 @@ box(.25,4.5,40,materials.wall,-13.25,2.1,0);
 box(.25,.4,40,materials.wall,13.25,.2,0);box(26.5,.4,.25,materials.wall,0,.2,20);
 box(9,1,.06,label('LABORATÓRIO DE HARDWARE',1024,128),0,3.6,-19.84);
 box(7,1.7,.1,'#e4eeeb',0,1.9,-19.8);
-box(6.5,.8,.03,label('ARQUITETURA + MANUTENÇÃO',1024,128,'#23454c','#e4eeeb'),0,2,-19.72);
+box(6.5,.8,.03,label('LABORATÓRIO DE HARDWARE',1024,128,'#23454c','#e4eeeb'),0,2,-19.72);
 for(const z of [-15,-7,1,9,16]){box(.06,1.6,3.2,'#a2cfda',-13.08,2.4,z);box(.1,1.6,.06,materials.dark,-13.04,2.4,z);box(.1,.06,3.2,materials.dark,-13.04,2.4,z);}
 for(const x of [-5.8,5.8])box(.07,.012,36,materials.mint,x,.01,0);
 for(const side of [-1,1]){box(2.6,.16,34.2,materials.wood,side*11.5,1.1,0);for(const z of [-16,-8,0,8,16])for(const x of [10.6,12.4])box(.1,1,.1,materials.dark,side*x,.5,z);}

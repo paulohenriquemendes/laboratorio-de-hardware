@@ -1,4 +1,4 @@
-name: Publicar Oficina 3D
+name: Publicar Laboratório de Hardware
 on:
   push:
     branches: [main]

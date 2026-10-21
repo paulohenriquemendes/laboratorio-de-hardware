@@ -2,7 +2,7 @@
 
 Jogo educativo 3D para aulas de arquitetura e manutenção de computadores. Sem cadastro ou backend. Feito com Three.js e Vite.
 
-**Jogar:** https://paulohenriquemendes.github.io/oficina-3d/
+**Jogar:** https://paulohenriquemendes.github.io/laboratorio-de-hardware/
 
 **Repositório:** https://github.com/paulohenriquemendes/oficina-3d
 
