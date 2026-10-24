@@ -86,3 +86,19 @@ Novo nome e logotipo SVG original. A sala mantém os 20 computadores centrais e 
 A suíte de regras agora tem 68 testes e inclui posicionamento, orientação das fileiras laterais, colisões, corredores, unicidade dos casos e migração dos 20 registros anteriores. O percurso automatizado foi ampliado para as 40 estações, utilizando os quatro corredores e testando as alternativas certas e erradas. O resultado esperado com quatro erros práticos por computador é 3600/6000.
 
 `npm run test:expansion` verifica nome, migração, gabinete verde após validação, persistência do estado visual, manutenção de vizinhos pendentes e remoção do verde ao reiniciar. O estado de revisão também possui etiqueta textual ✓ REVISADO e não depende só da cor. A câmera geral foi ajustada ao tamanho ampliado da sala.
+
+
+## Colaboração — 24/10/2026
+
+- Servidor real Supabase: 40 reparos e 40 desafios conceituais concluídos; tentativas repetidas com mesmo identificador debitam somente uma vez.
+- Reserva concorrente: apenas um aluno obtém o mesmo PC; liberar permite o colega assumir.
+- Segurança: visitante sem sessão não acessa as tabelas; sessão fora da sala não lê tarefas nem executa ações; escrita direta e avanço indevido de etapa são negados; apelidos inválidos rejeitados.
+- Navegadores independentes: avatares e movimento, dois reparos simultâneos em PCs diferentes, propagação da cor verde e pontuação 300, persistência após reload, queda de internet e reconexão automática, saída e restauração do modo individual.
+- Sala isolada: sem personagens ou progresso de outra sala. Painel móvel de 390 px sem transbordamento horizontal.
+- 68 testes unitários aprovados. Testes existentes de produção individual aprovados (7 verificações).
+- Evidências em test-results/coop-backend.json, coop-browser.json e capturas coop-equipe.png, coop-laboratorio.png e coop-mobile.png.
+- Auditoria: índices das chaves estrangeiras adicionados. Aviso de acesso de sessões anônimas autenticadas é esperado pelo modelo sem e-mail; acesso permanece limitado à associação à sala.
+- Limite: validação funcional com duas sessões simultâneas; não é ensaio de carga de 40 alunos. Cotas gratuitas do Supabase continuam aplicáveis.
+
+- Aparência: atribuição inicial distinta, quatro penteados/dez cores, persistência ao retornar, sincronização visual em outro navegador, alteração restrita ao próprio perfil e rejeição de estilos inválidos.
+- Localização: botão Localizar acompanha o colega no PC 20, identificação sobre o personagem e na bancada, retorno à câmera do próprio aluno. Captura: test-results/coop-localizar.png.
