@@ -67,8 +67,8 @@ Consulte GUIA-DO-PROFESSOR.md, CASOS-DO-LABORATORIO.md e RELATORIO-DE-TESTES.md 
 Digite um apelido e escolha **Entrar em equipe**. O endereço sem `?sala=` usa o laboratório aberto. Para uma turma, escolha **Criar sala da turma** e compartilhe o link em **Equipe → Copiar link da sala**. Todos precisam abrir o mesmo link e entrar em equipe.
 
 - Personagens e apelidos aparecem para os demais participantes.
-- Reparos, evidências, desafios e pontuação são compartilhados e persistidos no servidor.
-- Um PC aberto fica reservado por 60 segundos, renovados a cada 20 segundos. Fechar a ficha libera o PC; sem conexão a reserva expira.
+- Cada aluno possui respostas, progresso e pontuação individuais, persistidos no servidor. Conclusões e placar ficam visíveis à sala.
+- O mesmo PC pode ser resolvido por vários alunos simultaneamente. Cada ficha individual renova sua sessão a cada 20 segundos; não há reserva exclusiva do computador.
 - A validação de etapas e respostas ocorre no servidor. Identificadores de ação evitam cobrar duas vezes uma resposta reenviada.
 - Recarregar mantém a identidade anônima neste navegador. Limpar os dados do navegador cria outra identidade, mas a sala conserva os reparos. O link dá acesso à sala: compartilhe somente com a turma.
 - Voltar ao individual recupera a partida local anterior. Somente o professor pode reiniciar a sala pela área protegida Professor.
@@ -86,14 +86,14 @@ Novas entradas anônimas também têm limite por IP; em redes escolares comparti
 
 ### Testes colaborativos
 
-`npm run test:coop:backend` testa os 40 casos no serviço real, concorrência de reserva, deduplicação e isolamento de permissões. `npm run test:coop` usa navegadores independentes contra o preview (ou `GAME_URL`), verificando avatares, reparos simultâneos, persistência, reconexão, saída e isolamento entre salas. Esses testes criam sessões e salas de QA no projeto gratuito e consomem cotas; não executá-los continuamente em CI.
+`npm run test:coop:backend` testa os 80 casos no serviço real, tentativas simultâneas e independentes, múltiplos autores, pontuação individual, deduplicação, reinício e isolamento de permissões. `npm run test:coop` usa navegadores independentes contra o preview (ou `GAME_URL`), verificando avatares, reparos simultâneos, persistência, reconexão, saída e isolamento entre salas. Esses testes criam sessões e salas de QA no projeto gratuito e consomem cotas; não executá-los continuamente em CI.
 
 
 ### Personagens e localização
 
 Em **Equipe → Meu personagem**, escolha entre quatro penteados e dez cores de cabelo. O perfil fica salvo por aluno e sala. Novos participantes recebem uma combinação disponível entre as 40 possibilidades; escolhas manuais podem repetir combinações. Os uniformes continuam iguais.
 
-Cada participante pode clicar em **Localizar** ao lado de um colega. A câmera acompanha o personagem e mostra o PC em atendimento; **Voltar ao meu aluno** ou caminhar encerra o acompanhamento. O apelido aparece sobre o personagem e em uma etiqueta amarela no PC reservado. O gabinete continua verde quando já foi reparado.
+Cada participante pode clicar em **Localizar** ao lado de um colega. A câmera acompanha o personagem e mostra o PC em atendimento; **Voltar ao meu aluno** ou caminhar encerra o acompanhamento. O apelido e a pontuação individual aparecem sobre o personagem. O painel Equipe mostra o placar da rodada e todos os autores por PC. O gabinete continua verde quando já foi reparado.
 
 As mudanças de perfil estão registradas em `backend/appearance.sql` e `backend/distinct-avatars.sql`, aplicadas depois de `backend/schema.sql`.
 
@@ -111,3 +111,9 @@ O modo de turma compartilha presença, localização e status; não contém chat
 Cabelos automáticos variam ao entrar, procurando combinações disponíveis. Uma personalização escolhida pelo aluno permanece salva. Os 40 novos conteúdos estão em `src/fundamentals.js`: bits/bytes, bases numéricas, unidades, taxas, portas lógicas, hierarquia de memória, CPU e inicialização.
 
 As novas estruturas estão em `backend/expand-80.sql`, `backend/teacher.sql` e `backend/random-hair.sql`, posteriores às migrações anteriores. Para outro projeto, gere outra chave de professor e altere seu digest; não copie a configuração de acesso desta publicação.
+
+## Progresso individual na sala
+
+Aplique, após os scripts de backend anteriores, `supabase/migrations/20261025150810_individual_progress.sql`. A atualização cria tentativas por aluno/rodada/PC e conclusões com pontuação calculada no servidor. Migra resultados anteriores com autoria identificada; registros antigos sem identificação de sessão continuam no histórico, sem atribuir pontos arbitrariamente.
+
+Um PC verde continua disponível para outros alunos. A ficha lista todos os autores. Resolver o mesmo PC novamente na mesma sessão e rodada não duplica pontos. O professor reinicia a rodada de todos, preservando os placares e as conclusões anteriores. A chave de acesso permanece a mesma.

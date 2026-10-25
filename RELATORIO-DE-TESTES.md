@@ -111,3 +111,14 @@ A suíte de regras agora tem 68 testes e inclui posicionamento, orientação das
 - Dois navegadores: colegas visíveis, autoria, reinício sincronizado pelo professor, fechamento de fichas, histórico, bloqueio do acesso e conclusão na segunda ala.
 - Removidos controles de reinício individual dos alunos; reinício da sala exige autorização no servidor.
 - Limite: teste funcional com duas sessões simultâneas, sem ensaio de carga de uma turma inteira.
+
+
+## Progresso por aluno e placar — 25/10/2026
+
+- 110 testes unitários aprovados. Servidor real: os 80 desafios foram resolvidos, com erros idempotentes, progresso individual e isolamento de respostas.
+- Dois alunos podem abrir o mesmo PC ao mesmo tempo. A conclusão do segundo preserva a primeira; pontuações por PC são calculadas no servidor e não duplicam ao repetir a requisição.
+- Escrita direta em tentativas e pontuações negada, tentativas de outro aluno invisíveis, visitante de outra sala sem acesso ao resumo, reinício exclusivo do professor, rodadas antigas preservadas.
+- Migração: os 137 registros antigos de conclusão foram mantidos; nenhuma conclusão com autoria de sessão identificada ficou sem migrar. Registros sem essa identificação permanecem visíveis sem atribuição arbitrária de pontos individuais.
+- Auditoria sem novos erros de segurança ou desempenho. O aviso de [sessões anônimas autenticadas](https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins) é esperado para entrada por apelido; as políticas restringem sala e autor.
+
+- Navegadores independentes: mesmo PC aberto simultaneamente, verde mantido com ficha pendente para o segundo aluno, dois nomes na lista, 150/90 pontos individuais nas etiquetas e no placar, histórico com duas conclusões, nova rodada sincronizada, segunda ala, reconexão e layout móvel aprovados.

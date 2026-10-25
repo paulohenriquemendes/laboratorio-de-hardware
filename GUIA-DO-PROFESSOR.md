@@ -17,10 +17,10 @@
 2. Dê um nome à sala e clique em **Criar sala da turma**.
 3. Abra **Equipe**, copie o link e distribua aos alunos. Eles informam um apelido e clicam em **Entrar em equipe**.
 4. Em **Equipe → Meu personagem**, cada aluno pode escolher penteado e cor. Use **Localizar** ao lado de um participante para acompanhar a câmera e ver seu PC; a etiqueta amarela identifica quem está atendendo. Cada aluno escolhe um PC livre. Os colegas veem seu personagem, os atendimentos e os computadores reparados em verde.
-5. Feche a ficha ao terminar para liberar o PC. A pontuação e as metas são da equipe; a autoria de cada entrega aparece em Equipe.
+5. Cada aluno pode resolver todos os PCs, inclusive os verdes e os que colegas estão usando. A ficha lista quem já resolveu. Pontuação e metas são individuais; o placar aparece em Equipe e os pontos acompanham o nome sobre cada personagem.
 6. Para outra aula com os mesmos reparos, reutilize o link. Para um novo turno, crie outra sala.
 
-O modo individual continua separado e preserva as partidas antigas. Use apelidos, sem dados pessoais. Quem tiver o link pode entrar na sala. A identidade do aluno permanece no navegador; o progresso da sala permanece no servidor. O download de resumo contém o progresso da equipe durante uma sessão colaborativa.
+O modo individual continua separado e preserva as partidas antigas. Use apelidos, sem dados pessoais. Quem tiver o link pode entrar na sala. A identidade do aluno permanece no navegador; o progresso da sala permanece no servidor. O download de resumo contém o progresso individual. O professor pode baixar o histórico com todos os autores e os placares por rodada.
 
 A versão foi testada com dois alunos simultâneos. O serviço gratuito possui cotas; em turmas grandes a frequência de movimento é reduzida. Antes de usar todos os computadores da escola, valide a quantidade real de alunos e o limite de entradas anônimas por IP no painel do Supabase. Nenhum plano pago foi ativado.
 
