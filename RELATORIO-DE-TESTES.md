@@ -102,3 +102,12 @@ A suíte de regras agora tem 68 testes e inclui posicionamento, orientação das
 
 - Aparência: atribuição inicial distinta, quatro penteados/dez cores, persistência ao retornar, sincronização visual em outro navegador, alteração restrita ao próprio perfil e rejeição de estilos inválidos.
 - Localização: botão Localizar acompanha o colega no PC 20, identificação sobre o personagem e na bancada, retorno à câmera do próprio aluno. Captura: test-results/coop-localizar.png.
+
+
+## Expansão e área do professor — 25/10/2026
+
+- 110 testes unitários aprovados. Percurso completo de 80 computadores aprovado, incluindo respostas certas e erradas, persistência, cor verde e relatório final de 7200/12000 pontos.
+- Servidor: 80 atividades, autoria, reservas concorrentes, bloqueio de escrita indevida, reinício autorizado, rejeição de aluno e chave incorreta, preservação do histórico e rejeição de ações de rodadas antigas.
+- Dois navegadores: colegas visíveis, autoria, reinício sincronizado pelo professor, fechamento de fichas, histórico, bloqueio do acesso e conclusão na segunda ala.
+- Removidos controles de reinício individual dos alunos; reinício da sala exige autorização no servidor.
+- Limite: teste funcional com duas sessões simultâneas, sem ensaio de carga de uma turma inteira.

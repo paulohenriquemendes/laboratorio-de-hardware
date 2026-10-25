@@ -11,7 +11,8 @@ Jogo educativo 3D para aulas de arquitetura e manutenção de computadores. Feit
 - PCs 01–20: cinco bancadas centrais, com quatro computadores em cada.
 - PCs 21–30: voltados para a parede A.
 - PCs 31–40: voltados para a parede B.
-- Todos os 40 computadores têm sintomas, dois testes, diagnóstico, reparo e desafio conceitual próprios.
+- PCs 41–80: segunda ala, com mais cinco bancadas centrais e duas fileiras laterais, dedicada a fundamentos.
+- Todos os 80 computadores têm sintomas, dois testes, diagnóstico, reparo e desafio conceitual próprios.
 - Após validar o reparo, gabinete e monitor ficam verdes, com etiqueta ✓ REVISADO.
 - O uniforme do aluno e a paleta verde seguem as referências descritas em REFERENCIAS-VISUAIS.md.
 
@@ -23,9 +24,9 @@ As fichas têm fonte ampliável, caderno de evidências e glossário. Desafios m
 
 ## Pontuação e progresso
 
-Até 150 pontos por computador, menos 15 por erro de diagnóstico/reparo, com mínimo de 30. Pontos entram após validação. Total possível: 6000. Questões conceituais registram tentativas separadamente, sem reduzir a pontuação prática.
+Até 150 pontos por computador, menos 15 por erro de diagnóstico/reparo, com mínimo de 30. Pontos entram após validação. Total possível: 12000. Questões conceituais registram tentativas separadamente, sem reduzir a pontuação prática.
 
-A chave atual é `laboratorioHardware40.v1`. Os 20 registros da versão `oficina3d.unique20.v1` são migrados sem apagar a chave antiga. Reiniciar turno limpa somente a partida atual. O progresso fica no perfil do navegador e não é enviado automaticamente ao professor.
+A chave atual é `laboratorioHardware80.v1`. O progresso anterior de 40 PCs é ampliado para 80 sem perder resultados. Os 20 registros da versão `oficina3d.unique20.v1` são migrados sem apagar a chave antiga. Alunos não possuem botão para reiniciar o turno. O progresso fica no perfil do navegador e não é enviado automaticamente ao professor.
 
 ## Desenvolvimento
 
@@ -70,7 +71,7 @@ Digite um apelido e escolha **Entrar em equipe**. O endereço sem `?sala=` usa o
 - Um PC aberto fica reservado por 60 segundos, renovados a cada 20 segundos. Fechar a ficha libera o PC; sem conexão a reserva expira.
 - A validação de etapas e respostas ocorre no servidor. Identificadores de ação evitam cobrar duas vezes uma resposta reenviada.
 - Recarregar mantém a identidade anônima neste navegador. Limpar os dados do navegador cria outra identidade, mas a sala conserva os reparos. O link dá acesso à sala: compartilhe somente com a turma.
-- Voltar ao individual recupera a partida local anterior. Reiniciar individual não apaga o progresso compartilhado. Para outra atividade, crie outra sala.
+- Voltar ao individual recupera a partida local anterior. Somente o professor pode reiniciar a sala pela área protegida Professor.
 - O painel Equipe mostra quem está online e quem entregou cada computador. Sem internet, respostas ficam pausadas; a conexão é refeita ao voltar, com botão Reconectar disponível.
 
 ### Serviço e manutenção
@@ -95,3 +96,18 @@ Em **Equipe → Meu personagem**, escolha entre quatro penteados e dez cores de 
 Cada participante pode clicar em **Localizar** ao lado de um colega. A câmera acompanha o personagem e mostra o PC em atendimento; **Voltar ao meu aluno** ou caminhar encerra o acompanhamento. O apelido aparece sobre o personagem e em uma etiqueta amarela no PC reservado. O gabinete continua verde quando já foi reparado.
 
 As mudanças de perfil estão registradas em `backend/appearance.sql` e `backend/distinct-avatars.sql`, aplicadas depois de `backend/schema.sql`.
+
+
+## Professor e rodadas (80 computadores)
+
+Entre na sala, abra **Equipe → Professor** e informe a chave privada gerada para o responsável. A chave está no arquivo local `.private/ACESSO-PROFESSOR.txt`, ignorado pelo Git; não faz parte do site, de URLs ou do código publicado. O banco armazena somente seu digest SHA-256. A autorização fica associada à sessão anônima atual por 8 horas, com limite de tentativas. Use **Bloquear acesso** ao terminar, especialmente em um computador compartilhado.
+
+O painel informa status, autoria e data de cada conclusão. Em **Iniciar nova rodada**, digite **ZERAR** e confirme. A sala mantém o link, cria 80 tarefas vazias e fecha fichas dos alunos conectados. O histórico anterior permanece consultável e pode ser baixado em texto. Reiniciar a sala não reinicia outras salas nem partidas individuais. A capacidade de novos participantes é contabilizada na rodada atual.
+
+Cada ação envia o número da rodada; respostas atrasadas de uma rodada antiga são recusadas. A criação de rodadas é atômica e protege contra clique duplo concorrente. Os testes usam somente salas de QA criadas para esse fim; nenhuma rodada real da turma foi zerada durante a implementação.
+
+O modo de turma compartilha presença, localização e status; não contém chat ou mensagens entre alunos. Ao concluir um desafio, os colegas recebem o aviso e o PC fica verde com o apelido do responsável. Os registros de conclusão são feitos no servidor, com horário e identidade da sessão. Registros anteriores à atualização podem não ter horário, exibido como “—”.
+
+Cabelos automáticos variam ao entrar, procurando combinações disponíveis. Uma personalização escolhida pelo aluno permanece salva. Os 40 novos conteúdos estão em `src/fundamentals.js`: bits/bytes, bases numéricas, unidades, taxas, portas lógicas, hierarquia de memória, CPU e inicialização.
+
+As novas estruturas estão em `backend/expand-80.sql`, `backend/teacher.sql` e `backend/random-hair.sql`, posteriores às migrações anteriores. Para outro projeto, gere outra chave de professor e altere seu digest; não copie a configuração de acesso desta publicação.

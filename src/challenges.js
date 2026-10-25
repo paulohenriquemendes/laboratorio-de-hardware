@@ -1,3 +1,4 @@
+import {foundationChallenges} from './fundamentals.js';
 import {wallChallenges} from './wall-cases.js';
 import {extraChallenges} from './additional-cases.js';
 import {cases} from './cases.js';
@@ -9,9 +10,9 @@ const challengeTypes = [
  {topic:'Firmware e relógio',question:'Qual relação explica a perda da hora ao retirar o computador da tomada?',options:['A bateria alimenta o processador durante o uso','A bateria aumenta a velocidade do SSD','A bateria mantém o relógio de tempo real quando falta alimentação externa'],answer:2,explanation:'A bateria sustenta o RTC sem alimentação externa. A forma de preservar configurações varia entre placas; neste equipamento, a bateria esgotada provocou o aviso no POST.',hint:'Diferencie a alimentação do computador inteiro da pequena alimentação de reserva do relógio.'},
  {topic:'Rede e teste controlado',question:'O cabo conhecido como bom funcionou na mesma porta. O que esse teste indica?',options:['A falha acompanha o cabo original, isolando o problema físico','É necessário reinstalar o sistema operacional','O roteador inteiro está necessariamente defeituoso'],answer:0,explanation:'Mantendo computador e porta e trocando apenas o cabo, o teste identifica a variável ligada à falha. LED apagado sozinho não bastaria para condenar o cabo.',hint:'A conclusão deve se apoiar na troca controlada, e não apenas no primeiro sintoma.'}
 ];
-export const challenges=[...challengeTypes,...extraChallenges,...wallChallenges];
+export const challenges=[...challengeTypes,...extraChallenges,...wallChallenges,...foundationChallenges];
 export function goals(progress){return [
- {name:'Laboratório recuperado',value:progress.filter(p=>p.validated).length,total:cases.length,description:'Conclua e valide os 40 reparos.'},
+ {name:'Laboratório recuperado',value:progress.filter(p=>p.validated).length,total:cases.length,description:'Conclua e valide os 80 desafios.'},
  {name:'Diagnóstico de primeira',value:progress.filter(p=>p.validated&&p.errors===0).length,total:cases.length,description:'Entregue cada caso sem erro de diagnóstico ou reparo. Reinicie o turno para uma nova tentativa.'},
  {name:'Conceitos na prática',value:progress.filter(p=>p.challenge).length,total:cases.length,description:'Após cada entrega, responda ao desafio de arquitetura e manutenção.'}
 ];}

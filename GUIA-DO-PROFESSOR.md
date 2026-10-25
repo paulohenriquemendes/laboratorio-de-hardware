@@ -1,3 +1,16 @@
+# Versão com 80 computadores e área do professor
+
+- PCs 01–40: manutenção. PCs 41–80: nova ala de fundamentos, incluindo bits, bytes, binário, unidades, lógica e arquitetura básica.
+- Os alunos veem personagens, localização, PCs ocupados e autoria das soluções. Não há chat entre eles.
+- Um PC concluído fica verde e exibe quem o resolveu. O painel Equipe reúne os atendimentos.
+- Entre na sala, abra **Equipe → Professor** e use a chave privada entregue no arquivo local `.private/ACESSO-PROFESSOR.txt`. Não distribua a chave aos alunos.
+- Para reutilizar a mesma sala com novos alunos: abra **Iniciar nova rodada**, digite **ZERAR** e confirme. São criados 80 desafios pendentes, preservando o link e o histórico anterior.
+- Use o seletor de rodada para consultar autoria e horários, ou **Baixar histórico**. Ao terminar, clique em **Bloquear acesso**; a autorização também expira após 8 horas.
+- Um reinício da sala não afeta outras salas ou partidas individuais. Os registros antigos continuam disponíveis para consulta.
+- Cabelos automáticos variam entre entradas; escolhas manuais ficam salvas.
+
+---
+
 # Atividade colaborativa — atualização de 24/10/2026
 
 1. Abra o jogo, digite um apelido e expanda **Criar uma sala para minha turma**.
@@ -33,7 +46,7 @@ Para acesso pela internet em computadores diferentes, use https://paulohenriquem
 
 Para desenvolvimento local, no computador com o servidor ativo, abra http://127.0.0.1:4180. Este endereço é local: não funciona nos outros computadores do laboratório. Para usar em outras máquinas sem publicar, copie a pasta do projeto (sem node_modules), instale Node.js, execute `npm install` e `npm run dev` em cada máquina. O GitHub Pages hospeda apenas os arquivos do jogo. Não há login nem envio automático das respostas dos alunos.
 
-Use Edge ou outro navegador com WebGL disponível. Os testes automatizados foram executados no Edge; faça uma verificação no hardware do laboratório antes da aula. O progresso é compartilhado pelas pessoas que usam o mesmo perfil do navegador: reinicie o turno entre alunos ou use perfis distintos.
+Use Edge ou outro navegador com WebGL disponível. Os testes automatizados foram executados no Edge; faça uma verificação no hardware do laboratório antes da aula. O progresso é compartilhado pelas pessoas que usam o mesmo perfil do navegador: use perfis distintos para prática individual ou a área protegida Professor para reiniciar a sala compartilhada.
 
 ## Atividade
 

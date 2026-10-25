@@ -1,3 +1,4 @@
+import {foundationCases} from './fundamentals.js';
 import {wallCases} from './wall-cases.js';
 import {extraCases} from './additional-cases.js';
 const caseTypes = [
@@ -8,12 +9,12 @@ const caseTypes = [
  {title:'O tempo se perde',client:'Biblioteca Central',symptom:'Depois de tirar o computador da tomada, a data volta ao padrão e surge um aviso de configuração no POST.',tests:[['Conferir retenção do relógio','O relógio mantém a hora ligado, mas perde a configuração quando a alimentação externa é removida.'],['Medir bateria CMOS','Bateria CR2032 mede 1,8 V; abaixo da tensão nominal de 3 V.']],options:['Sistema infectado','Fonte incompatível','Bateria CMOS esgotada'],answer:2,repairs:['Reinstalar todos os aplicativos','Substituir CR2032 e ajustar BIOS/UEFI','Trocar o processador'],repair:1,explain:'A bateria esgotada não preservava o relógio e as configurações com o equipamento fora da tomada.',validation:'Data e configurações mantidas após novo ciclo sem alimentação externa.'},
  {title:'Conexão interrompida',client:'Café Horizonte',symptom:'O computador não acessa a rede por cabo. Outros dispositivos conectados ao mesmo roteador funcionam.',tests:[['Verificar link e adaptador','Adaptador habilitado e driver funcionando, mas o LED da porta de rede não acende.'],['Usar cabo conhecido como bom','Na mesma porta do roteador, o cabo de teste restabelece o link e o acesso à rede.']],options:['Roteador sem internet','Cabo Ethernet defeituoso','SSD corrompido'],answer:1,repairs:['Formatar o computador','Substituir a fonte','Substituir o cabo Ethernet'],repair:2,explain:'A troca controlada do cabo restabeleceu a conexão, isolando uma falha física no cabo original.',validation:'Link ativo, endereço IP válido e teste de conectividade aprovado.'}
 ];
-export const cases = [...caseTypes,...extraCases,...wallCases].map((c,i)=>({...c,client:'Laboratório · PC '+String(i+1).padStart(2,'0'),type:i}));
+export const cases = [...caseTypes,...extraCases,...wallCases,...foundationCases].map((c,i)=>({...c,client:'Laboratório · PC '+String(i+1).padStart(2,'0'),type:i}));
 export const fresh = () => cases.map(()=>({tests:[],diagnosed:false,repaired:false,validated:false,errors:0,challenge:false,challengeErrors:0}));
 export function restoreProgress(raw){
  try{
   const saved=JSON.parse(raw);
-  if(!Array.isArray(saved)||![6,20,cases.length].includes(saved.length)) return fresh();
+  if(!Array.isArray(saved)||![6,20,40,cases.length].includes(saved.length)) return fresh();
   if(saved.length<cases.length)saved.push(...fresh().slice(saved.length));
   return saved.map((p,i)=>{
    const fallback=fresh()[i];
