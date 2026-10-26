@@ -15,7 +15,8 @@
     "test:expansion": "node expansion.test.mjs",
     "test:coop:backend": "node coop-backend.test.mjs",
     "test:coop": "node coop-browser.test.mjs",
-    "test:appearance": "node appearance.test.mjs"
+    "test:appearance": "node appearance.test.mjs",
+    "test:participation": "node participation-backend.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

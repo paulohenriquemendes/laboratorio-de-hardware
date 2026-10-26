@@ -122,3 +122,16 @@ A suíte de regras agora tem 68 testes e inclui posicionamento, orientação das
 - Auditoria sem novos erros de segurança ou desempenho. O aviso de [sessões anônimas autenticadas](https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins) é esperado para entrada por apelido; as políticas restringem sala e autor.
 
 - Navegadores independentes: mesmo PC aberto simultaneamente, verde mantido com ficha pendente para o segundo aluno, dois nomes na lista, 150/90 pontos individuais nas etiquetas e no placar, histórico com duas conclusões, nova rodada sincronizada, segunda ala, reconexão e layout móvel aprovados.
+
+
+## Administração separada, participação e anotações — 26/10/2026
+
+- Administração em `admin.html`, sem carregar o cenário 3D. Mesma chave e autorização de professor no servidor.
+- Identificação privada por nome completo e turma, sem e-mail; contagens de iniciados, concluídos, conceitos, pontos e envio por aluno/rodada.
+- Registro atômico das alternativas marcadas e dos acertos/erros, sem duplicar eventos em tentativas repetidas da mesma requisição. Testes de servidor aprovados para respostas, notas, autorização e preservação após reinício.
+- Dados privados não aparecem no resumo público da sala. Anotações de colegas não podem ser lidas nem marcadas como lidas por alunos; o relatório detalhado exige autorização do professor.
+- Informações antigas de progresso preservadas. Alternativas específicas não registradas anteriormente não são reconstruídas.
+- RLS sem políticas nas tabelas privadas de identificação e eventos é intencional: acesso direto negado, leitura apenas por funções que verificam a autorização. Referência do [aviso informativo](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy).
+- 110 testes unitários aprovados. A validação é funcional, com duas sessões de aluno e uma administrativa; não representa teste de carga de uma turma inteira.
+
+- Navegador: envio de participação com nome/turma, alternativas corretas e incorretas no painel, CSV com linhas válidas, mensagem tratada como texto (sem executar HTML), reinício e histórico aprovados. Corrigida sobreposição no menu estreito; controles e rascunho testados em larguras 390, 844 e 1024 px. Leitura e produção individual aprovadas.

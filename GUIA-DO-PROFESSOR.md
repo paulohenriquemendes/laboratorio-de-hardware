@@ -1,93 +1,41 @@
-# Versão com 80 computadores e área do professor
+# Laboratório de Hardware — guia do professor
 
-- PCs 01–40: manutenção. PCs 41–80: nova ala de fundamentos, incluindo bits, bytes, binário, unidades, lógica e arquitetura básica.
-- Os alunos veem personagens, localização, PCs ocupados e autoria das soluções. Não há chat entre eles.
-- Um PC concluído fica verde e exibe quem o resolveu. O painel Equipe reúne os atendimentos.
-- Entre na sala, abra **Equipe → Professor** e use a chave privada entregue no arquivo local `.private/ACESSO-PROFESSOR.txt`. Não distribua a chave aos alunos.
-- Para reutilizar a mesma sala com novos alunos: abra **Iniciar nova rodada**, digite **ZERAR** e confirme. São criados 80 desafios pendentes, preservando o link e o histórico anterior.
-- Use o seletor de rodada para consultar autoria e horários, ou **Baixar histórico**. Ao terminar, clique em **Bloquear acesso**; a autorização também expira após 8 horas.
-- Um reinício da sala não afeta outras salas ou partidas individuais. Os registros antigos continuam disponíveis para consulta.
-- Cabelos automáticos variam entre entradas; escolhas manuais ficam salvas.
+## Acesso administrativo
 
----
+Abra https://paulohenriquemendes.github.io/laboratorio-de-hardware/admin.html e informe a chave privada do arquivo local `.private/ACESSO-PROFESSOR.txt`. A chave permanece a mesma e não é publicada. Use **Bloquear acesso** ao terminar, especialmente em um computador compartilhado. A autorização expira após 8 horas.
 
-# Atividade colaborativa — atualização de 24/10/2026
+## Turmas e convites
 
-1. Abra o jogo, digite um apelido e expanda **Criar uma sala para minha turma**.
-2. Dê um nome à sala e clique em **Criar sala da turma**.
-3. Abra **Equipe**, copie o link e distribua aos alunos. Eles informam um apelido e clicam em **Entrar em equipe**.
-4. Em **Equipe → Meu personagem**, cada aluno pode escolher penteado e cor. Use **Localizar** ao lado de um participante para acompanhar a câmera e ver seu PC; a etiqueta amarela identifica quem está atendendo. Cada aluno escolhe um PC livre. Os colegas veem seu personagem, os atendimentos e os computadores reparados em verde.
-5. Cada aluno pode resolver todos os PCs, inclusive os verdes e os que colegas estão usando. A ficha lista quem já resolveu. Pontuação e metas são individuais; o placar aparece em Equipe e os pontos acompanham o nome sobre cada personagem.
-6. Para outra aula com os mesmos reparos, reutilize o link. Para um novo turno, crie outra sala.
+Selecione a turma no painel ou use **Criar uma nova turma**. Copie o convite e envie aos alunos. Quem abre o mesmo convite entra na mesma turma; outra turma tem outro endereço e resultados separados. O endereço do jogo sem convite entra no laboratório aberto.
 
-O modo individual continua separado e preserva as partidas antigas. Use apelidos, sem dados pessoais. Quem tiver o link pode entrar na sala. A identidade do aluno permanece no navegador; o progresso da sala permanece no servidor. O download de resumo contém o progresso individual. O professor pode baixar o histórico com todos os autores e os placares por rodada.
+No jogo, **Minha turma** mostra colegas, localização e placar. O convite fica recolhido em **Convidar colegas**. A aparência fica em **Personalizar meu personagem**. O laboratório é um único ambiente com 80 computadores e placas “Laboratório de Hardware”. Todos podem resolver todos os desafios, inclusive o mesmo computador simultaneamente. Verde significa que alguém já resolveu, e a ficha lista os autores. Pontos e respostas são individuais.
 
-A versão foi testada com dois alunos simultâneos. O serviço gratuito possui cotas; em turmas grandes a frequência de movimento é reduzida. Antes de usar todos os computadores da escola, valide a quantidade real de alunos e o limite de entradas anônimas por IP no painel do Supabase. Nenhum plano pago foi ativado.
+## Identificação e participação
 
----
+Peça ao aluno para abrir **Participação e anotações**, informar **nome completo e turma**, e clicar em **Enviar minha participação ao professor**. Não é solicitado e-mail. O nome completo e a turma não aparecem aos colegas; no jogo continua o apelido.
 
-> Versão atual: 40 computadores, 40 casos e máximo de 6000 pontos. Cinco bancadas centrais (20 PCs) e dez PCs voltados para cada parede lateral. O endereço público e o nome técnico do repositório permanecem os mesmos.
+Os resultados da turma são salvos no servidor a cada ação. O envio identifica esses resultados, e o aluno pode continuar praticando. No painel, **Participação dos alunos** mostra, por rodada:
 
-# Roteiro para a aula — Laboratório de Hardware
+- Nome completo, turma e apelido; participantes ainda não identificados também aparecem após iniciarem uma atividade.
+- Desafios iniciados (pelo menos uma evidência consultada), desafios concluídos, questões conceituais concluídas e pontos.
+- Data de envio da participação.
+- **Ver respostas**, com as alternativas marcadas, acertos, erros e horários.
+- **Baixar planilha CSV**, para apoiar o registro de participação, e download das respostas de um aluno.
 
-Público: alunos de arquitetura e manutenção de computadores. Duração sugerida: 30–45 minutos, em duplas ou individualmente.
+As alternativas específicas passam a ser registradas nesta atualização. Para atividades anteriores, as etapas, conclusões e contagens de erros existentes são preservadas, sem inventar respostas antigas. A identificação é declarada pelo aluno; não é uma verificação de identidade. Use a turma e a supervisão em aula para relacionar o registro à pessoa. A pontuação do jogo é um dado de apoio; a avaliação e a nota final ficam a seu critério.
 
-## Objetivos
+## Anotações dos alunos
 
-- Distinguir sintomas de causas e sustentar o diagnóstico com evidências.
-- Isolar uma variável por vez, evitando trocas sem justificativa.
-- Associar alimentação, memória, armazenamento, refrigeração, firmware e rede aos sintomas observados.
-- Planejar o reparo e validar nas condições em que a falha ocorria.
-- Priorizar preservação dos dados e procedimentos adequados ao equipamento.
+No mesmo bloco, o aluno pode escrever uma sugestão e usar **Enviar ao professor**. O rascunho fica no navegador até o envio. Na administração, **Anotações recebidas** mostra nome, turma, apelido, mensagem, data e rodada. É possível filtrar pela turma selecionada e marcar como lida. Outros alunos não podem ler as mensagens. Reiniciar a rodada não apaga anotações.
 
-## Preparação
+## Nova rodada
 
-Para acesso pela internet em computadores diferentes, use https://paulohenriquemendes.github.io/oficina-3d/.
+Selecione a turma correta, abra **Iniciar nova rodada**, digite **ZERAR** e confirme. Isso zera a rodada atual para todos daquela turma e fecha suas fichas abertas. O convite continua o mesmo. As rodadas anteriores continuam disponíveis pelo seletor **Rodada para consultar**, incluindo participação, respostas registradas, autoria e placar. Alunos não têm controle para reiniciar a turma. A identificação é por rodada; novos alunos informam seus próprios dados.
 
-Para desenvolvimento local, no computador com o servidor ativo, abra http://127.0.0.1:4180. Este endereço é local: não funciona nos outros computadores do laboratório. Para usar em outras máquinas sem publicar, copie a pasta do projeto (sem node_modules), instale Node.js, execute `npm install` e `npm run dev` em cada máquina. O GitHub Pages hospeda apenas os arquivos do jogo. Não há login nem envio automático das respostas dos alunos.
+## Orientação para a aula
 
-Use Edge ou outro navegador com WebGL disponível. Os testes automatizados foram executados no Edge; faça uma verificação no hardware do laboratório antes da aula. O progresso é compartilhado pelas pessoas que usam o mesmo perfil do navegador: use perfis distintos para prática individual ou a área protegida Professor para reiniciar a sala compartilhada.
+Os desafios cobrem manutenção, arquitetura, bits, bytes, unidades e lógica. Cada PC vale até 150 pontos, descontando 15 por erro prático, com mínimo de 30. Questões conceituais registram erros separadamente e não retiram pontos práticos. Máximo: 12000 pontos. O mesmo PC não concede pontos repetidos ao mesmo aluno na mesma rodada.
 
-## Atividade
+Use perfis de navegador distintos para alunos diferentes. A sessão fica no navegador; trocar de dispositivo ou apagar os dados pode criar outra identidade. O modo de prática individual continua local e não gera registros na turma: para acompanhamento pelo professor, os alunos devem entrar pelo convite da turma.
 
-1. Exploração (5 min): experimentar WASD/setas, Q/R, câmera por arraste e interação E.
-2. Investigação (15–20 min): realizar os 20 atendimentos, explicando a hipótese antes de selecionar a resposta. Os dois testes são necessários para liberar o diagnóstico.
-3. Conceitos (5–10 min): após cada entrega, responder ao desafio conceitual. O retorno explica o raciocínio e permite tentar novamente, sem reduzir a pontuação prática.
-4. Discussão (5–10 min): abrir **Desafios**, conferir metas e baixar o resumo. Cada aluno pode apresentar o arquivo e justificar suas decisões.
-
-## Metas
-
-- **Oficina recuperada:** 20 reparos com validação final.
-- **Diagnóstico de primeira:** 20 computadores sem erro de diagnóstico ou reparo. Esta meta requer uma nova partida se o aluno quiser recuperar um caso em que errou.
-- **Conceitos na prática:** 20 desafios conceituais respondidos corretamente.
-
-Pontuação prática: até 150 por caso, menos 15 por tentativa incorreta de diagnóstico/reparo, com mínimo de 30. Só é creditada na validação final. Total: 3000. Desafios conceituais registram tentativas separadamente. O resumo local não constitui avaliação supervisionada nem é enviado automaticamente ao professor.
-
-## Perguntas para discussão
-
-1. Fonte: o que foi descartado antes de condenar a fonte? Quais compatibilidades verificar na substituição?
-2. RAM: o que mudaria na hipótese se ambos os módulos falhassem apenas no mesmo slot?
-3. Temperatura: por que testar apenas em repouso seria insuficiente? Os limites variam conforme o processador.
-4. Disco: por que formatar não resolve falha física? Qual é a prioridade quando existem arquivos importantes?
-5. CMOS/RTC: o que a bateria mantém sem energia externa? Compare a implementação em placas diferentes.
-6. Rede: por que o LED apagado sozinho não prova defeito no cabo? O que a troca controlada demonstrou?
-
-## Limites da simulação
-
-Os testes são escolhas com resultados simulados; não medem hardware real. O jogo não representa desmontagem manual, manuseio de instrumentos ou todos os defeitos possíveis. Os cenários são deliberadamente delimitados para ensinar diagnóstico. Procedimentos reais devem seguir instruções do fabricante e orientação do professor; nunca abrir fontes de alimentação durante a atividade.
-
-## Disposição do laboratório
-
-São cinco bancadas compartilhadas, com quatro computadores por bancada: dois de cada lado. O lado A tem PCs 01–10 e o lado B tem PCs 11–20. Todos são interativos. Cada um dos 20 computadores possui sintomas, testes, diagnóstico, reparo e desafio conceitual próprios. A pontuação máxima é 3000. O botão **Ver laboratório** mostra a disposição completa e pausa a caminhada. Use **Voltar ao técnico** para retomar.
-
-O progresso usa a chave `oficina3d.unique20.v1`. Na migração, os seis casos originais são preservados e os PCs 07–20, cujo conteúdo mudou, começam pendentes. As chaves anteriores não são apagadas. Cada computador mantém seu progresso independente.
-
-## Leitura das informações
-
-As fichas usam fundo claro e opaco, texto de 16 px, opção **A+ Ampliar texto**, etapas do atendimento e caderno de evidências consultável durante o reparo. O glossário explica as siglas presentes no caso. As respostas são identificadas por letras e o retorno de erro aparece em um bloco próprio. A ampliação vale para os painéis durante a sessão.
-
-## Expansão de 21/10/2026
-
-Os 20 casos anteriores foram mantidos e mais 20 casos foram adicionados. O teto de pontuação agora é 6000. Os PCs validados passam a ter gabinete e moldura do monitor verdes, além de etiqueta ✓ REVISADO. Essa indicação aparece após o teste final de reparo; a pergunta conceitual continua disponível. A cor é restaurada ao recarregar e volta ao estado pendente ao reiniciar o turno.
-
-O salvamento atual usa `laboratorioHardware40.v1`; os 20 registros da versão anterior são migrados sem apagar sua chave. A marca em SVG combina monitor, circuito, letra H e verificação.
+A experiência é testada funcionalmente com dois alunos e um administrador. Não é um ensaio de carga de uma turma inteira. Nenhum plano pago foi ativado. Verifique os computadores e a conexão da escola antes da aula.

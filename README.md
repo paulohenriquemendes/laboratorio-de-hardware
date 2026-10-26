@@ -11,7 +11,7 @@ Jogo educativo 3D para aulas de arquitetura e manutenção de computadores. Feit
 - PCs 01–20: cinco bancadas centrais, com quatro computadores em cada.
 - PCs 21–30: voltados para a parede A.
 - PCs 31–40: voltados para a parede B.
-- PCs 41–80: segunda ala, com mais cinco bancadas centrais e duas fileiras laterais, dedicada a fundamentos.
+- PCs 41–80: continuação do mesmo laboratório, com mais cinco bancadas centrais e duas fileiras laterais.
 - Todos os 80 computadores têm sintomas, dois testes, diagnóstico, reparo e desafio conceitual próprios.
 - Após validar o reparo, gabinete e monitor ficam verdes, com etiqueta ✓ REVISADO.
 - O uniforme do aluno e a paleta verde seguem as referências descritas em REFERENCIAS-VISUAIS.md.
@@ -64,15 +64,15 @@ Consulte GUIA-DO-PROFESSOR.md, CASOS-DO-LABORATORIO.md e RELATORIO-DE-TESTES.md 
 
 ## Modo colaborativo
 
-Digite um apelido e escolha **Entrar em equipe**. O endereço sem `?sala=` usa o laboratório aberto. Para uma turma, escolha **Criar sala da turma** e compartilhe o link em **Equipe → Copiar link da sala**. Todos precisam abrir o mesmo link e entrar em equipe.
+No painel `admin.html`, o professor cria ou seleciona uma turma e copia seu convite. Os alunos abrem o mesmo convite, informam um apelido e escolhem **Entrar na turma**. Sem `?sala=`, o jogo usa o laboratório aberto.
 
 - Personagens e apelidos aparecem para os demais participantes.
 - Cada aluno possui respostas, progresso e pontuação individuais, persistidos no servidor. Conclusões e placar ficam visíveis à sala.
 - O mesmo PC pode ser resolvido por vários alunos simultaneamente. Cada ficha individual renova sua sessão a cada 20 segundos; não há reserva exclusiva do computador.
 - A validação de etapas e respostas ocorre no servidor. Identificadores de ação evitam cobrar duas vezes uma resposta reenviada.
 - Recarregar mantém a identidade anônima neste navegador. Limpar os dados do navegador cria outra identidade, mas a sala conserva os reparos. O link dá acesso à sala: compartilhe somente com a turma.
-- Voltar ao individual recupera a partida local anterior. Somente o professor pode reiniciar a sala pela área protegida Professor.
-- O painel Equipe mostra quem está online e quem entregou cada computador. Sem internet, respostas ficam pausadas; a conexão é refeita ao voltar, com botão Reconectar disponível.
+- Voltar ao individual recupera a partida local anterior. Somente o professor pode reiniciar a sala pela página administrativa protegida.
+- O painel Minha turma mostra quem está online e quem entregou cada computador. Sem internet, respostas ficam pausadas; a conexão é refeita ao voltar, com botão Reconectar disponível.
 
 ### Serviço e manutenção
 
@@ -91,16 +91,16 @@ Novas entradas anônimas também têm limite por IP; em redes escolares comparti
 
 ### Personagens e localização
 
-Em **Equipe → Meu personagem**, escolha entre quatro penteados e dez cores de cabelo. O perfil fica salvo por aluno e sala. Novos participantes recebem uma combinação disponível entre as 40 possibilidades; escolhas manuais podem repetir combinações. Os uniformes continuam iguais.
+Em **Minha turma → Personalizar meu personagem**, escolha entre quatro penteados e dez cores de cabelo. O perfil fica salvo por aluno e sala. Novos participantes recebem uma combinação disponível entre as 40 possibilidades; escolhas manuais podem repetir combinações. Os uniformes continuam iguais.
 
-Cada participante pode clicar em **Localizar** ao lado de um colega. A câmera acompanha o personagem e mostra o PC em atendimento; **Voltar ao meu aluno** ou caminhar encerra o acompanhamento. O apelido e a pontuação individual aparecem sobre o personagem. O painel Equipe mostra o placar da rodada e todos os autores por PC. O gabinete continua verde quando já foi reparado.
+Cada participante pode clicar em **Localizar** ao lado de um colega. A câmera acompanha o personagem e mostra o PC em atendimento; **Voltar ao meu aluno** ou caminhar encerra o acompanhamento. O apelido e a pontuação individual aparecem sobre o personagem. O painel Minha turma mostra o placar da rodada e todos os autores por PC. O gabinete continua verde quando já foi reparado.
 
 As mudanças de perfil estão registradas em `backend/appearance.sql` e `backend/distinct-avatars.sql`, aplicadas depois de `backend/schema.sql`.
 
 
 ## Professor e rodadas (80 computadores)
 
-Entre na sala, abra **Equipe → Professor** e informe a chave privada gerada para o responsável. A chave está no arquivo local `.private/ACESSO-PROFESSOR.txt`, ignorado pelo Git; não faz parte do site, de URLs ou do código publicado. O banco armazena somente seu digest SHA-256. A autorização fica associada à sessão anônima atual por 8 horas, com limite de tentativas. Use **Bloquear acesso** ao terminar, especialmente em um computador compartilhado.
+Abra **Administração (admin.html)** e informe a chave privada gerada para o responsável. A chave está no arquivo local `.private/ACESSO-PROFESSOR.txt`, ignorado pelo Git; não faz parte do site, de URLs ou do código publicado. O banco armazena somente seu digest SHA-256. A autorização fica associada à sessão anônima atual por 8 horas, com limite de tentativas. Use **Bloquear acesso** ao terminar, especialmente em um computador compartilhado.
 
 O painel informa status, autoria e data de cada conclusão. Em **Iniciar nova rodada**, digite **ZERAR** e confirme. A sala mantém o link, cria 80 tarefas vazias e fecha fichas dos alunos conectados. O histórico anterior permanece consultável e pode ser baixado em texto. Reiniciar a sala não reinicia outras salas nem partidas individuais. A capacidade de novos participantes é contabilizada na rodada atual.
 
@@ -117,3 +117,11 @@ As novas estruturas estão em `backend/expand-80.sql`, `backend/teacher.sql` e `
 Aplique, após os scripts de backend anteriores, `supabase/migrations/20261025150810_individual_progress.sql`. A atualização cria tentativas por aluno/rodada/PC e conclusões com pontuação calculada no servidor. Migra resultados anteriores com autoria identificada; registros antigos sem identificação de sessão continuam no histórico, sem atribuir pontos arbitrariamente.
 
 Um PC verde continua disponível para outros alunos. A ficha lista todos os autores. Resolver o mesmo PC novamente na mesma sessão e rodada não duplica pontos. O professor reinicia a rodada de todos, preservando os placares e as conclusões anteriores. A chave de acesso permanece a mesma.
+
+## Participação identificada e anotações
+
+O professor acessa `admin.html`, uma entrada separada do jogo. O aluno informa nome completo e turma em **Participação e anotações**; não há coleta de e-mail. O painel permite consultar iniciados, concluídos, conceitos, pontos, envio e alternativas marcadas por aluno e rodada, além de exportar CSV e respostas em texto. Dados de identificação e respostas detalhadas são restritos ao professor. No cenário permanece o apelido.
+
+Aplique as migrações `20261025154550_student_notes.sql` e `20261026153045_student_participation.sql` após as anteriores. Anotações têm limite de 2000 caracteres e 10 envios por hora por sessão, com repetição de requisições deduplicada. O histórico de respostas começa nesta atualização; resultados anteriores mantêm suas etapas sem reconstruir alternativas desconhecidas. O professor vê até 2000 eventos mais recentes por aluno no detalhe, com aviso caso o limite seja atingido.
+
+`node participation-backend.test.mjs` verifica identificação, contagens, eventos, privacidade, anotações e autorização. `npm run test:coop` inclui o painel administrativo em outra página, participação e exportação. Consulte GUIA-DO-PROFESSOR.md para o fluxo atualizado.
