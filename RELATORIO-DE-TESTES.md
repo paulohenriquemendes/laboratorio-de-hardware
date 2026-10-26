@@ -135,3 +135,6 @@ A suíte de regras agora tem 68 testes e inclui posicionamento, orientação das
 - 110 testes unitários aprovados. A validação é funcional, com duas sessões de aluno e uma administrativa; não representa teste de carga de uma turma inteira.
 
 - Navegador: envio de participação com nome/turma, alternativas corretas e incorretas no painel, CSV com linhas válidas, mensagem tratada como texto (sem executar HTML), reinício e histórico aprovados. Corrigida sobreposição no menu estreito; controles e rascunho testados em larguras 390, 844 e 1024 px. Leitura e produção individual aprovadas.
+
+## Acesso administrativo por URL — 26/10/2026
+A pedido do proprietário, /admin/ abre sem chave e o jogo não exibe atalho administrativo. A URL permite acesso aos relatórios e ao reinício das turmas para qualquer visitante. Teste admin-url.test.mjs aprovado localmente: entrada por /admin, criação e reinício de turma exclusiva de teste, retorno ao jogo, redirecionamento do endereço antigo preservando a turma e recarregamento sem senha. 110 testes unitários aprovados.

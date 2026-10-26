@@ -2,7 +2,7 @@
 
 ## Acesso administrativo
 
-Abra https://paulohenriquemendes.github.io/laboratorio-de-hardware/admin.html e informe a chave privada do arquivo local `.private/ACESSO-PROFESSOR.txt`. A chave permanece a mesma e não é publicada. Use **Bloquear acesso** ao terminar, especialmente em um computador compartilhado. A autorização expira após 8 horas.
+Abra https://paulohenriquemendes.github.io/laboratorio-de-hardware/admin/ . A administração abre diretamente, sem chave, conforme solicitado. O jogo não mostra um atalho administrativo. Quem descobrir esse endereço também poderá consultar dados e reiniciar turmas. **Sair da administração** retorna ao jogo; abrir o endereço novamente permite entrar de novo. O endereço antigo `admin.html` redireciona para `/admin/`.
 
 ## Turmas e convites
 
@@ -12,7 +12,7 @@ No jogo, **Minha turma** mostra colegas, localização e placar. O convite fica 
 
 ## Identificação e participação
 
-Peça ao aluno para abrir **Participação e anotações**, informar **nome completo e turma**, e clicar em **Enviar minha participação ao professor**. Não é solicitado e-mail. O nome completo e a turma não aparecem aos colegas; no jogo continua o apelido.
+Peça ao aluno para abrir **Participação e anotações**, informar **nome completo e turma**, e clicar em **Enviar minha participação ao professor**. Não é solicitado e-mail. O nome completo e a turma não aparecem no cenário; no jogo continua o apelido.
 
 Os resultados da turma são salvos no servidor a cada ação. O envio identifica esses resultados, e o aluno pode continuar praticando. No painel, **Participação dos alunos** mostra, por rodada:
 
@@ -26,7 +26,7 @@ As alternativas específicas passam a ser registradas nesta atualização. Para 
 
 ## Anotações dos alunos
 
-No mesmo bloco, o aluno pode escrever uma sugestão e usar **Enviar ao professor**. O rascunho fica no navegador até o envio. Na administração, **Anotações recebidas** mostra nome, turma, apelido, mensagem, data e rodada. É possível filtrar pela turma selecionada e marcar como lida. Outros alunos não podem ler as mensagens. Reiniciar a rodada não apaga anotações.
+No mesmo bloco, o aluno pode escrever uma sugestão e usar **Enviar ao professor**. O rascunho fica no navegador até o envio. Na administração, **Anotações recebidas** mostra nome, turma, apelido, mensagem, data e rodada. É possível filtrar pela turma selecionada e marcar como lida. As mensagens são lidas no painel administrativo, que está acessível por URL sem chave. Reiniciar a rodada não apaga anotações.
 
 ## Nova rodada
 

@@ -125,3 +125,7 @@ O professor acessa `admin.html`, uma entrada separada do jogo. O aluno informa n
 Aplique as migrações `20261025154550_student_notes.sql` e `20261026153045_student_participation.sql` após as anteriores. Anotações têm limite de 2000 caracteres e 10 envios por hora por sessão, com repetição de requisições deduplicada. O histórico de respostas começa nesta atualização; resultados anteriores mantêm suas etapas sem reconstruir alternativas desconhecidas. O professor vê até 2000 eventos mais recentes por aluno no detalhe, com aviso caso o limite seja atingido.
 
 `node participation-backend.test.mjs` verifica identificação, contagens, eventos, privacidade, anotações e autorização. `npm run test:coop` inclui o painel administrativo em outra página, participação e exportação. Consulte GUIA-DO-PROFESSOR.md para o fluxo atualizado.
+
+## Acesso administrativo por URL — 26/10/2026
+
+Por solicitação expressa do responsável, `/admin/` abre o painel sem chave. A rota antiga `admin.html` redireciona para ela e o jogo não exibe atalho de administração. A migração `20261026160455_url_admin_access.sql` permite que uma sessão anônima autenticada obtenha acesso administrativo automaticamente. Portanto, conhecer a URL permite consultar identificação, respostas e anotações e reiniciar turmas. As referências anteriores a acesso exclusivo por chave descrevem a versão anterior. Nenhuma chave privada foi incorporada ao código.
