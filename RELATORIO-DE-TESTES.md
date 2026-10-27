@@ -138,3 +138,6 @@ A suíte de regras agora tem 68 testes e inclui posicionamento, orientação das
 
 ## Acesso administrativo por URL — 26/10/2026
 A pedido do proprietário, /admin/ abre sem chave e o jogo não exibe atalho administrativo. A URL permite acesso aos relatórios e ao reinício das turmas para qualquer visitante. Teste admin-url.test.mjs aprovado localmente: entrada por /admin, criação e reinício de turma exclusiva de teste, retorno ao jogo, redirecionamento do endereço antigo preservando a turma e recarregamento sem senha. 110 testes unitários aprovados.
+
+## Ordem pedagógica — 27/10/2026
+111 testes unitários aprovados. Comparação com a versão anterior confirmou preservação dos 80 conteúdos, respostas e IDs internos. Teste order.test.mjs confirmou lista 01–80, títulos, abertura do computador correto e progresso antigo associado ao novo número. No percurso de navegador, 70 desafios passaram; houve timeout de deslocamento antes da última parede. Os dez restantes foram verificados em execução separada com TEST_LAST_WALL=1, incluindo persistência, cor verde e exportação. Os 80 desafios foram assim concluídos nas duas execuções. A tabela ORDEM-DOS-DESAFIOS.md relaciona números atuais e anteriores.

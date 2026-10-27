@@ -1,3 +1,4 @@
+import {challengeOrder,pcNumber} from './src/challenge-order.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {cases,fresh,restoreProgress,scoreOf,blocked} from './src/cases.js';
@@ -27,3 +28,13 @@ test('Dez PCs em cada parede, voltados para ela; migração preserva os 20 anter
 
 test('Migração dos 40 PCs preserva dados e adiciona 40 desafios básicos',()=>{const old=fresh().slice(0,40);old[39]={...old[39],tests:[0,1],diagnosed:true,repaired:true,validated:true};const restored=restoreProgress(JSON.stringify(old));assert.equal(restored.length,80);assert.equal(restored[39].validated,true);assert.ok(restored.slice(40).every(p=>!p.validated));assert.equal(cases.filter(c=>c.category==='Fundamentos').length,40)});
 test('Passagem entre as alas e todos os corredores são transitáveis',()=>{for(let x=-12;x<40;x+=.1)assert.equal(blocked(x,18.4),false);for(const x of [19.4,24.1,31.9,36.6])for(let z=-19;z<19;z+=.2)assert.equal(blocked(x,z),false)});
+
+test('Ordem pedagógica cobre os 80 desafios sem trocar IDs ou progresso',()=>{
+ assert.deepEqual([...challengeOrder].sort((a,b)=>a-b),Array.from({length:80},(_,i)=>i));
+ assert.equal(cases[challengeOrder[0]].title,'O menor estado');
+ assert.equal(cases[challengeOrder[1]].title,'O pacote de oito');
+ challengeOrder.forEach((id,i)=>{assert.equal(stations[id].id,i+1);assert.equal(pcNumber(id),i+1)});
+ const saved=fresh();saved[0]={...saved[0],tests:[0,1],diagnosed:true,repaired:true,validated:true};
+ assert.deepEqual(restoreProgress(JSON.stringify(saved)),saved);
+ assert.equal(cases[0].title,'Silêncio na partida');assert.equal(cases[40].title,'O menor estado');
+});

@@ -1,3 +1,4 @@
+// Physical PC 20 now uses immutable case ID 63; PC 60 uses ID 7.
 import {cases} from './src/cases.js';
 import {challenges} from './src/challenges.js';
 import {chromium} from 'playwright';
@@ -12,10 +13,10 @@ await page.addInitScript(()=>{window.renderedLabels=[];const original=CanvasRend
 try{
 const response=await page.goto(url);assert.equal(response.status(),200);await page.click('#start');assert.ok((await page.evaluate(()=>window.renderedLabels)).includes('LABORATÓRIO DE HARDWARE'));assert.ok(!(await page.evaluate(()=>window.renderedLabels)).some(t=>t.includes('ARQUITETURA + MANUTENÇÃO')||t.includes('FUNDAMENTOS')));assert.ok((await page.evaluate(()=>window.renderedLabels)).filter(t=>t==='LABORATÓRIO DE HARDWARE').length>=3);assert.equal(await page.locator('#teacherButton,#adminPanel').count(),0);
 assert.ok(requests.some(r=>r.startsWith(new URL('assets/',url).href)));assert.ok(requests.every(r=>new URL(r).origin===new URL(url).origin));assert.ok(!requests.some(r=>r.includes('/src/')||r.includes('/@vite/')));
-await page.keyboard.down('w');await page.waitForFunction(()=>window.oficina.state.near===19);await page.keyboard.up('w');await page.click('#interact');
-await page.locator('[data-test="0"]').dblclick();assert.deepEqual(await page.evaluate(()=>window.oficina.state.progress[19].tests),[0]);await page.click('[data-test="1"]');
-for(let i=0;i<12;i++)await page.click(`[data-diagnosis="${(cases[19].answer+1)%3}"]`);
-await page.click(`[data-diagnosis="${cases[19].answer}"]`);await page.click(`[data-repair="${cases[19].repair}"]`);await page.locator('[data-action="validate"]').dblclick();assert.equal(await page.evaluate(()=>window.oficina.state.score),30);
+await page.keyboard.down('w');await page.waitForFunction(()=>window.oficina.state.near===63);await page.keyboard.up('w');await page.click('#interact');
+await page.locator('[data-test="0"]').dblclick();assert.deepEqual(await page.evaluate(()=>window.oficina.state.progress[63].tests),[0]);await page.click('[data-test="1"]');
+for(let i=0;i<12;i++)await page.click(`[data-diagnosis="${(cases[63].answer+1)%3}"]`);
+await page.click(`[data-diagnosis="${cases[63].answer}"]`);await page.click(`[data-repair="${cases[63].repair}"]`);await page.locator('[data-action="validate"]').dblclick();assert.equal(await page.evaluate(()=>window.oficina.state.score),30);
 await page.keyboard.press('Escape');await page.click('#interact');assert.equal(await page.locator('[data-action="validate"]').count(),0);assert.equal(await page.evaluate(()=>window.oficina.state.score),30);await page.keyboard.press('Escape');
 await page.click('#classroomButton');const waitDownload=page.waitForEvent('download');await page.click('#downloadReport');const download=await waitDownload;await download.saveAs('test-results/partial-report.txt');assert.match(fs.readFileSync('test-results/partial-report.txt','utf8'),/Pontuação prática: 30 \/ 12000/);await page.keyboard.press('Escape');
 const perfect=fresh().map(p=>({...p,tests:[0,1],diagnosed:true,repaired:true,validated:true,challenge:true}));await page.evaluate(p=>localStorage.setItem('laboratorioHardware80.v1',JSON.stringify(p)),perfect);await page.reload();await page.click('#start');await page.click('#classroomButton');assert.equal(await page.evaluate(()=>window.oficina.state.score),12000);const summary=await page.locator('#classContent').innerText();for(const name of ['Laboratório recuperado','Diagnóstico de primeira','Conceitos na prática'])assert.ok(summary.includes(name+' · 80/80'));await page.screenshot({path:'test-results/production-goals.png'});
