@@ -39,3 +39,7 @@ Os desafios cobrem manutenção, arquitetura, bits, bytes, unidades e lógica. C
 Use perfis de navegador distintos para alunos diferentes. A sessão fica no navegador; trocar de dispositivo ou apagar os dados pode criar outra identidade. O modo de prática individual continua local e não gera registros na turma: para acompanhamento pelo professor, os alunos devem entrar pelo convite da turma.
 
 A experiência é testada funcionalmente com dois alunos e um administrador. Não é um ensaio de carga de uma turma inteira. Nenhum plano pago foi ativado. Verifique os computadores e a conexão da escola antes da aula.
+
+## Meu visual e contato entre alunos
+O botão **Meu visual** abre um catálogo com miniaturas do personagem. Os quatro cabelos básicos e as cores continuam livres. Moicano exige 300 pontos; afro, 600; tranças, 1.200; topete, 1.800. O casaco aberto exige 1.500 pontos, as luvas esportivas, 2.400, e a tatuagem decorativa de circuito, 6.000. O uniforme é preservado. Os pontos não são gastos; o servidor verifica a pontuação da rodada ao salvar. Ao reiniciar a rodada, itens acima da nova pontuação deixam de ser usados.
+Personagens entram em posições livres, colidem e recebem pequenos empurrões ao contato. Paredes e móveis continuam bloqueando o movimento. A sincronização depende da conexão; foram verificados dois navegadores simultâneos, sem teste de carga com uma turma completa.

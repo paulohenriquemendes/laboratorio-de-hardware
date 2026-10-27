@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1 --port 4180 --strictPort",
     "build": "vite build",
     "test": "node --test unit.test.mjs && node tests.mjs && node robustness.mjs && node reading.test.mjs",
-    "test:unit": "node --test unit.test.mjs",
+    "test:unit": "node --test unit.test.mjs physics-cosmetics.test.mjs",
     "test:e2e": "node tests.mjs",
     "test:robustness": "node robustness.mjs",
     "test:production": "node production.mjs",
@@ -16,7 +16,8 @@
     "test:coop:backend": "node coop-backend.test.mjs",
     "test:coop": "node coop-browser.test.mjs",
     "test:appearance": "node appearance.test.mjs",
-    "test:participation": "node participation-backend.test.mjs"
+    "test:participation": "node participation-backend.test.mjs",
+    "test:rewards": "node rewards.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",
