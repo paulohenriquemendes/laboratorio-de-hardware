@@ -5,13 +5,13 @@ import {chromium} from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {fresh} from './src/cases.js';
-const url=process.env.GAME_URL||'http://127.0.0.1:4181/oficina-3d/';
+const url=process.env.GAME_URL||'http://127.0.0.1:4181/';
 const browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=swiftshader']});
 const page=await browser.newPage({viewport:{width:1366,height:768}}),requests=[],errors=[];
 page.on('request',r=>requests.push(r.url()));page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
 await page.addInitScript(()=>{window.renderedLabels=[];const original=CanvasRenderingContext2D.prototype.fillText;CanvasRenderingContext2D.prototype.fillText=function(text,...args){window.renderedLabels.push(String(text));return original.call(this,text,...args)}});
 try{
-const response=await page.goto(url);assert.equal(response.status(),200);await page.click('#start');assert.ok((await page.evaluate(()=>window.renderedLabels)).includes('LABORATÓRIO DE HARDWARE'));assert.ok(!(await page.evaluate(()=>window.renderedLabels)).some(t=>t.includes('ARQUITETURA + MANUTENÇÃO')||t.includes('FUNDAMENTOS')));assert.ok((await page.evaluate(()=>window.renderedLabels)).filter(t=>t==='LABORATÓRIO DE HARDWARE').length>=3);assert.equal(await page.locator('#teacherButton,#adminPanel').count(),0);
+const response=await page.goto(url);assert.equal(response.status(),200);await page.fill('#registrationName','Aluno Testes QA');await page.click('#start');assert.ok((await page.evaluate(()=>window.renderedLabels)).includes('LABORATÓRIO DE HARDWARE'));assert.ok(!(await page.evaluate(()=>window.renderedLabels)).some(t=>t.includes('ARQUITETURA + MANUTENÇÃO')||t.includes('FUNDAMENTOS')));assert.ok((await page.evaluate(()=>window.renderedLabels)).filter(t=>t==='LABORATÓRIO DE HARDWARE').length>=3);assert.equal(await page.locator('#teacherButton,#adminPanel').count(),0);
 assert.ok(requests.some(r=>r.startsWith(new URL('assets/',url).href)));assert.ok(requests.every(r=>new URL(r).origin===new URL(url).origin));assert.ok(!requests.some(r=>r.includes('/src/')||r.includes('/@vite/')));
 await page.keyboard.down('w');await page.waitForFunction(()=>window.oficina.state.near===63);await page.keyboard.up('w');await page.click('#interact');
 await page.locator('[data-test="0"]').dblclick();assert.deepEqual(await page.evaluate(()=>window.oficina.state.progress[63].tests),[0]);await page.click('[data-test="1"]');

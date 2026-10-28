@@ -15,7 +15,7 @@ export class OnlineLab {
   if(!session){const result=await this.client.auth.signInAnonymously();if(result.error)throw new Error(result.error.code==='anonymous_provider_disabled'?'A entrada de alunos ainda não foi ativada no servidor.':result.error.message);session=result.data.session;}
   this.userId=session.user.id;
   const joined=await this.client.rpc('lab_join',{p_room:room,p_name:cleanName(name),p_title:title});if(joined.error)throw joined.error;this.room=joined.data;
-  if(identity){const saved=await this.client.rpc('lab_student_identity',{p_room:this.room.id,p_operation:'save',p_name:identity.fullName,p_class:identity.className});if(saved.error)throw saved.error;}
+  if(identity){const saved=await this.client.rpc('lab_student_identity',{p_room:this.room.id,p_operation:'save',p_name:identity.fullName,p_class:this.room.title});if(saved.error)throw saved.error;}
   const profile=await this.client.rpc('lab_wardrobe',{p_room:this.room.id});if(profile.error)throw profile.error;this.appearance=profile.data;
   await this.client.realtime.setAuth(session.access_token);
   await this.connect();

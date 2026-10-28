@@ -1,3 +1,14 @@
+## Revisão de 28/10/2026
+
+- Entrada simplificada: nome completo e nome do personagem. Turma obtida pelo convite; sem campo de turma na entrada ou nas anotações.
+- Servidor usa o nome da turma do convite ao salvar a identificação. Migração verificada em transação revertida, sem alterar as turmas dos alunos.
+- 116 testes de regras aprovados; build de produção aprovado.
+- Percurso completo dos 80 computadores aprovado na revisão: diagnósticos, reparos, perguntas, recompensas, indicação verde e recuperação do progresso.
+- Mobiliário estático agrupado em 21 lotes (1.339 peças), mantendo computadores interativos separados. Gráficos leves por padrão e atualização reduzida com janelas abertas.
+- Resultados de desempenho medidos em Edge com SwiftShader; não representam medição de FPS em celulares físicos.
+
+Os registros abaixo descrevem verificações anteriores e suas respectivas versões.
+
 # Verificação para uso em aula
 
 Data: 16/10/2026. Ambiente: Windows, Microsoft Edge 155.0.4283.45, Playwright. Renderização automatizada com SwiftShader (software). Servidor local: http://127.0.0.1:4180.

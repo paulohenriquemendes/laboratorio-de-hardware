@@ -29,7 +29,7 @@ try{
  assert.match(await p.locator('#offlineStatus').innerText(),/Pronto para usar/);
  assert.equal(await p.evaluate(()=>navigator.serviceWorker.controller.scriptURL),url+'sw.js');
  const adminCached=await p.evaluate(async()=>{for(const name of await caches.keys()){for(const r of await(await caches.open(name)).keys())if(r.url.includes('/admin/'))return true;}return false;});assert.equal(adminCached,false);
- await p.fill('#registrationName','Aluno Completo QA');await p.fill('#registrationClass','Informática QA');await p.click('#start');await context.setOffline(true);await p.reload();await p.waitForSelector('#offlineInfo[data-ready=true]');
+ await p.fill('#registrationName','Aluno Completo QA');await p.click('#start');await context.setOffline(true);await p.reload();await p.waitForSelector('#offlineInfo[data-ready=true]');
  assert.ok(await p.locator('#joinTeam').isDisabled());await p.click('#start');assert.equal(await p.locator('#offlineBanner button').isVisible(),false);assert.equal(await p.locator('#joblist .job').count(),80);
  await p.keyboard.down('w');try{await p.waitForFunction(()=>window.oficina.state.near===63)}finally{await p.keyboard.up('w')}
  await p.click('#interact');await p.click('[data-test="0"]');await p.click('[data-test="1"]');await p.click(`[data-diagnosis="${cases[63].answer}"]`);await p.click(`[data-repair="${cases[63].repair}"]`);await p.click('[data-action="validate"]');

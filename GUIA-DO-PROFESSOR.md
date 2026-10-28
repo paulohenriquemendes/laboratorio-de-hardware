@@ -12,7 +12,7 @@ No jogo, **Minha turma** mostra colegas, localização e placar. O convite fica 
 
 ## Identificação e participação
 
-Na entrada, o aluno informa **nome completo e turma**, usados para registrar a atividade. O **apelido no jogo é opcional**: se preenchido, aparece nos personagens e no placar; caso contrário, aparece somente o primeiro nome. Ao entrar na turma, a identificação já é salva no registro administrativo. Em **Participação e anotações**, ele pode conferir os dados e clicar em **Enviar minha participação ao professor** para marcar a data do envio. Não é solicitado e-mail nem login Google. Nome completo e turma não são incluídos na presença pública ou no placar. Na prática individual, a identificação fica no aparelho e acompanha o resumo baixado.
+Na entrada, o aluno informa apenas **nome completo** e **nome do personagem (apelido)**. A turma vem automaticamente do convite criado pelo professor, sem campo para o aluno preencher. O **apelido no jogo é opcional**: se preenchido, aparece nos personagens e no placar; caso contrário, aparece somente o primeiro nome. Ao entrar na turma, a identificação já é salva no registro administrativo. Em **Participação e anotações**, ele pode conferir o nome completo e clicar em **Enviar minha participação ao professor** para marcar a data do envio. Não é solicitado e-mail nem login Google. Nome completo e turma não são incluídos na presença pública ou no placar. Na prática individual, a identificação fica no aparelho e acompanha o resumo baixado.
 
 Os resultados da turma são salvos no servidor a cada ação. O envio identifica esses resultados, e o aluno pode continuar praticando. No painel, **Participação dos alunos** mostra, por rodada:
 

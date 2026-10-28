@@ -3,14 +3,21 @@ import * as THREE from 'three';
 import {applyAppearance,normalizeAppearance} from './avatar.js';
 import {styleNames,stylePoints,accessories,unlockedAppearance} from './cosmetics.js';
 export function setupWardrobe({player,getSession,getScore,getSolved,notify}){
- const $=s=>document.querySelector(s);let draft=normalizeAppearance(player.userData.appearance),renderer;
+ const $=s=>document.querySelector(s);let draft=normalizeAppearance(player.userData.appearance),renderer,previewScene,previewModel,previewCamera;const previewCache=new Map();
  const host=document.createElement('div');host.id='wardrobeCatalog';document.querySelector('.avatar-fields').before(host);
  const styles=$('#hairStyle');for(let i=4;i<styleNames.length;i++){const o=document.createElement('option');o.value=i;o.textContent=styleNames[i];styles.append(o);}
  function preview(value,detail=false){
-  renderer??=new THREE.WebGLRenderer({alpha:true,antialias:true,preserveDrawingBuffer:true});renderer.setSize(144,170);renderer.setPixelRatio(1);
-  const scene=new THREE.Scene();scene.add(new THREE.HemisphereLight(0xffffff,0x668877,3));const light=new THREE.DirectionalLight(0xffffff,3);light.position.set(-2,4,-4);scene.add(light);
-  const model=player.clone(true);model.position.set(0,0,0);model.rotation.set(0,0,0);applyAppearance(model,value);scene.add(model);
-  const camera=new THREE.PerspectiveCamera(34,144/170,.1,30);camera.position.set(2.1,1.8,-4);camera.lookAt(0,1.1,0);if(detail==='feet'){camera.position.set(.8,.5,-1.4);camera.lookAt(0,.16,-.05);}else if(detail==='face'){camera.position.set(.65,1.8,-1.4);camera.lookAt(0,1.7,0);}else if(detail){camera.position.set(1.25,1.3,-1.9);camera.lookAt(.12,1.03,0);}renderer.render(scene,camera);const image=renderer.domElement.toDataURL();model._hairMaterial?.dispose();return image;
+  const normalized=normalizeAppearance(value),key=JSON.stringify([normalized,detail]);
+  if(previewCache.has(key))return previewCache.get(key);
+  if(!renderer){
+   renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,preserveDrawingBuffer:true});renderer.setSize(144,170);renderer.setPixelRatio(1);
+   previewScene=new THREE.Scene();previewScene.add(new THREE.HemisphereLight(0xffffff,0x668877,3));const light=new THREE.DirectionalLight(0xffffff,3);light.position.set(-2,4,-4);previewScene.add(light);
+   previewModel=player.clone(true);previewModel.position.set(0,0,0);previewModel.rotation.set(0,0,0);previewModel.traverse(part=>{if(part.userData.avatarLimb)part.rotation.set(0,0,0)});previewScene.add(previewModel);
+   previewCamera=new THREE.PerspectiveCamera(34,144/170,.1,30);
+  }
+  applyAppearance(previewModel,normalized);previewCamera.position.set(2.1,1.8,-4);previewCamera.lookAt(0,1.1,0);
+  if(detail==='feet'){previewCamera.position.set(.8,.5,-1.4);previewCamera.lookAt(0,.16,-.05);}else if(detail==='face'){previewCamera.position.set(.65,1.8,-1.4);previewCamera.lookAt(0,1.7,0);}else if(detail){previewCamera.position.set(1.25,1.3,-1.9);previewCamera.lookAt(.12,1.03,0);}
+  renderer.render(previewScene,previewCamera);const image=renderer.domElement.toDataURL();if(previewCache.size>=48)previewCache.delete(previewCache.keys().next().value);previewCache.set(key,image);return image;
  }
  function render(){const score=getScore();host.replaceChildren();const intro=document.createElement('p');intro.className='wardrobe-score';intro.textContent=money(score)+' fictícios acumulados · '+getSolved()+' desafios concluídos. Os visuais são liberados pelas conquistas: não descontam o valor acumulado. Sem dinheiro real.';host.append(intro);
   for(const [title,items] of [['Cabelos',styleNames.map((name,style)=>({name,key:'style',value:style,points:stylePoints[style]}))],['Acessórios sobre o fardamento',accessories.map(a=>({...a,value:true}))]]){
