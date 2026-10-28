@@ -6,22 +6,33 @@ import {unlockedAppearance} from './src/cosmetics.js';
 import {caseReward} from './src/economy.js';
 export const MOCK_ROOM='00000000-0000-4000-8000-000000000080';
 const userId='00000000-0000-4000-8000-000000000081';
-export async function mockClassroom(context,{completed=false}={}){
- const state={progress:fresh(),appearance:normalizeAppearance({style:0,color:'#171717'}),fullName:'',nickname:'Aluno QA',submitted:null,requests:[],sockets:[],revision:0};
+export async function mockClassroom(context,{completed=false,tutorial=false}={}){
+ const state={progress:fresh(),appearance:normalizeAppearance({style:0,color:'#171717'}),fullName:'',nickname:'Aluno QA',submitted:null,requests:[],sockets:[],revision:0,expenses:0,incidentRequests:new Map(),lastIncident:0};
  if(completed)state.progress.forEach(p=>Object.assign(p,{tests:[0,1],diagnosed:true,repaired:true,validated:true,challenge:true}));
- const room=()=>({id:MOCK_ROOM,title:'Turma de teste local',round:1,nickname:state.nickname});
- const scores=()=>[{user_id:userId,name:state.nickname,score:scoreOf(state.progress),solved:state.progress.filter(p=>p.validated).length},...(state.peer?[{user_id:state.peer.userId,name:state.peer.name,score:4800,solved:80}]:[])];
+ const room=()=>({competition_mode:state.competitionMode||'ranking',id:MOCK_ROOM,title:'Turma de teste local',round:1,nickname:state.nickname});
+ const scores=()=>[{user_id:userId,name:state.nickname,earned:scoreOf(state.progress),expenses:state.expenses,score:Math.max(0,scoreOf(state.progress)-state.expenses),solved:state.progress.filter(p=>p.validated).length},...(state.peer?[{user_id:state.peer.userId,name:state.peer.name,score:4800,solved:80}]:[])];
  const task=pc=>({room_id:MOCK_ROOM,round:1,user_id:userId,pc,revision:++state.revision,progress:state.progress[pc],solvers:state.progress[pc].validated?[{user_id:userId,name:state.nickname,score:caseReward(pc,state.progress[pc].errors)}]:[]});
  const json=value=>Buffer.from(JSON.stringify(value)).toString('base64url'),expires=Math.floor(Date.now()/1000)+86400;
  const session={access_token:json({alg:'HS256',typ:'JWT'})+'.'+json({sub:userId,role:'authenticated',exp:expires})+'.signature',refresh_token:'local-test-only',expires_at:expires,expires_in:86400,token_type:'bearer',user:{id:userId,aud:'authenticated',role:'authenticated',is_anonymous:true}};
- await context.addInitScript(session=>localStorage.setItem('hardware-coop.auth',JSON.stringify(session)),session);
+ await context.addInitScript(({session,tutorial})=>{localStorage.setItem('hardware-coop.auth',JSON.stringify(session));if(!tutorial)localStorage.setItem('hardware.tutorial.v1.'+session.user.id,'completed');},{session,tutorial});
  await context.route('https://*.supabase.co/**',async route=>{
   const name=new URL(route.request().url()).pathname.split('/').pop();const p=route.request().postDataJSON()||{};state.requests.push({name,args:p});let data;
   if(name==='lab_join')data=room(),state.nickname=p.p_name,data.nickname=p.p_name;
-  else if(name==='lab_snapshot')data={room:room(),tasks:state.progress.map((_,pc)=>task(pc)),scores:scores()};
+  else if(name==='lab_snapshot')data={expenses:state.expenses,room:room(),tasks:state.progress.map((_,pc)=>task(pc)),scores:scores().filter(s=>state.admin||!state.competitionMode||state.competitionMode==='ranking'||s.user_id===userId)};
   else if(name==='lab_student_identity'){if(p.p_operation!=='get'&&p.p_name)state.fullName=p.p_name;if(p.p_operation==='submit')state.submitted=new Date().toISOString();data={full_name:state.fullName,class_name:room().title,submitted_at:state.submitted};}
   else if(name==='lab_wardrobe'){if(p.p_appearance)state.appearance=normalizeAppearance(unlockedAppearance(p.p_appearance,scoreOf(state.progress),scores()[0].solved));data=state.appearance;}
-  else if(name==='lab_notes')data={sent:true};
+  else if(name==='lab_notes')data=p.p_operation==='list'?{notes:[],total:0,unread:0}:{sent:true};
+  else if(name==='lab_incident'){
+   if(state.incidentRequests.has(p.p_request))data={...state.incidentRequests.get(p.p_request),duplicate:true};
+   else if(Date.now()-state.lastIncident<8000)data={cost:0,expenses:state.expenses,cooldown:true};
+   else{const cost=Math.min(10,Math.max(0,scoreOf(state.progress)-state.expenses));state.expenses+=cost;state.lastIncident=Date.now();data={cost,charged:cost>0,expenses:state.expenses,wallet:Math.max(0,scoreOf(state.progress)-state.expenses)};state.incidentRequests.set(p.p_request,data);}
+  }
+  else if(name==='lab_open_admin'){state.admin=true;data={ok:true};}
+  else if(name==='lab_manage_rooms')data=[room()];
+  else if(name==='lab_admin')data={ok:true,authorized:true,room:room(),rounds:[1],tasks:state.progress.map((_,pc)=>task(pc)),scores:scores()};
+  else if(name==='lab_competition'){if(p.p_mode)state.competitionMode=p.p_mode;data={mode:state.competitionMode||'ranking',room_id:MOCK_ROOM};}
+  else if(name==='lab_student_report')data={round:1,students:state.students||[],attempts:[],events:[]};
+  else if(name==='lab_evaluation_report')data={round:1,students:state.periodStudents||[],events:state.periodEvents||[],completions:state.periodCompletions||[],events_truncated:false};
   else if(name==='lab_action_v3'){
    const v=state.progress[p.p_pc],c=cases[p.p_pc];if(p.p_kind==='test'&&!v.tests.includes(p.p_choice))v.tests.push(p.p_choice);
    if(p.p_kind==='diagnosis'){if(p.p_choice===c.answer)v.diagnosed=true;else v.errors++;}

@@ -67,3 +67,27 @@ As animações não têm áudio, usam desenhos locais e ficam guardadas no cache
 ## Sinais dos problemas no cenário
 
 As 80 telas mostram sinais discretos do respectivo relato: cursor irregular, falha de conexão, aquecimento, artefatos de vídeo ou o tema do exercício de arquitetura. A ilustração não indica a resposta. Quando alguém resolve, o computador mantém o visual verde e a lista de autores. Ele continua disponível para os colegas resolverem. Ao reiniciar a rodada, os sinais dos desafios voltam.
+
+## Orientação ao errar
+
+Após um diagnóstico ou reparo incorreto, a ficha retoma a alternativa escolhida e um resultado dos testes, com uma pergunta para orientar a nova tentativa. O botão **Rever evidências na ficha** abre o caderno. Nas questões conceituais, a orientação retoma a relação ou unidade em discussão. As regras de recompensa permanecem: erro prático reduz R$ 5 até o mínimo de R$ 20; erro conceitual não desconta.
+
+## Configurar a competição por turma
+
+Na administração, abra a turma e expanda **Competição e placar dos alunos**. Escolha **Placar completo**, **Apenas a própria evolução** ou **Placar oculto**, depois use **Salvar configuração da turma**. A mudança vale para aquela turma e é recebida pelos alunos conectados. Nomes, localizações e autores das conclusões continuam visíveis. A carteira pessoal permanece disponível; o professor continua consultando todos os resultados. As turmas existentes começam com o placar completo, preservando o comportamento anterior.
+
+## Avaliação por período
+
+Em **Participação dos alunos → Avaliação por período**, informe as datas e clique em **Aplicar período**. O dia final é incluído; os horários seguem Fortaleza (UTC−3), independentemente do fuso do navegador. Use **Rodada inteira** para remover o filtro.
+
+A tabela e **Baixar planilha CSV** passam a usar o mesmo período. São contados os computadores com respostas no período, as conclusões realizadas no período, os conceitos acertados, as recompensas obtidas e os horários das atividades. Alunos já identificados sem atividade nesse intervalo aparecem com zero. A planilha inclui erros, quantidade de respostas e custos fictícios de incidentes em colunas separadas. **Ver respostas do período** também limita o histórico às datas escolhidas; quando houver mais de 2000 respostas, o aviso identifica o limite da listagem, enquanto os totais da planilha continuam completos. A planilha apoia a avaliação do professor; não atribui uma nota automaticamente.
+
+## Tutorial guiado
+
+Na primeira entrada de uma sessão de aluno, o tutorial acompanha o movimento, a abertura de uma ficha, as duas evidências, diagnóstico, solução, validação, conceito e envio da participação. O aluno avança realizando as ações; não é necessário resolver um desafio extra fora da turma. Pode usar **Agora não** e reabrir por **Menu → Tutorial guiado**. A conclusão ou dispensa fica neste navegador para aquela sessão de aluno.
+
+## Segurança simulada e carteira fictícia
+
+Há oito áreas amarelas sinalizadas com cabos, ferramentas ou peças no piso, fora da entrada e dos pontos de uso dos computadores. Ao pisar, um aviso vermelho explica o incidente simulado e o custo de uma consulta médica fictícia: **até R$ 10**, limitado ao dinheiro disponível. Não há saldo negativo. Permanecer sobre a área não gera descontos repetidos; existe também um intervalo mínimo de oito segundos entre incidentes aceitos pelo servidor.
+
+Os custos são salvos por aluno, turma e rodada, inclusive após recarregar. A carteira e o placar mostram o saldo após os custos. As recompensas conquistadas em desafios, respostas e conclusões não são apagadas; os desbloqueios por conquistas também são preservados. Na avaliação por período, custos ficam separados das recompensas. Ao iniciar uma nova rodada, a nova carteira começa sem os custos da anterior, cujo histórico permanece guardado. Todo o dinheiro e o atendimento são fictícios; o objetivo é lembrar de manter a circulação do laboratório livre de riscos.

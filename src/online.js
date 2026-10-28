@@ -7,7 +7,7 @@ export function validRoom(value){return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0
 export function cleanName(value){return String(value||'').replace(/[<>\x00-\x1f]/g,'').trim().slice(0,24)}
 export function validPose(p){return p&&Number.isFinite(p.x)&&p.x>=bounds.minX&&p.x<=bounds.maxX&&Number.isFinite(p.z)&&Math.abs(p.z)<=20&&Number.isFinite(p.angle)&&Math.abs(p.angle)<100}
 export class OnlineLab {
- constructor(callbacks){this.cb=callbacks;this.client=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:'hardware-coop.auth',persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});this.rows=new Map();this.scores=[];this.refreshSerial=0;this.peers=new Map();this.connected=false;this.activePc=-1;this.closed=false;this.lastSend=0;this.lastPose=null;this.instance=crypto.randomUUID();}
+ constructor(callbacks){this.cb=callbacks;this.client=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:'hardware-coop.auth',persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});this.rows=new Map();this.scores=[];this.expenses=0;this.refreshSerial=0;this.peers=new Map();this.connected=false;this.activePc=-1;this.closed=false;this.lastSend=0;this.lastPose=null;this.instance=crypto.randomUUID();}
  status(message){this.cb.status(message,this.connected)}
  async enter(name,room=OPEN_ROOM,title=null,identity=null){
   this.status('Conectando à sala…');
@@ -28,6 +28,7 @@ export class OnlineLab {
   this.channel=this.client.channel('lab:'+this.room.id,{config:{private:true,presence:{key:this.instance},broadcast:{self:false}}});
   const channel=this.channel;
   this.channel.on('presence',{event:'sync'},()=>this.syncPeers()).on('broadcast',{event:'pose'},({payload})=>{if(payload?.instance===this.instance||!validPose(payload))return;const peer=this.peers.get(payload.instance);if(peer){Object.assign(peer,payload,{name:peer.name,userId:peer.userId,instance:peer.instance});this.cb.peers([...this.peers.values()]);}})
+   .on('broadcast',{event:'wallet'},()=>this.scheduleRefresh())
    .on('broadcast',{event:'contact'},({payload})=>{const peer=this.peers.get(payload?.instance);const now=performance.now();if(payload?.target===this.instance&&peer&&now-(this.lastContactReceived||0)>220){this.lastContactReceived=now;this.cb.push?.(peer);}})
    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'lab_rooms',filter:'id=eq.'+this.room.id},()=>{void this.refresh().catch(()=>this.status('Não foi possível atualizar a rodada. Reconecte.'))})
    .on('postgres_changes',{event:'*',schema:'public',table:'lab_attempts',filter:'room_id=eq.'+this.room.id},({new:row})=>this.accept(row))
@@ -45,12 +46,16 @@ export class OnlineLab {
  disconnect(){this.connected=false;this.status('Sem internet · respostas pausadas até reconectar');const old=this.channel;this.channel=null;this.offlineCleanup=old?this.client.removeChannel(old):Promise.resolve();this.peers.clear();this.cb.peers([]);}
  async reconnect(){if(this.closed||this.reconnecting)return;this.reconnecting=true;this.status('Reconectando à sala…');try{await this.offlineCleanup;await this.connect();}catch{this.status('Não foi possível reconectar. Use Reconectar no painel Equipe.');}finally{this.reconnecting=false;}}
  scheduleRefresh(){clearTimeout(this.refreshTimer);this.refreshTimer=setTimeout(()=>{if(!this.closed)void this.refresh().catch(()=>this.status('Não foi possível atualizar o placar. Use Reconectar.'));},250);}
+ earnedFor(userId){const s=this.scores.find(s=>s.user_id===userId);return s?.earned??s?.score??0;}
+ async incident(hazard,request=crypto.randomUUID()){if(!this.connected)throw new Error('Aguarde a reconexão.');const params={p_room:this.room.id,p_round:this.room.round,p_hazard:hazard,p_request:request};let result=await this.client.rpc('lab_incident',params);if(result.error&&(!result.status||result.status>=500))result=await this.client.rpc('lab_incident',params);if(result.error)throw result.error;this.expenses=result.data.expenses;await this.refresh();if(this.connected)void this.channel.send({type:'broadcast',event:'wallet',payload:{}});return result.data;}
  scoreFor(userId){return this.scores.find(s=>s.user_id===userId)?.score||0;}
  async refresh(){
   const serial=++this.refreshSerial;
   const {data,error}=await this.client.rpc('lab_snapshot',{p_room:this.room.id});if(error)throw error;
   if(this.closed||serial!==this.refreshSerial||data.room.round<this.room.round)return;
   if(data.room.round!==this.room.round){this.room.round=data.room.round;this.rows.clear();this.scores=[];this.activePc=-1;this.cb.round?.(data.room.round);void this.track();}
+  this.room.competition_mode=data.room.competition_mode||'ranking';
+  this.expenses=Number(data.expenses)||0;
   this.scores=data.scores;
   for(const row of data.tasks){const previous=this.rows.get(row.pc);this.rows.set(row.pc,previous&&previous.revision>row.revision?{...row,progress:previous.progress,revision:previous.revision}:row);}
   this.cb.tasks([...this.rows.values()]);

@@ -1,3 +1,15 @@
+## Ferramentas de ensino e segurança simulada — 28/10/2026
+
+- Feedback educativo para alternativas incorretas nos 80 desafios, mantendo a regra de desconto e a liberdade de nova tentativa. Testes cobrem diagnóstico, reparo e conceito.
+- Competição por turma: placar completo, evolução individual e oculto. Snapshots de alunos nos modos restritos omitem entradas de classificação dos colegas; professores continuam consultando todas. Nomes, localização e autoria permanecem visíveis.
+- Exportação por período usa limites [início, dia seguinte ao fim), no horário de Fortaleza. Testes do banco incluem os limites exatos, atividades antes/depois, aluno inativo, detalhes das respostas e custos separados. CSV protege células que possam ser interpretadas como fórmulas.
+- Tutorial com nove etapas reais, dispensa, reabertura e persistência de conclusão; testado desde o movimento até o envio de participação no celular.
+- Oito perigos fora da entrada e dos pontos de uso dos 80 PCs; contato real testado com desconto de R$ 10, aviso vermelho, persistência e nenhuma cobrança contínua ao permanecer parado. Não há carteira negativa.
+- Banco verificado com a transação de tests/sql/teaching-tools.sql integralmente revertida: acesso de aluno/professor, modos de placar, precisão dos períodos, idempotência, intervalo de incidentes e isolamento entre rodadas. Nenhuma turma ou resposta de teste permanece no projeto.
+- Testes de interface usam serviços e Realtime simulados, além da verificação SQL separada. Não equivalem a um ensaio de carga com uma turma inteira.
+- 121 testes de regras aprovados. Compilação de produção aprovada; suíte de navegador inclui celular, fichas, animações, cache, participação, catálogo e novas ferramentas.
+- Auditoria: sem novas permissões públicas nas tabelas privadas. Os avisos de sessões anônimas e tabelas privadas com RLS sem políticas continuam compatíveis com o acesso por apelido e RPC já adotado.
+
 ## Catálogo, turma obrigatória e participação — 28/10/2026
 
 - 14 cabelos e 14 acessórios, incluindo seis referências genéricas de rock, pulseiras, celular, tablet, calça azul e saia verde. Miniaturas, desbloqueios e exclusão entre itens incompatíveis testados em telas 320/390 e desktop.

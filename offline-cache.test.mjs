@@ -34,7 +34,7 @@ try{
  assert.ok(await p.locator('#joinTeam').isDisabled());assert.equal(await p.locator('#start').count(),0);await p.keyboard.press('Escape');assert.ok(await p.locator('#welcome').evaluate(e=>e.open));assert.equal(await p.evaluate(()=>window.oficina.state.online),null);assert.equal(await p.locator('#joblist .job').count(),80);
  const saved=await p.evaluate(()=>localStorage.getItem('hardware.studentRegistration.v1'));await p.close();
  const next=await context.newPage();next.on('pageerror',e=>errors.push(e.message));await next.goto(url+'?sala=00000000-0000-4000-8000-000000000040');assert.equal(await next.evaluate(()=>localStorage.getItem('hardware.studentRegistration.v1')),saved);
- await next.setViewportSize({width:390,height:844});assert.ok(await next.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+ await next.setViewportSize({width:390,height:844});await next.waitForFunction(()=>document.body.classList.contains('mobile-game'));await next.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));assert.ok(await next.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  await context.setOffline(false);await next.waitForFunction(()=>navigator.onLine);
  // A failed update must not remove the already prepared game or the student's progress.
  update=true;failAssets=true;

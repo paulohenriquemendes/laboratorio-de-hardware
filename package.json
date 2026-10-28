@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 4180 --strictPort",
     "build": "vite build",
-    "test": "npm run test:unit && node classroom-updates.test.mjs && node reading.test.mjs && node symptom-animation.test.mjs && node mobile.test.mjs && node offline-cache.test.mjs",
-    "test:unit": "node --test unit.test.mjs physics-cosmetics.test.mjs",
+    "test": "npm run test:unit && node classroom-updates.test.mjs && node reading.test.mjs && node symptom-animation.test.mjs && node mobile.test.mjs && node offline-cache.test.mjs && node teaching-tools.test.mjs",
+    "test:unit": "node --test unit.test.mjs physics-cosmetics.test.mjs teaching-tools.unit.test.mjs",
     "test:e2e": "node tests.mjs",
     "test:robustness": "node robustness.mjs",
     "test:production": "node production.mjs",
@@ -26,7 +26,8 @@
     "test:local:visuals": "node local-visuals.test.mjs",
     "test:classrooms": "node admin-classrooms.test.mjs",
     "test:animations": "node symptom-animation.test.mjs",
-    "test:classroom:updates": "node classroom-updates.test.mjs"
+    "test:classroom:updates": "node classroom-updates.test.mjs",
+    "test:teaching": "node teaching-tools.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",
