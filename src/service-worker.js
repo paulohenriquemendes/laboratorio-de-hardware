@@ -28,6 +28,6 @@ self.addEventListener('fetch',event=>{
   event.respondWith((async()=>{const cache=await caches.open(CACHE);return await cache.match(new URL('index.html',ROOT))||fetch(request);})());return;
  }
  // Never cache API calls, student records, admin pages or arbitrary navigation.
- if(paths.has(url.href))event.respondWith((async()=>{const cache=await caches.open(CACHE);return await cache.match(request)||fetch(request);})());
- else if(url.pathname.startsWith(ROOT.pathname+'assets/'))event.respondWith((async()=>{return await caches.match(request)||fetch(request);})());
+ if(paths.has(url.href))event.respondWith((async()=>{const cache=await caches.open(CACHE);return await cache.match(request,{ignoreVary:true})||fetch(request);})());
+ else if(url.pathname.startsWith(ROOT.pathname+'assets/'))event.respondWith((async()=>{return await caches.match(request,{ignoreVary:true})||fetch(request);})());
 });

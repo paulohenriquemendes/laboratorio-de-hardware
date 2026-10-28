@@ -1,3 +1,4 @@
+import {caseReward} from './economy.js';
 import {pcLabel} from './challenge-order.js';
 import {foundationCases} from './fundamentals.js';
 import {wallCases} from './wall-cases.js';
@@ -26,5 +27,5 @@ export function restoreProgress(raw){
   });
  }catch{return fresh()}
 }
-export function scoreOf(progress){return progress.reduce((s,p)=>s+(p.validated?Math.max(30,150-p.errors*15):0),0)}
+export function scoreOf(progress){return progress.reduce((s,p,i)=>s+(p.validated?caseReward(i,p.errors):0),0)}
 export {blocked} from './layout.js';

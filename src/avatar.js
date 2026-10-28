@@ -1,9 +1,9 @@
-import {styleNames} from './cosmetics.js';
+import {accessories,styleNames} from './cosmetics.js';
 import * as THREE from 'three';
 export const hairColors=['#171717','#613b22','#d4a84b','#a34324','#294b78','#70499b','#808080','#d4d7d9','#3f704b','#a13f69'];
 export const hairStyles=styleNames;
 export function defaultAppearance(id){let n=0;for(const c of id)n=(n*31+c.charCodeAt(0))>>>0;return {style:n%4,color:hairColors[Math.floor(n/4)%hairColors.length]}}
-export function normalizeAppearance(a){return {style:Number.isInteger(a?.style)&&a.style>=0&&a.style<8?a.style:0,color:hairColors.includes(a?.color)?a.color:hairColors[1],jacket:a?.jacket===true,gloves:a?.gloves===true,tattoo:a?.tattoo===true}}
+export function normalizeAppearance(a){return {style:Number.isInteger(a?.style)&&a.style>=0&&a.style<8?a.style:0,color:hairColors.includes(a?.color)?a.color:hairColors[1],...Object.fromEntries(accessories.map(item=>[item.key,a?.[item.key]===true]))}}
 export function createHair(parent){
  const hair=new THREE.Group();hair.name='studentHair';parent.add(hair);
  const material=new THREE.MeshStandardMaterial({color:hairColors[1],roughness:.9});
@@ -19,14 +19,20 @@ export function createHair(parent){
  const quiff=new THREE.BoxGeometry(.43,.26,.3);part(7,quiff,0,2.02,-.07);part(7,new THREE.BoxGeometry(.43,.15,.2),0,1.93,.13);
  parent._hairMaterial=material;applyAppearance(parent,{style:0,color:hairColors[1]});return hair;
 }
-export function applyAppearance(parent,value){const a=normalizeAppearance(value);const hair=parent.getObjectByName('studentHair');if(!hair)return;parent._hairMaterial??=new THREE.MeshStandardMaterial({roughness:.9});parent._hairMaterial.color.set(a.color);for(const child of hair.children){child.material=parent._hairMaterial;child.visible=child.userData.hairStyle===a.style;}parent.traverse(child=>{if(child.userData.cosmetic)child.visible=!!a[child.userData.cosmetic]});parent.userData.appearance=a;}
+export function applyAppearance(parent,value){const a=normalizeAppearance(value);const hair=parent.getObjectByName('studentHair');if(!hair)return;parent._hairMaterial??=new THREE.MeshStandardMaterial({roughness:.9});parent._hairMaterial.color.set(a.color);for(const child of hair.children){child.material=parent._hairMaterial;child.visible=child.userData.hairStyle===a.style;}parent.traverse(child=>{if(child.userData.cosmetic)child.visible=!!a[child.userData.cosmetic];if(child.userData.uniformShoe)child.visible=!a.sandals});parent.userData.appearance=a;}
 
-export function createAccessories(parent,arms){
+export function createAccessories(parent,arms,legs=[]){
  const add=(root,key,w,h,d,x,y,z,color)=>{const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color,roughness:.8}));mesh.position.set(x,y,z);mesh.userData.cosmetic=key;mesh.visible=false;root.add(mesh);return mesh;};
+ add(parent,'beard',.34,.15,.035,0,1.58,-.211,'#613b22');
  // Open jacket keeps the white shirt, green collar and orange uniform trim visible.
  add(parent,'jacket',.62,.61,.08,0,1.13,.2,'#075b38');
  for(const side of [-1,1]){add(parent,'jacket',.14,.61,.08,side*.25,1.13,-.2,'#075b38');add(parent,'jacket',.025,.6,.09,side*.17,1.13,-.205,'#ed8b23');}
- for(const arm of arms){add(arm,'gloves',.2,.17,.21,0,-.59,0,'#253e48');add(arm,'gloves',.205,.035,.215,0,-.51,0,'#ed8b23');
+ for(const arm of arms){
+ add(arm,'strong',.25,.27,.26,0,-.14,0,'#ffffff');add(arm,'strong',.23,.23,.24,0,-.48,0,'#c48c68');
+ for(const x of [-.055,0,.055])for(const z of [-.095,.095])add(arm,'nails',.035,.05,.012,x,-.59,z,'#c02d78');
+ for(const z of [-.101,.101]){for(const [x,y,rotation] of [[0,-.4,-.55],[.025,-.46,-.55]]){const bolt=add(arm,'tattooBolt',.028,.09,.008,x,y,z,'#152a31');bolt.rotation.z=rotation;}for(const rotation of [0,Math.PI/4]){const star=add(arm,'tattooStar',.09,.025,.008,0,-.43,z,'#152a31');star.rotation.z=rotation;}}
+ add(arm,'gloves',.2,.17,.21,0,-.59,0,'#253e48');add(arm,'gloves',.205,.035,.215,0,-.51,0,'#ed8b23');
  // Circuit motif on both sides of the forearm; no change to the uniform.
  for(const z of [-.096,.096]){add(arm,'tattoo',.025,.12,.008,-.035,-.43,z,'#153c35');add(arm,'tattoo',.09,.018,.008,0,-.4,z,'#153c35');add(arm,'tattoo',.025,.07,.008,.035,-.43,z,'#153c35');}}
+ for(const leg of legs){add(leg,'sandals',.26,.045,.42,0,-.75,-.05,'#102e3b');add(leg,'sandals',.22,.09,.35,0,-.69,-.065,'#c48c68');for(const side of [-1,1]){const strap=add(leg,'sandals',.025,.035,.2,side*.04,-.63,-.08,'#217a5b');strap.rotation.y=side*.45;}if(leg===legs[0])add(leg,'sandals',.07,.07,.055,-.065,-.675,-.24,'#cd4d4b');}
 }

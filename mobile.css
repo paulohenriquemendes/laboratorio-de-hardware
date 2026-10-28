@@ -20,3 +20,5 @@
 @media(max-height:500px){.mobile-game header .brand{display:none}.mobile-game header .stats{margin-left:0}.mobile-game #joystick{width:110px;height:110px}.mobile-game #controlMode{width:110px;min-height:30px;margin-top:4px}.mobile-game #touch{bottom:calc(8px + var(--safe-bottom))}.mobile-game #followBanner{left:auto;width:260px;top:66px}.mobile-game .stats.mobile-expanded{left:0;right:auto}.mobile-game dialog{padding-top:12px}.mobile-game dialog h1{font-size:22px}}
 
 .mobile-menu-open #touch,.mobile-menu-open #resetCamera{display:none!important}.mobile-game.mobile-menu-open header{z-index:6}.mobile-game #interact::after{margin-left:5px}
+
+@media(max-width:380px){.mobile-game header .brand{display:none}}

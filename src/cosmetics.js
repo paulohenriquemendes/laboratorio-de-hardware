@@ -1,4 +1,4 @@
 export const styleNames=['Curto','Cacheado','Comprido','Coque','Moicano','Afro','Tranças','Topete'];
-export const stylePoints=[0,0,0,0,300,600,1200,1800];
-export const accessories=[{key:'jacket',name:'Casaco aberto',points:1500},{key:'gloves',name:'Luvas esportivas',points:2400},{key:'tattoo',name:'Tatuagem de circuito',points:6000}];
-export function unlockedAppearance(a,score=0){return {...a,style:score>=(stylePoints[a.style]??Infinity)?a.style:0,...Object.fromEntries(accessories.map(item=>[item.key,!!a[item.key]&&score>=item.points]))};}
+export const stylePoints=[0,0,0,0,100,240,480,720];
+export const accessories=[{key:'jacket',name:'Casaco aberto',points:600},{key:'gloves',name:'Luvas esportivas',points:960},{key:'tattoo',name:'Tatuagem de circuito',points:2400},{key:'tattooBolt',name:'Tatuagem de raio',points:3000},{key:'tattooStar',name:'Tatuagem de estrela',points:3600},{key:'beard',name:'Barba',points:400},{key:'nails',name:'Unhas coloridas',points:200},{key:'strong',name:'Porte atlético',points:1600},{key:'sandals',name:'Chinelo · dedo avermelhado',points:800,solved:20}];
+export function unlockedAppearance(a,score=0,solved=0){return {...a,style:score>=(stylePoints[a.style]??Infinity)?a.style:0,...Object.fromEntries(accessories.map(item=>[item.key,!!a[item.key]&&score>=item.points&&solved>=(item.solved||0)]))};}

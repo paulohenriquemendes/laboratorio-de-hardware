@@ -9,12 +9,13 @@ export function validPose(p){return p&&Number.isFinite(p.x)&&p.x>=bounds.minX&&p
 export class OnlineLab {
  constructor(callbacks){this.cb=callbacks;this.client=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:'hardware-coop.auth',persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});this.rows=new Map();this.scores=[];this.refreshSerial=0;this.peers=new Map();this.connected=false;this.activePc=-1;this.closed=false;this.lastSend=0;this.lastPose=null;this.instance=crypto.randomUUID();}
  status(message){this.cb.status(message,this.connected)}
- async enter(name,room=OPEN_ROOM,title=null){
+ async enter(name,room=OPEN_ROOM,title=null,identity=null){
   this.status('Conectando à sala…');
   let {data:{session},error}=await this.client.auth.getSession();if(error)throw error;
   if(!session){const result=await this.client.auth.signInAnonymously();if(result.error)throw new Error(result.error.code==='anonymous_provider_disabled'?'A entrada de alunos ainda não foi ativada no servidor.':result.error.message);session=result.data.session;}
   this.userId=session.user.id;
   const joined=await this.client.rpc('lab_join',{p_room:room,p_name:cleanName(name),p_title:title});if(joined.error)throw joined.error;this.room=joined.data;
+  if(identity){const saved=await this.client.rpc('lab_student_identity',{p_room:this.room.id,p_operation:'save',p_name:identity.fullName,p_class:identity.className});if(saved.error)throw saved.error;}
   const profile=await this.client.rpc('lab_wardrobe',{p_room:this.room.id});if(profile.error)throw profile.error;this.appearance=profile.data;
   await this.client.realtime.setAuth(session.access_token);
   await this.connect();
@@ -36,7 +37,7 @@ export class OnlineLab {
    this.channel.subscribe(async status=>{
     if(this.closed||this.channel!==channel)return;
     this.connected=status==='SUBSCRIBED';
-    if(this.connected){try{await this.refresh();await this.channel.track({instance:this.instance,userId:this.userId,name:this.room.nickname,appearance:this.appearance,pc:this.activePc,...(this.lastPose||{x:3.9,z:18.4,angle:0})});this.ready=true;this.status('Online · seu progresso e sua pontuação estão salvos');clearTimeout(timeout);resolve();}catch(e){this.connected=false;this.status('Sem sincronização. Reconectando…');clearTimeout(timeout);reject(e);}}
+    if(this.connected){try{await this.refresh();await this.channel.track({instance:this.instance,userId:this.userId,name:this.room.nickname,appearance:this.appearance,pc:this.activePc,...(this.lastPose||{x:3.9,z:18.4,angle:0})});this.ready=true;this.status('Online · seu progresso e suas recompensas fictícias estão salvos');clearTimeout(timeout);resolve();}catch(e){this.connected=false;this.status('Sem sincronização. Reconectando…');clearTimeout(timeout);reject(e);}}
     else{this.status('Conexão interrompida · aguardando reconexão');}
    });
   });

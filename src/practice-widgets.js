@@ -4,7 +4,7 @@ export function mountPractice(container, caseId) {
  if (!binary && caseId !== 55) return;
  const section = document.createElement('details');
  section.className = 'practice-widget';
- section.innerHTML = `<summary>Experimentar: ${binary ? 'painel de bits' : 'tempo de cópia'}</summary><p>Área de experimentação livre, sem pontos. Depois, responda à ficha do computador.</p>`;
+ section.innerHTML = `<summary>Experimentar: ${binary ? 'painel de bits' : 'tempo de cópia'}</summary><p>Área de experimentação livre, sem recompensa. Depois, responda à ficha do computador.</p>`;
  const output = document.createElement('output');
  output.setAttribute('aria-live','polite');
  if(binary) {
