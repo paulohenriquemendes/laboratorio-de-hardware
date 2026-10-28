@@ -43,3 +43,9 @@ A experiência é testada funcionalmente com dois alunos e um administrador. Nã
 ## Meu visual e contato entre alunos
 O botão **Meu visual** abre um catálogo com miniaturas do personagem. Os quatro cabelos básicos e as cores continuam livres. Moicano exige 300 pontos; afro, 600; tranças, 1.200; topete, 1.800. O casaco aberto exige 1.500 pontos, as luvas esportivas, 2.400, e a tatuagem decorativa de circuito, 6.000. O uniforme é preservado. Os pontos não são gastos; o servidor verifica a pontuação da rodada ao salvar. Ao reiniciar a rodada, itens acima da nova pontuação deixam de ser usados.
 Personagens entram em posições livres, colidem e recebem pequenos empurrões ao contato. Paredes e móveis continuam bloqueando o movimento. A sincronização depende da conexão; foram verificados dois navegadores simultâneos, sem teste de carga com uma turma completa.
+
+## Uso pelo celular
+Arraste o controle circular para caminhar e a parte direita do cenário para girar a câmera, inclusive com dois dedos simultâneos. Use **Abrir PC** perto de uma bancada e **↺ Câmera** para voltar à visão inicial. **Usar setas** troca o controle circular por botões direcionais. O **Menu** reúne desafios, turma, anotações e visual. As fichas ocupam a tela para facilitar a leitura; o modo de gráficos leves vem ativado no celular e pode ser alterado pelo menu.
+
+## Experimentação nos desafios
+Algumas fichas possuem a seção **Experimentar**. Nos dez desafios iniciais sobre bits e representação (IDs internos 40–49), o aluno alterna chaves para comparar binário, decimal e hexadecimal. No desafio de tempo ideal de cópia, modifica tamanho e taxa para observar a duração. Esses controles são uma área livre de apoio: não concedem pontos nem enviam respostas. A avaliação continua nas etapas de evidências, diagnóstico, solução e conceito; o professor recebe os mesmos registros de participação.

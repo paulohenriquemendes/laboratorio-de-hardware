@@ -17,7 +17,9 @@
     "test:coop": "node coop-browser.test.mjs",
     "test:appearance": "node appearance.test.mjs",
     "test:participation": "node participation-backend.test.mjs",
-    "test:rewards": "node rewards.test.mjs"
+    "test:rewards": "node rewards.test.mjs",
+    "test:mobile": "node mobile.test.mjs",
+    "test:practice": "node practice.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

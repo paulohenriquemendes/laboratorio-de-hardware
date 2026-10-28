@@ -1,0 +1,8 @@
+.practice-widget{margin:18px 0;padding:16px;border:1px solid #a8c8b6;border-radius:12px;background:#edf6ef;color:#163c2b}
+.practice-widget summary{cursor:pointer;font-weight:700;min-height:44px;display:list-item;line-height:1.6}
+.practice-widget output{display:block;padding:12px;margin-top:12px;background:white;border-radius:8px;font-weight:700;overflow-wrap:anywhere}
+.bit-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.bit-controls label{position:relative;display:flex;flex-direction:column;align-items:center;padding:8px 2px;border:1px solid #97b4a3;border-radius:8px;background:white;cursor:pointer}
+.bit-controls input{min-height:24px!important;width:24px;height:24px;accent-color:#008241}
+.bit-controls span{font-size:24px;font-weight:bold}.bit-controls small{font-size:12px}.bit-controls label:has(input:checked){background:#d4edda;border-color:#008241}
+.copy-controls{display:flex;flex-wrap:wrap;gap:12px}.copy-controls label{display:flex;flex:1 1 130px;flex-direction:column;gap:6px}.copy-controls input{width:100%;box-sizing:border-box;min-height:48px;font-size:16px;padding:10px}

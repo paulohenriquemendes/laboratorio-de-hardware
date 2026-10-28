@@ -5,7 +5,7 @@ import {cases,fresh} from './src/cases.js';
 const browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=swiftshader']});
 const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
 try{
- await page.goto(process.env.GAME_URL||'http://127.0.0.1:4181/laboratorio-de-hardware/');await page.click('#start');
+ await page.goto(process.env.GAME_URL||'http://127.0.0.1:4181/');await page.click('#start');
  assert.deepEqual(await page.locator('#joblist .num').allTextContents(),challengeOrder.map(pcLabel));
  assert.deepEqual(await page.locator('#joblist .job > div').evaluateAll(els=>els.map(e=>e.firstChild.textContent)),challengeOrder.map(id=>cases[id].title));
  const saved=fresh();saved[0]={...saved[0],tests:[0,1],diagnosed:true,repaired:true,validated:true,challenge:true};
