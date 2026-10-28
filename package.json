@@ -19,7 +19,9 @@
     "test:participation": "node participation-backend.test.mjs",
     "test:rewards": "node rewards.test.mjs",
     "test:mobile": "node mobile.test.mjs",
-    "test:practice": "node practice.test.mjs"
+    "test:practice": "node practice.test.mjs",
+    "test:offline": "node offline-cache.test.mjs",
+    "test:offline:transition": "node offline-transition.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

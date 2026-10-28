@@ -49,3 +49,14 @@ Arraste o controle circular para caminhar e a parte direita do cenário para gir
 
 ## Experimentação nos desafios
 Algumas fichas possuem a seção **Experimentar**. Nos dez desafios iniciais sobre bits e representação (IDs internos 40–49), o aluno alterna chaves para comparar binário, decimal e hexadecimal. No desafio de tempo ideal de cópia, modifica tamanho e taxa para observar a duração. Esses controles são uma área livre de apoio: não concedem pontos nem enviam respostas. A avaliação continua nas etapas de evidências, diagnóstico, solução e conceito; o professor recebe os mesmos registros de participação.
+
+## Preparar o jogo para uma aula sem internet
+1. Em casa ou em uma rede com internet, abra o link habitual do jogo no navegador que será usado na escola. Também funciona com o convite da turma.
+2. Aguarde a mensagem **Pronto para usar sem internet neste navegador**, na seção **Leve o laboratório para a escola**. O primeiro acesso precisa baixar todos os arquivos; apenas ver a página não garante que terminou. A opção **Uso sem internet** no menu abre essa seção novamente.
+3. Salve o link nos favoritos. Teste em modo avião: feche e abra o jogo pelo link e escolha **Praticar offline**. Não é necessário baixar um HTML ou instalar firmware.
+4. Na escola, os 80 desafios, controles de celular, leituras e pontuação individual funcionam sem rede. O progresso fica no mesmo navegador/aparelho.
+5. Para registrar a atividade para o professor, abra **Desafios → Baixar resumo da prática**. O arquivo pode ser entregue quando houver conexão. A prática individual não é enviada automaticamente nem somada ao placar da turma.
+
+Se a conexão cair durante a turma online, o aviso **Praticar neste aparelho** permite sair para a prática individual sem esperar pela rede. Essa ficha é separada da turma: os resultados já confirmados no servidor continuam lá e reaparecem ao entrar novamente. O progresso individual anterior é retomado. Personagens dos colegas, envios de participação/anotações e relatórios administrativos precisam de internet. Com a conexão restabelecida, o aluno decide quando voltar à turma; não há mistura automática de notas locais e registros do servidor.
+
+Evite modo anônimo e não apague dados do site. Navegadores podem remover o armazenamento por falta de espaço; confira a mensagem e o modo avião antes da aula. A preparação é por navegador, perfil e aparelho. Um primeiro acesso completamente sem rede não consegue baixar o jogo. O navegador verifica atualizações quando há internet; somente uma versão com todos os arquivos baixados substitui a anterior. Recarregue conectado para usar a atualização.

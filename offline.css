@@ -1,0 +1,4 @@
+.offline-info{padding:16px;border:1px solid #a7c8b2;border-radius:12px;background:#edf6ef;margin:18px 0;color:#163c2b}.offline-info h2{margin-top:0}.offline-info p{line-height:1.6}.offline-info[data-ready=true] #offlineStatus{font-weight:bold;color:#006b36}
+#offlineBanner{position:fixed;z-index:5;top:100px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 24px);width:420px;box-sizing:border-box;padding:10px 14px;border-radius:10px;background:#fff2cf;color:#503609;font-size:14px;box-shadow:0 4px 20px #0003}#offlineBanner button{display:block;margin:8px 0 0;min-height:44px;background:#006b36;color:white;padding:8px 12px}#offlineBanner[hidden],.game-dialog-open #offlineBanner{display:none}.mobile-game #offlineBanner{top:calc(78px + env(safe-area-inset-top,0px));font-size:13px}.mobile-menu-open #offlineBanner{display:none}
+
+#offlineBanner button[hidden]{display:none}
