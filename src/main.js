@@ -1,3 +1,4 @@
+import {createFaultScreens} from './fault-screens.js';
 import {showSymptomAnimation} from './symptom-animation.js';
 import '../symptom-animation.css';
 import {batchStaticBoxes} from './scene-performance.js';
@@ -23,10 +24,10 @@ import {cases,fresh,restoreProgress,scoreOf,blocked} from './cases.js';
 import {benches,stations,room,spawn,nearestStation} from './layout.js';
 import {challenges,goals} from './challenges.js';
 const registration=setupStudentRegistration();
-const $=s=>document.querySelector(s),key='laboratorioHardware80.v1';
-let progress=fresh(),storageAvailable=true;try{const saved=localStorage.getItem(key)??localStorage.getItem('laboratorioHardware40.v1');if(saved!==null)progress=restoreProgress(saved);else{const unique=localStorage.getItem('oficina3d.unique20.v1');if(unique!==null){progress=restoreProgress(unique)}else{const previous=restoreProgress(localStorage.getItem('oficina3d.lab20.v1') ?? localStorage.getItem('oficina3d.progress.v1'));progress=previous.map((p,i)=>i<6?p:fresh()[i])}}}catch{storageAvailable=false}
+const $=s=>document.querySelector(s);
+let progress=fresh();
 let current=-1,near=-1,started=false,angle=0,walk=0,drag=null,overview=false;
-let teamSignature='';let focusedPeer=null;let online=null,onlineBusy=false,localProgress=null,onlineRows=[],onlineMessage='';const remotePlayers=new Map();
+let teamSignature='';let focusedPeer=null;let online=null,onlineBusy=false,onlineRows=[],onlineMessage='';const remotePlayers=new Map();
 const keys=new Set(),scene=new THREE.Scene();scene.background=new THREE.Color('#142d25');scene.fog=new THREE.Fog('#142d25',100,220);
 const renderer=new THREE.WebGLRenderer({canvas:$('#world'),antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=false;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.3;
 const camera=new THREE.PerspectiveCamera(48,innerWidth/innerHeight,.1,220);
@@ -48,15 +49,16 @@ for(const z of [-15,-7,1,9,16]){box(.06,1.6,3.2,'#a2cfda',-13.08,2.4,z);box(.1,1
 for(const x of [-5.8,5.8,22.2,33.8])box(.07,.012,36,materials.mint,x,.01,0);
 for(const offset of [0,28])for(const side of [-1,1]){box(2.6,.16,34.2,materials.wood,offset+side*11.5,1.1,0);for(const z of [-16,-8,0,8,16])for(const x of [10.6,12.4])box(.1,1,.1,materials.dark,offset+side*x,.5,z);}
 box(10,1,.06,label('LABORATÓRIO DE HARDWARE',1024,128),28,3.6,-19.84);
-const beacons=[];const finishedBody=mat('#3cb769'),finishedFront=mat('#84dc9f'),finishedRing=mat('#7fea9c'),inactiveScreen=mat('#263f4f'),chairMat=mat('#2a7050');
+const beacons=[];const finishedBody=mat('#3cb769'),finishedFront=mat('#84dc9f'),finishedRing=mat('#7fea9c'),chairMat=mat('#2a7050');
 for(const b of benches){
  box(b.width,.16,b.depth,materials.wood,b.x,1.1,b.z);
  for(const x of [-1.65,1.65])for(const z of [-2.35,2.35])box(.1,1,.1,materials.dark,b.x+x,.5,b.z+z);
  box(.14,.28,4.8,materials.dark,b.x,1.3,b.z);
  box(1,.3,.02,label('BANCADA '+b.id,256,80),b.x,.85,b.z+2.72);
 }
-for(const s of stations){const g=new THREE.Group();g.position.set(s.x,0,s.z);g.rotation.y=s.facing*Math.PI/2;scene.add(g);
- const monitorFrame=box(.95,.65,.12,materials.dark,-.25,1.65,-.3,g);const screen=box(.84,.52,.015,materials.screen,-.25,1.66,-.23,g);
+const faultScreens=createFaultScreens(cases);
+for(const [caseId,s] of stations.entries()){const g=new THREE.Group();g.position.set(s.x,0,s.z);g.rotation.y=s.facing*Math.PI/2;scene.add(g);
+ const monitorFrame=box(.95,.65,.12,materials.dark,-.25,1.65,-.3,g);const screen=new THREE.Mesh(faultScreens.geometry(caseId),faultScreens.material);screen.position.set(-.25,1.66,-.22);g.add(screen);
  box(.08,.3,.08,materials.metal,-.25,1.28,-.3,g);box(.5,.04,.3,materials.dark,-.25,1.19,-.3,g);
  box(.75,.04,.28,materials.dark,-.25,1.21,.3,g);box(.13,.06,.2,materials.mint,.32,1.23,.32,g);
  const tower=box(.38,.78,.6,materials.dark,.8,1.55,-.13,g);const towerFront=box(.28,.6,.02,materials.metal,.8,1.55,.18,g);box(.05,.05,.03,materials.mint,.85,1.8,.2,g);
@@ -65,7 +67,7 @@ for(const s of stations){const g=new THREE.Group();g.position.set(s.x,0,s.z);g.r
  const chair=new THREE.Group();chair.position.set(s.chairX,0,s.z);chair.rotation.y=s.facing*Math.PI/2;scene.add(chair);
  box(.7,.13,.7,chairMat,0,.65,0,chair);box(.7,.7,.1,chairMat,0,1.03,.36,chair);box(.08,.58,.08,materials.metal,0,.3,0,chair);box(.8,.06,.08,materials.dark,0,.08,0,chair);box(.08,.06,.8,materials.dark,0,.08,0,chair);
  const ring=new THREE.Mesh(new THREE.TorusGeometry(.32,.025,8,24),materials.mint);ring.rotation.x=-Math.PI/2;ring.position.set(s.useX,.03,s.z);scene.add(ring);
- const marker=new THREE.Mesh(new THREE.PlaneGeometry(.7,.3),label('PC '+String(s.id).padStart(2,'0'),256,96));marker.position.set(s.x,2.55,s.z);scene.add(marker);beacons.push({ring,marker,screen,tower,towerFront,monitorFrame,pendingLabel:marker.material,doneLabel:label('✓ '+String(s.id).padStart(2,'0')+' REVISADO',512,128,'#103b20','#a4f1b7')});
+ const marker=new THREE.Mesh(new THREE.PlaneGeometry(.7,.3),label('PC '+String(s.id).padStart(2,'0'),256,96));marker.position.set(s.x,2.55,s.z);scene.add(marker);beacons.push({ring,marker,screen,tower,towerFront,monitorFrame,pendingLabel:marker.material,faultMaterial:faultScreens.material,doneLabel:label('✓ '+String(s.id).padStart(2,'0')+' REVISADO',512,128,'#103b20','#a4f1b7')});
 }
 const batching=batchStaticBoxes(scene,new Set(beacons.flatMap(b=>[b.screen,b.tower,b.towerFront,b.monitorFrame])));
 // Student uniform, stylized from the requested Ceará school palette.
@@ -82,16 +84,16 @@ for(const x of [-.11,.11])box(.05,.05,.02,'#17252b',x,1.77,-.2,player);
 const limbs=[];for(const side of [-1,1]){
  const arm=new THREE.Group();arm.userData.avatarLimb=true;arm.position.set(side*.39,1.41,0);player.add(arm);
  box(.2,.31,.23,uniform.shirt,0,-.13,0,arm);box(.205,.045,.235,uniform.trim,0,-.28,0,arm);box(.205,.06,.235,uniform.green,0,-.33,0,arm);box(.17,.26,.18,'#c48c68',0,-.49,0,arm);
- const leg=new THREE.Group();leg.userData.avatarLimb=true;leg.position.set(side*.17,.8,0);player.add(leg);box(.23,.62,.27,uniform.green,0,-.3,0,leg);box(.018,.59,.035,uniform.trim,side*.12,-.3,0,leg);box(.25,.16,.4,uniform.shoes,0,-.69,-.05,leg).userData.uniformShoe=true;
+ const leg=new THREE.Group();leg.userData.avatarLimb=true;leg.position.set(side*.17,.8,0);player.add(leg);box(.23,.62,.27,uniform.green,0,-.3,0,leg).userData.uniformPants=true;box(.018,.59,.035,uniform.trim,side*.12,-.3,0,leg).userData.uniformPants=true;box(.25,.16,.4,uniform.shoes,0,-.69,-.05,leg).userData.uniformShoe=true;
  limbs.push({arm,leg,side});
 }
 createAccessories(player,limbs.map(l=>l.arm),limbs.map(l=>l.leg));
 const wardrobe=setupWardrobe({player,getSession:()=>online,getScore:()=>scoreOf(progress),getSolved:()=>progress.filter(p=>p.validated).length,notify:s=>toast(s)});
 function toast(s){$('#toast').textContent=s;$('#toast').style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').style.display='none',3500)}
-function save(){if(online){updateHUD();return;}try{localStorage.setItem(key,JSON.stringify(progress))}catch{storageAvailable=false}updateHUD()}
+
 function sharedSolved(i){return online?!!onlineRows.find(r=>r.pc===i)?.shared_solved||progress[i].validated:progress[i].validated;}
 function solversFor(i){return onlineRows.find(r=>r.pc===i)?.solvers||[];}
-function updateHUD(){if(online)$('#save').textContent=onlineMessage;if(!storageAvailable)$('#save').textContent='Armazenamento indisponível: progresso só nesta sessão';const done=progress.filter(p=>p.validated).length;$('#progress').textContent=`${done} / 80 desafios${online?' seus':''}`;$('#score').textContent=money(scoreOf(progress));$('#score').title='Reais fictícios do jogo, sem valor monetário';$('#joblist').innerHTML=challengeOrder.map(i=>{const c=cases[i];return `<div class="job ${progress[i].validated?'done':''}"><span class="num">${progress[i].validated?'✓':pcLabel(i)}</span><div>${c.title}<small>${progress[i].validated?'✓ Você resolveu':online&&sharedSolved(i)?'Já resolvido na turma · sua vez!':locationOf(stations[i])}</small></div></div>`}).join('');beacons.forEach((b,i)=>{const done=sharedSolved(i);b.ring.material=done?finishedRing:materials.mint;b.screen.material=done?materials.screen:inactiveScreen;b.tower.material=done?finishedBody:materials.dark;b.towerFront.material=done?finishedFront:materials.metal;b.monitorFrame.material=done?finishedBody:materials.dark;b.marker.material=done?b.doneLabel:b.pendingLabel;b.marker.scale.x=done?1.6:1});if(!online){try{const stored=JSON.parse(localStorage.getItem('hardware.localAppearance')||'null');if(stored)applyAppearance(player,unlockedAppearance(normalizeAppearance(stored),scoreOf(progress),done));}catch{}}if(online){applyAppearance(player,unlockedAppearance(normalizeAppearance(online.appearance),scoreOf(progress),progress.filter(p=>p.validated).length));updateOccupancy();updateTeam();}}
+function updateHUD(){if(online)$('#save').textContent=onlineMessage;const done=progress.filter(p=>p.validated).length;$('#progress').textContent=`${done} / 80 desafios${online?' seus':''}`;$('#score').textContent=money(scoreOf(progress));$('#score').title='Reais fictícios do jogo, sem valor monetário';$('#joblist').innerHTML=challengeOrder.map(i=>{const c=cases[i];return `<div class="job ${progress[i].validated?'done':''}"><span class="num">${progress[i].validated?'✓':pcLabel(i)}</span><div>${c.title}<small>${progress[i].validated?'✓ Você resolveu':online&&sharedSolved(i)?'Já resolvido na turma · sua vez!':locationOf(stations[i])}</small></div></div>`}).join('');beacons.forEach((b,i)=>{const done=sharedSolved(i);b.ring.material=done?finishedRing:materials.mint;b.screen.material=done?materials.screen:b.faultMaterial;b.tower.material=done?finishedBody:materials.dark;b.towerFront.material=done?finishedFront:materials.metal;b.monitorFrame.material=done?finishedBody:materials.dark;b.marker.material=done?b.doneLabel:b.pendingLabel;b.marker.scale.x=done?1.6:1});if(online){applyAppearance(player,unlockedAppearance(normalizeAppearance(online.appearance),scoreOf(progress),progress.filter(p=>p.validated).length));updateOccupancy();updateTeam();}}
 function renderCase(){const c=cases[current],p=progress[current];$('#caseTag').textContent=`${locationOf(stations[current]).toUpperCase()} / PC ${pcLabel(current)}`;$('#caseTitle').textContent=c.title;$('#symptom').textContent=c.symptom;showSymptomAnimation(current);let html='';
 if(p.validated){html=`<h3 class="result">✓ Reparo validado e entregue</h3><p>${c.explain}</p><div class="clue">${c.validation}</div><h3>+${money(caseReward(current,p.errors))} fictícios nesta bancada</h3>`;if(progress.every(v=>v.validated))html+=`<div class="clue"><b>Turno concluído! ${money(scoreOf(progress))} / ${money(MAX_EARNINGS)} fictícios</b><br>Oitenta computadores recuperados. ${scoreOf(progress)>=4000?'Excelente investigação, técnico!':'Bom trabalho! Você pode repetir o turno para aprimorar o diagnóstico.'}</div>`;}
 else if(p.repaired){html=`<h3 class="result">Reparo aplicado</h3><p>${c.explain}</p><button class="primary" data-action="validate">Verificar solução e concluir →</button>`;}
@@ -100,18 +102,10 @@ else{html=`<h3>01 / Reúna evidências <small>(${p.tests.length}/2)</small></h3>
 if(p.validated){const q=challenges[current];html+=`<section class="challenge"><span class="eyebrow">DESAFIO DE CONCEITO / ${q.topic}</span><h3>${q.question}</h3>${p.challenge?`<div class="clue"><b>✓ Conceito concluído</b><br>${q.explanation}</div>`:`<p class="hint">Sem desconto na recompensa fictícia. Leia, responda e discuta em aula.</p><div class="options">${q.options.map((o,i)=>`<button data-challenge="${i}">${o}</button>`).join('')}</div>`}</section>`;}
 $('#caseContent').innerHTML=`<p class="clue">Recompensa: até <b>${money(baseReward(current))}</b> fictícios · desconto de R$ 5 por erro prático, mínimo de R$ 20.</p>`+phaseMarkup(p)+(p.diagnosed?evidenceMarkup(c,p):'')+html+glossaryMarkup(c)+'<p id="feedback" class="error" role="status"></p>';mountPractice($('#caseContent'),current);if(online){const authors=document.createElement('section');authors.className='clue completion-list';const title=document.createElement('b');title.textContent=solversFor(current).length?'Já resolveram este computador':'Seja o primeiro a resolver este computador';authors.append(title);const list=document.createElement('ul');for(const solver of solversFor(current)){const li=document.createElement('li');li.textContent=solver.name+(solver.score===null?' · registro anterior':` · ${money(solver.score)} fictícios neste PC`);list.append(li)}authors.append(list);const hint=document.createElement('p');hint.textContent=p.validated?'Sua conclusão e suas recompensas fictícias já estão registradas.':'Sua ficha é individual. Você pode resolver mesmo que outros alunos já tenham concluído.';authors.append(hint);$('#caseContent').prepend(authors);}}
 
-async function interact(){if(focusedPeer)return;if(near<0||!started||overview||$('#welcome').open||$('#classroom').open||$('#panel').open)return;if(onlineBusy)return;const selected=near;keys.clear();if(online){onlineBusy=true;try{await online.claim(selected)}catch(e){toast(e.message);return}finally{onlineBusy=false}}current=selected;renderCase();$('#panel').showModal();}
-$('#caseContent').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b||b.disabled||onlineBusy)return;if(online){const kind=['test','diagnosis','repair','challenge'].find(k=>b.dataset[k]!==undefined)||b.dataset.action;if(!kind)return;onlineBusy=true;$('#caseContent').querySelectorAll('button').forEach(x=>x.disabled=true);try{const result=await online.action(current,kind,b.dataset[kind]!==undefined?Number(b.dataset[kind]):null);renderCase();$('#feedback').textContent=result.feedback;if(kind==='validate')toast('Você resolveu! Recompensa fictícia adicionada ao seu placar.')}catch(e){renderCase();$('#feedback').textContent=e.message;}finally{onlineBusy=false}return;}const p=progress[current],c=cases[current];let error='';if(b.dataset.challenge!==undefined&&p.validated&&!p.challenge){const q=challenges[current];if(+b.dataset.challenge===q.answer)p.challenge=true;else{p.challengeErrors++;error=q.hint+' Tente novamente; sua recompensa fictícia foi mantida.'}}else if(b.dataset.test!==undefined){const i=+b.dataset.test;if(!p.tests.includes(i))p.tests.push(i)}else if(b.dataset.diagnosis!==undefined){if(+b.dataset.diagnosis===c.answer)p.diagnosed=true;else{p.errors++;error='As evidências não sustentam essa hipótese. Releia os resultados. Reduz R$ 5 da recompensa, até o mínimo de R$ 20.'}}else if(b.dataset.repair!==undefined){if(+b.dataset.repair===c.repair)p.repaired=true;else{p.errors++;error='Esse procedimento não resolve o defeito identificado. Escolha novamente. Reduz R$ 5 da recompensa, até o mínimo de R$ 20.'}}else if(b.dataset.action==='validate'){p.validated=true;toast('Computador recuperado! Recompensa fictícia adicionada.')}save();renderCase();$('#feedback').textContent=error;if(error)$('#feedback').scrollIntoView({block:'nearest'});const next=$('#caseContent button:not(:disabled)');if(next)next.focus({preventScroll:true});else $('#close').focus({preventScroll:true});});
+async function interact(){if(focusedPeer)return;if(near<0||!started||!online?.connected||overview||$('#welcome').open||$('#classroom').open||$('#panel').open)return;if(onlineBusy)return;const selected=near;keys.clear();if(online){onlineBusy=true;try{await online.claim(selected)}catch(e){toast(e.message);return}finally{onlineBusy=false}}current=selected;renderCase();$('#panel').showModal();}
+$('#caseContent').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b||b.disabled||onlineBusy||!online?.connected)return;if(online){const kind=['test','diagnosis','repair','challenge'].find(k=>b.dataset[k]!==undefined)||b.dataset.action;if(!kind)return;onlineBusy=true;$('#caseContent').setAttribute('aria-busy','true');$('#caseContent').querySelectorAll('button').forEach(x=>x.disabled=true);try{const result=await online.action(current,kind,b.dataset[kind]!==undefined?Number(b.dataset[kind]):null);renderCase();$('#feedback').textContent=result.feedback;if(kind==='validate')toast('Você resolveu! Recompensa fictícia adicionada ao seu placar.')}catch(e){renderCase();$('#feedback').textContent=e.message;}finally{onlineBusy=false;$('#caseContent').setAttribute('aria-busy','false')}return;}});
 document.querySelectorAll('[data-reading-size]').forEach(button=>button.onclick=()=>{const large=!$('#panel').classList.contains('large-text');document.querySelectorAll('dialog').forEach(d=>d.classList.toggle('large-text',large));document.querySelectorAll('[data-reading-size]').forEach(b=>{b.textContent=large?'A− Texto padrão':'A+ Ampliar texto';b.setAttribute('aria-pressed',String(large))})});
-$('#close').onclick=()=>$('#panel').close();$('#interact').onclick=interact;$('#start').onclick=practiceIndividual;$('#help').onclick=()=>{keys.clear();$('#welcome').showModal()};$('#welcome').addEventListener('cancel',()=>{started=true});
-function practiceIndividual(){
- if(!registration.read()){if(!$('#welcome').open)$('#welcome').showModal();return;}
- const previous=online;online=null;onlineBusy=false;
- if(previous){progress=localProgress||fresh();localProgress=null;onlineRows=[];focusedPeer=null;syncAvatars([]);void previous.leave().catch(()=>{});}
- for(const id of ['panel','teamDialog','classroom','notesDialog','welcome'])if($('#'+id).open)$('#'+id).close();
- $('#save').textContent='Progresso individual salvo neste navegador · baixe o resumo em Desafios';
- started=true;keys.clear();updateHUD();updateTeam();offlineUI.update();
-}
+$('#close').onclick=()=>$('#panel').close();$('#interact').onclick=interact;$('#help').onclick=()=>{keys.clear();$('#welcome').showModal()};$('#welcome').addEventListener('cancel',e=>{if(!started)e.preventDefault()});
 function modalOpen(){return mobileControls.menuOpen||$('#panel').open||$('#welcome').open||$('#classroom').open||$('#teamDialog').open||$('#notesDialog').open}
 addEventListener('keydown',e=>{if(modalOpen())return;const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d','q','r','e'].includes(k)){e.preventDefault();if(k==='e'){if(!e.repeat)interact();return;}keys.add(k)}});
 addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));addEventListener('blur',()=>{keys.clear();drag=null});document.addEventListener('visibilitychange',()=>keys.clear());
@@ -143,19 +137,19 @@ $('#classroomButton').onclick=()=>{keys.clear();renderClassroom();$('#classroom'
 $('#closeClass').onclick=()=>$('#classroom').close();
 
 $('#downloadReport').onclick=()=>{
- const report=['LABORATÓRIO DE HARDWARE — REGISTRO DE PRÁTICA','Data: '+new Date().toLocaleString('pt-BR'),'Aluno: '+(registration.saved.fullName||'Não informado'),'Turma: '+(registration.saved.className||'Prática individual'),...(validRoom(new URL(location.href).searchParams.get('sala'))?['Convite da turma: '+location.origin+location.pathname+'?sala='+new URL(location.href).searchParams.get('sala')]:[]),online?'Sala: '+online.room.title:'Modo individual','Recompensas fictícias: '+money(scoreOf(progress))+' / '+money(MAX_EARNINGS),...goals(progress).map(g=>g.name+': '+g.value+'/'+g.total),'',...challengeOrder.map(i=>{const c=cases[i],p=progress[i];return [pcNumber(i)+'. '+c.title,'Testes: '+p.tests.length+'/2; diagnóstico: '+(p.diagnosed?'confirmado':'pendente')+'; reparo: '+(p.repaired?'aplicado':'pendente')+'; validação: '+(p.validated?'concluída':'pendente'),'Resolvido por: '+(solversFor(i).map(s=>s.name).join(', ')||'—'),'Tentativas incorretas na prática: '+p.errors,'Desafio conceitual: '+(p.challenge?'concluído':'pendente')+'; tentativas incorretas: '+p.challengeErrors].join('\n')}),'',online?'Registro individual na sala para discussão em aula; não é uma avaliação supervisionada.':'Registro local para discussão em aula; não é uma avaliação supervisionada.'].join('\n');
+ const report=['LABORATÓRIO DE HARDWARE — REGISTRO DE PRÁTICA','Data: '+new Date().toLocaleString('pt-BR'),'Aluno: '+(registration.saved.fullName||'Não informado'),'Turma: '+(registration.saved.className||'Não identificada'),...(validRoom(new URL(location.href).searchParams.get('sala'))?['Convite da turma: '+location.origin+location.pathname+'?sala='+new URL(location.href).searchParams.get('sala')]:[]),online?'Sala: '+online.room.title:'Entre na sua turma','Recompensas fictícias: '+money(scoreOf(progress))+' / '+money(MAX_EARNINGS),...goals(progress).map(g=>g.name+': '+g.value+'/'+g.total),'',...challengeOrder.map(i=>{const c=cases[i],p=progress[i];return [pcNumber(i)+'. '+c.title,'Testes: '+p.tests.length+'/2; diagnóstico: '+(p.diagnosed?'confirmado':'pendente')+'; reparo: '+(p.repaired?'aplicado':'pendente')+'; validação: '+(p.validated?'concluída':'pendente'),'Resolvido por: '+(solversFor(i).map(s=>s.name).join(', ')||'—'),'Tentativas incorretas na prática: '+p.errors,'Desafio conceitual: '+(p.challenge?'concluído':'pendente')+'; tentativas incorretas: '+p.challengeErrors].join('\n')}),'',online?'Registro individual na sala para discussão em aula; não é uma avaliação supervisionada.':'Registro local para discussão em aula; não é uma avaliação supervisionada.'].join('\n');
  const url=URL.createObjectURL(new Blob([report],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='laboratorio-hardware-relatorio.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 };
-setupTeam();setupNotes({getSession:()=>online,onOpen:()=>keys.clear()});
-const offlineUI=setupOffline({getSession:()=>online,isBusy:()=>onlineBusy,hasInvite:()=>validRoom(new URL(location.href).searchParams.get('sala')),practice:practiceIndividual,onOpen:()=>keys.clear()});
+setupTeam();setupNotes({getSession:()=>online,getIdentity:()=>registration.saved,onOpen:()=>keys.clear()});
+const offlineUI=setupOffline({getSession:()=>online,isBusy:()=>onlineBusy,hasInvite:()=>validRoom(new URL(location.href).searchParams.get('sala')),onOpen:()=>keys.clear()});
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});updateHUD();$('#welcome').showModal();frame();
 // Read-only diagnostics for reproducible browser verification.
-window.oficina={get state(){return {performance:{framesRendered,framesUpdated,drawCalls:renderer.info.render.calls,geometries:renderer.info.memory.geometries,textures:renderer.info.memory.textures,light:!renderer.shadowMap.enabled,batching},appearance:player.userData.appearance,focusedPeer,online:online?{room:online.room?.id,round:online.room?.round,connected:online.connected,peers:[...remotePlayers.values()].map(p=>({name:p.name,x:p.group.position.x,z:p.group.position.z,appearance:p.group.userData.appearance,pc:p.pc,score:online.scoreFor(p.userId),label:p.tagText})),scores:structuredClone(online.scores),rows:structuredClone(onlineRows)}:null,position:{x:player.position.x,z:player.position.z},camera:{x:camera.position.x,y:camera.position.y,z:camera.position.z},angle,near,overview,computerColors:beacons.map(b=>b.tower.material.color.getHexString()),stations:stations.map(s=>({...s})),benchCount:benches.length,moving:limbs[0].leg.rotation.x,progress:structuredClone(progress),score:scoreOf(progress)}}};
+window.oficina={get state(){return {busy:onlineBusy,performance:{framesRendered,framesUpdated,drawCalls:renderer.info.render.calls,geometries:renderer.info.memory.geometries,textures:renderer.info.memory.textures,light:!renderer.shadowMap.enabled,batching},appearance:player.userData.appearance,focusedPeer,online:online?{room:online.room?.id,round:online.room?.round,connected:online.connected,peers:[...remotePlayers.values()].map(p=>({name:p.name,x:p.group.position.x,z:p.group.position.z,appearance:p.group.userData.appearance,pc:p.pc,score:online.scoreFor(p.userId),label:p.tagText})),scores:structuredClone(online.scores),rows:structuredClone(onlineRows)}:null,position:{x:player.position.x,z:player.position.z},camera:{x:camera.position.x,y:camera.position.y,z:camera.position.z},angle,near,overview,faultScreens:beacons.map((b,i)=>({caseId:i,pc:pcNumber(i),faultVisible:b.screen.material===b.faultMaterial})),computerColors:beacons.map(b=>b.tower.material.color.getHexString()),stations:stations.map(s=>({...s})),benchCount:benches.length,moving:limbs[0].leg.rotation.x,progress:structuredClone(progress),score:scoreOf(progress)}}};
 
 
 function updateTeam(){$('#newTeam').hidden=!!online;$('#leaveTeam').hidden=!online;$('#reconnectTeam').hidden=!online;$('.invite-details').hidden=!online;
- $('#teamSummary').textContent=online?`${online.room?.title||'Sala'} · Rodada ${online.room?.round||1} · ${remotePlayers.size+1} online · Você: ${progress.filter(p=>p.validated).length}/80`:'Modo individual';
- if(!online){teamSignature='';$('#teamMembers').replaceChildren();$('#teamActivity').replaceChildren();$('#teamRanking').replaceChildren();$('#roomLink').value='';$('#teamStatus').textContent='No modo individual, seu progresso fica neste navegador.';return;}
+ $('#teamSummary').textContent=online?`${online.room?.title||'Sala'} · Rodada ${online.room?.round||1} · ${remotePlayers.size+1} online · Você: ${progress.filter(p=>p.validated).length}/80`:'Entre na sua turma';
+ if(!online){teamSignature='';$('#teamMembers').replaceChildren();$('#teamActivity').replaceChildren();$('#teamRanking').replaceChildren();$('#roomLink').value='';$('#teamStatus').textContent='Use o convite enviado pelo professor para entrar na sua turma.';return;}
  const signature=JSON.stringify([online.room?.nickname,onlineMessage,[...remotePlayers].map(([id,p])=>[id,p.name,p.pc]),online.scores,onlineRows.map(r=>[r.pc,r.revision,r.solvers])]);if(signature===teamSignature)return;teamSignature=signature;
  $('#teamStatus').textContent=onlineMessage;
  const members=$('#teamMembers');members.replaceChildren();
@@ -174,10 +168,11 @@ function syncAvatars(peers){
 }
 function setupTeam(){
  let roomParam=new URL(location.href).searchParams.get('sala');
- $('#roomHint').textContent=roomParam?'Este convite leva à turma do seu professor. Informe seu nome e sobrenome para o registro; a turma já está definida neste convite. Escolha um apelido para encontrar seus colegas.':'Para entrar com colegas, abra o link da turma enviado pelo professor. Sem convite, use a prática individual.';
+ $('#roomHint').textContent=roomParam?'Este convite leva à turma do seu professor. Informe seu nome e sobrenome para o registro; a turma já está definida neste convite. Escolha um apelido para encontrar seus colegas.':'Para entrar com colegas, abra o link da turma enviado pelo professor. Peça ao professor o link da sua turma.';
  try{$('#nickname').value=localStorage.getItem('hardware.nickname')||''}catch{}
  const button=document.createElement('button');button.id='teamButton';button.textContent='Minha turma';$('.stats').append(button);
- button.onclick=()=>{keys.clear();updateTeam();wardrobe.open();$('#teamDialog').showModal()};
+ button.onclick=()=>{keys.clear();updateTeam();$('#teamDialog').showModal()};
+ $('.appearance-details').addEventListener('toggle',()=>{if($('.appearance-details').open)wardrobe.open()});
  const look=document.createElement('button');look.id='wardrobeButton';look.textContent='Meu visual';$('.stats').append(look);look.onclick=()=>{button.click();$('.appearance-details').open=true;$('.appearance-details').scrollIntoView({block:'start'})};
  $('#returnToMe').onclick=()=>{focusedPeer=null};
  $('#followMe').onclick=()=>{focusedPeer=null;overview=false;$('#teamDialog').close()};
@@ -185,10 +180,10 @@ function setupTeam(){
  $('#closeTeam').onclick=()=>$('#teamDialog').close();
  $('#copyRoom').onclick=async()=>{if(!online?.room)return;const url=new URL(location.href);url.searchParams.set('sala',online.room.id);$('#roomLink').value=url.href;try{await navigator.clipboard.writeText(url.href);toast('Link da sala copiado!')}catch{$('#roomLink').select();toast('Selecione e copie o link da sala.')}};
  const enter=async create=>{
-  if(!navigator.onLine){$('#joinError').textContent='Sem internet. Escolha Praticar offline para continuar neste aparelho.';return;}if(onlineBusy)return;roomParam=new URL(location.href).searchParams.get('sala');const identity=registration.read();if(!identity)return;const name=identity.nickname;
-  if(!validRoom(roomParam)){$('#joinError').textContent='Abra o convite enviado pelo professor para entrar em uma turma. Sem convite, você pode praticar individualmente.';return;}
+  if(!navigator.onLine){$('#joinError').textContent='Sem conexão. Reconecte para entrar na turma.';return;}if(onlineBusy)return;roomParam=new URL(location.href).searchParams.get('sala');const identity=registration.read();if(!identity)return;const name=identity.nickname;
+  if(!validRoom(roomParam)){$('#joinError').textContent='Abra o convite enviado pelo professor para entrar em uma turma. Peça ao professor o link da sua turma.';return;}
   if(online){await online.leave();online=null;}
-  localProgress??=structuredClone(progress);onlineRows=[];onlineBusy=true;$('#joinError').textContent='Conectando…';$('#joinTeam').disabled=true;
+  started=false;progress=fresh();onlineRows=[];onlineBusy=true;$('#joinError').textContent='Conectando…';$('#joinTeam').disabled=true;
   const session=new OnlineLab({
    status:(message)=>{if(online!==session)return;offlineUI.update();onlineMessage=message;$('#teamStatus').textContent=message;$('#save').textContent=message;},
    round:round=>{if(online!==session)return;progress=fresh();onlineRows=[];teamSignature='';if($('#panel').open)$('#panel').close();updateHUD();toast('O professor iniciou a rodada '+round+'. Os 80 desafios estão disponíveis.');},
@@ -197,17 +192,17 @@ function setupTeam(){
    peers:peers=>{if(online===session)syncAvatars(peers)}
   });online=session;
   try{const room=await session.enter(name,roomParam||OPEN_ROOM,null,identity);if(online!==session)return;registration.rememberRoom(room);const entry=freeSpawn(spawn,[...remotePlayers.values()].map(p=>p.target),blocked);player.position.set(entry.x,0,entry.z);try{localStorage.setItem('hardware.nickname',name)}catch{}const url=new URL(location.href);url.searchParams.set('sala',room.id);history.replaceState(null,'',url);$('#roomLink').value=url.href;$('#teamNickname').value=name;applyAppearance(player,session.appearance);$('#hairStyle').value=String(session.appearance.style);$('#hairColor').value=session.appearance.color;$('#welcome').close();$('#teamDialog').close();started=true;keys.clear();updateHUD();toast('Você entrou em '+room.title+'. Veja seus colegas em Minha turma.');}
-  catch(e){void session.leave().catch(()=>{});if(online!==session)return;online=null;progress=localProgress||fresh();localProgress=null;$('#joinError').textContent=e.message||'Não foi possível entrar. Tente novamente.';updateHUD();}
-  finally{if(online===session||!online){onlineBusy=false;$('#start').disabled=false;offlineUI.update();}}
+  catch(e){void session.leave().catch(()=>{});if(online!==session)return;online=null;progress=fresh();started=false;$('#joinError').textContent=e.message||'Não foi possível entrar. Tente novamente.';updateHUD();}
+  finally{if(online===session||!online){onlineBusy=false;offlineUI.update();}}
  };
  $('#joinTeam').onclick=()=>enter(false);
  $('#newTeam').onclick=()=>{$('#teamDialog').close();$('#welcome').showModal();$('#joinError').textContent='Confira sua identificação e o apelido para entrar. Para trocar de turma, abra o convite enviado pelo professor.'};
- $('#leaveTeam').onclick=()=>{if(!online||onlineBusy)return;practiceIndividual();const url=new URL(location.href);url.searchParams.delete('sala');history.replaceState(null,'',url);$('#teamDialog').close();$('#save').textContent='Progresso individual salvo neste navegador';updateHUD();updateTeam();toast('Você voltou ao modo individual. A sala permanece salva.');};
+ $('#leaveTeam').onclick=async()=>{if(!online||onlineBusy)return;const previous=online;online=null;started=false;progress=fresh();onlineRows=[];focusedPeer=null;syncAvatars([]);keys.clear();for(const id of ['panel','teamDialog','classroom','notesDialog'])$('#'+id).close();$('#welcome').showModal();updateHUD();updateTeam();offlineUI.update();await previous.leave();};
  $('#panel').addEventListener('close',()=>{if(online)void online.release()});
  addEventListener('offline',()=>{if(online)online.disconnect();});
  addEventListener('online',()=>{if(online)void online.reconnect();});
  setInterval(()=>{if(online){updateOccupancy();updateTeam()}},1000);
- $('#teamStatus').textContent='No modo individual, seu progresso fica neste navegador.';
+ $('#teamStatus').textContent='Use o convite enviado pelo professor para entrar na sua turma.';
 }
 
 function updateOccupancy(){

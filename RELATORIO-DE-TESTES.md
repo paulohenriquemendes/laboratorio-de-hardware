@@ -1,3 +1,15 @@
+## Catálogo, turma obrigatória e participação — 28/10/2026
+
+- 14 cabelos e 14 acessórios, incluindo seis referências genéricas de rock, pulseiras, celular, tablet, calça azul e saia verde. Miniaturas, desbloqueios e exclusão entre itens incompatíveis testados em telas 320/390 e desktop.
+- A turma é obrigatória. Não há botão de prática individual, desvio via Escape ou troca para uma ficha local quando falta rede. O cache de arquivos permanece; respostas aguardam reconexão.
+- Nome completo e turma não são capturados em Minha participação: o registro da entrada é reutilizado no envio de participação e sugestões.
+- Os 80 monitores têm representações do relato. Indicadores são substituídos pelo verde ao concluir, mantendo os IDs e os resultados existentes.
+- Teste SQL em transação revertida: cabelos 8–13 e cinco novos acessórios bloqueados sem saldo, liberados com conquistas, persistidos e bloqueados novamente em nova rodada. Celular/tablet e calça/saia simultâneos são recusados. Nenhuma turma de teste ou resposta foi deixada no servidor.
+- Testes de interface usam respostas de serviço e Realtime simuladas; não equivalem a um ensaio de carga de uma turma real. Migração do catálogo aplicada ao projeto existente sem mudar contas ou histórico.
+- Auditoria do Supabase: os avisos sobre [sessões anônimas](https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins) pertencem ao acesso por apelido já autorizado; as tabelas privadas continuam protegidas por RPC, com RLS e sem políticas públicas. Não foram abertas permissões ou tabelas novas nesta alteração.
+
+As seções abaixo registram versões anteriores, inclusive o antigo modo individual, agora removido.
+
 ## Ilustrações animadas dos 80 sintomas — 28/10/2026
 
 - Todas as fichas têm uma ilustração do relato; hardware, periféricos, redes e fundamentos usam desenhos adequados ao tema, sem mostrar o reparo.

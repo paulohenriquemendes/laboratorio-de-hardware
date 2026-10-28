@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 4180 --strictPort",
     "build": "vite build",
-    "test": "node --test unit.test.mjs && node tests.mjs && node robustness.mjs && node reading.test.mjs",
+    "test": "npm run test:unit && node classroom-updates.test.mjs && node reading.test.mjs && node symptom-animation.test.mjs && node mobile.test.mjs && node offline-cache.test.mjs",
     "test:unit": "node --test unit.test.mjs physics-cosmetics.test.mjs",
     "test:e2e": "node tests.mjs",
     "test:robustness": "node robustness.mjs",
@@ -25,7 +25,8 @@
     "test:identity:economy": "node identity-economy.test.mjs",
     "test:local:visuals": "node local-visuals.test.mjs",
     "test:classrooms": "node admin-classrooms.test.mjs",
-    "test:animations": "node symptom-animation.test.mjs"
+    "test:animations": "node symptom-animation.test.mjs",
+    "test:classroom:updates": "node classroom-updates.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

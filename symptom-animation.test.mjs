@@ -1,3 +1,4 @@
+import {mockClassroom,enterClassroom} from './classroom-test-support.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {chromium} from 'playwright';
@@ -9,8 +10,8 @@ for(let i=0;i<80;i++){assert.equal(symptomScenes[i].id,i);assert.match(symptomMa
 const browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=swiftshader']});
 fs.mkdirSync('test-results',{recursive:true});
 try{
- const page=await browser.newPage({viewport:{width:390,height:844}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://127.0.0.1:4181/');await page.fill('#registrationName','Aluno Animacao QA');await page.fill('#nickname','Teste');await page.click('#start');
+ const context=await browser.newContext({viewport:{width:390,height:844}});await mockClassroom(context);const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await enterClassroom(page);
  await page.keyboard.down('w');try{await page.waitForFunction(()=>window.oficina.state.near===63);}finally{await page.keyboard.up('w');}
  await page.keyboard.press('e');await page.waitForSelector('#symptomAnimation svg');assert.equal(await page.locator('#symptomAnimation').getAttribute('data-case-id'),'63');
  await page.click('[data-motion=pause]');assert.equal(await page.locator('[data-motion=pause]').getAttribute('aria-pressed'),'true');

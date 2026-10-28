@@ -1,7 +1,7 @@
 import {money} from './economy.js';
 import * as THREE from 'three';
 import {applyAppearance,normalizeAppearance} from './avatar.js';
-import {styleNames,stylePoints,accessories,unlockedAppearance} from './cosmetics.js';
+import {styleNames,stylePoints,accessories,unlockedAppearance,selectCosmetic} from './cosmetics.js';
 export function setupWardrobe({player,getSession,getScore,getSolved,notify}){
  const $=s=>document.querySelector(s);let draft=normalizeAppearance(player.userData.appearance),renderer,previewScene,previewModel,previewCamera;const previewCache=new Map();
  const host=document.createElement('div');host.id='wardrobeCatalog';document.querySelector('.avatar-fields').before(host);
@@ -23,14 +23,14 @@ export function setupWardrobe({player,getSession,getScore,getSolved,notify}){
   for(const [title,items] of [['Cabelos',styleNames.map((name,style)=>({name,key:'style',value:style,points:stylePoints[style]}))],['Acessórios sobre o fardamento',accessories.map(a=>({...a,value:true}))]]){
    const h=document.createElement('h3');h.textContent=title;const grid=document.createElement('div');grid.className='wardrobe-grid';host.append(h,grid);
    for(const item of items){const selected=draft[item.key]===item.value,locked=score<item.points||getSolved()<(item.solved||0);const button=document.createElement('button');button.type='button';button.className='wardrobe-card';button.disabled=locked;button.setAttribute('aria-pressed',String(selected));button.dataset.item=item.key==='style'?'hair-'+item.value:item.key;
-    const next={...draft};if(['tattoo','tattooBolt','tattooStar'].includes(item.key))for(const key of ['tattoo','tattooBolt','tattooStar'])next[key]=false;if(item.key==='nails')next.gloves=false;if(item.key==='gloves')next.nails=false;next[item.key]=item.value;const img=document.createElement('img');img.src=preview(next,item.key==='sandals'?'feet':item.key==='beard'?'face':['gloves','tattoo','tattooBolt','tattooStar','nails'].includes(item.key));img.alt=item.name+' no personagem com fardamento';img.width=144;img.height=170;const name=document.createElement('strong');name.textContent=item.name;const requirement=document.createElement('span');requirement.textContent=locked?'Requer '+money(item.points)+(item.solved?' e '+item.solved+' desafios':''):selected?'Selecionado':item.points?money(item.points)+' · liberado':'Livre';button.append(img,name,requirement);button.onclick=()=>{draft={...next,[item.key]:item.key==='style'?item.value:!selected};styles.value=draft.style;render();};grid.append(button);
+    const next=selectCosmetic(draft,item.key,item.value);const img=document.createElement('img');img.src=preview(next,item.key==='sandals'?'feet':item.key==='beard'?'face':['gloves','tattoo','tattooBolt','tattooStar','nails','bracelets','phone','tablet'].includes(item.key));img.alt=item.name+' no personagem com fardamento';img.width=144;img.height=170;const name=document.createElement('strong');name.textContent=item.name;const requirement=document.createElement('span');requirement.textContent=locked?'Requer '+money(item.points)+(item.solved?' e '+item.solved+' desafios':''):selected?'Selecionado':item.points?money(item.points)+' · liberado':'Livre';button.append(img,name,requirement);button.onclick=()=>{draft={...next,[item.key]:item.key==='style'?item.value:!selected};styles.value=draft.style;render();};grid.append(button);
    }
   }
   for(const o of styles.options)o.disabled=score<(stylePoints[Number(o.value)]||0);
   styles.value=draft.style;$('#hairColor').value=draft.color;
  }
  styles.onchange=()=>{draft.style=Number(styles.value);render()};$('#hairColor').onchange=()=>{draft.color=$('#hairColor').value;render()};
- $('#saveAppearance').onclick=async()=>{const session=getSession();if(!session){const a=normalizeAppearance(unlockedAppearance(draft,getScore(),getSolved()));try{localStorage.setItem('hardware.localAppearance',JSON.stringify(a));}catch{}applyAppearance(player,a);draft=a;render();notify('Visual salvo neste aparelho.');return;}const b=$('#saveAppearance');b.disabled=true;try{const a=await session.setAppearance(draft);applyAppearance(player,a);draft=normalizeAppearance(a);render();notify('Visual salvo. Seu valor acumulado foi mantido.')}catch(e){notify(e.message)}finally{b.disabled=false}};
+ $('#saveAppearance').onclick=async()=>{const session=getSession();if(!session?.connected){notify('Reconecte à turma para salvar seu visual.');return;}const b=$('#saveAppearance');b.disabled=true;try{const a=await session.setAppearance(draft);applyAppearance(player,a);draft=normalizeAppearance(a);render();notify('Visual salvo. Seu valor acumulado foi mantido.')}catch(e){notify(e.message)}finally{b.disabled=false}};
  return {open(){draft=normalizeAppearance(unlockedAppearance(getSession()?.appearance||player.userData.appearance,getScore(),getSolved()));render();}};
 }
 
