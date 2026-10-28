@@ -30,6 +30,7 @@ try{
   }
  }
  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>window.animationTest.showSymptomAnimation(32));await page.locator('#symptomAnimation').scrollIntoViewIfNeeded();await page.screenshot({path:'test-results/symptom-mouse-mobile.png'});
+ const closeBox=await page.locator('#close').boundingBox(),replayBox=await page.locator('[data-motion=replay]').boundingBox();assert.ok(replayBox.x+replayBox.width<=closeBox.x||replayBox.y>=closeBox.y+closeBox.height,'Rever livre do botão de fechar');
  const movement=await page.locator('.sa-cursor').evaluate(async e=>{const a=getComputedStyle(e).transform;await new Promise(r=>setTimeout(r,2000));return [a,getComputedStyle(e).transform];});assert.notEqual(...movement);
  await page.click('[data-motion=pause]');const paused=await page.locator('.sa-cursor').evaluate(async e=>{const a=getComputedStyle(e).transform;await new Promise(r=>setTimeout(r,250));return [a,getComputedStyle(e).transform];});assert.equal(...paused);
  await page.emulateMedia({reducedMotion:'reduce'});await page.evaluate(()=>window.animationTest.showSymptomAnimation(9));assert.equal(await page.locator('[data-motion=pause]').getAttribute('aria-pressed'),'true');
