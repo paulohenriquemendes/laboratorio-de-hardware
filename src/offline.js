@@ -1,5 +1,5 @@
 import '../offline.css';
-export function setupOffline({getSession,isBusy,practice,onOpen}){
+export function setupOffline({getSession,isBusy,hasInvite,practice,onOpen}){
  const info=document.createElement('section');info.id='offlineInfo';info.className='offline-info';
  info.innerHTML='<h2>Leve o laboratório para a escola</h2><p id="offlineStatus" role="status">Preparando os arquivos para uso sem internet…</p><p>Antes da aula, abra este link com internet e espere a confirmação “Pronto para usar sem internet”. Na escola, abra o mesmo link no mesmo navegador e escolha praticar individualmente.</p><p>Na prática offline, os 80 desafios e suas recompensas fictícias ficam neste aparelho. Colegas, placar da turma e envios ao professor precisam de conexão. O progresso individual não é enviado automaticamente: em <b>Desafios</b>, baixe o resumo para entregar ao professor.</p><p>Evite navegação anônima e não limpe os dados do site. O navegador pode remover arquivos se faltar espaço. Teste abrindo o jogo em modo avião antes de sair de casa.</p><button id="prepareOffline" type="button">Verificar arquivos / tentar novamente</button>';
  document.querySelector('#start').before(info);
@@ -12,7 +12,7 @@ export function setupOffline({getSession,isBusy,practice,onOpen}){
   banner.hidden=navigator.onLine&&!interrupted;
   banner.querySelector('span').textContent=session?'Turma sem sincronização. Continue na prática individual salva neste aparelho.':'Sem internet · prática individual salva neste aparelho.';
   banner.querySelector('button').hidden=!session;
-  document.querySelector('#joinTeam').disabled=!navigator.onLine||isBusy();
+  document.querySelector('#joinTeam').disabled=!navigator.onLine||isBusy()||!hasInvite();
   document.querySelector('#start').textContent=navigator.onLine?'Praticar individualmente →':'Praticar offline →';
  }
  async function verify(worker){

@@ -6,7 +6,7 @@ Abra https://paulohenriquemendes.github.io/laboratorio-de-hardware/admin/ . A ad
 
 ## Turmas e convites
 
-Selecione a turma no painel ou use **Criar uma nova turma**. Copie o convite e envie aos alunos. Quem abre o mesmo convite entra na mesma turma; outra turma tem outro endereço e resultados separados. O endereço do jogo sem convite entra no laboratório aberto.
+Selecione a turma no painel ou use **Criar uma nova turma**. Copie o convite e envie aos alunos. Quem abre o mesmo convite entra na mesma turma; outra turma tem outro endereço e resultados separados. O endereço do jogo sem convite oferece a prática individual. Para entrar com colegas é necessário abrir um convite de turma criado na administração. A criação de turmas é verificada no servidor e exige sessão administrativa; não há criação automática por alunos.
 
 No jogo, **Minha turma** mostra colegas, localização e placar. O convite fica recolhido em **Convidar colegas**. A aparência fica em **Personalizar meu personagem**. O laboratório é um único ambiente com 80 computadores e placas “Laboratório de Hardware”. Todos podem resolver todos os desafios, inclusive o mesmo computador simultaneamente. Verde significa que alguém já resolveu, e a ficha lista os autores. Recompensas fictícias e respostas são individuais.
 

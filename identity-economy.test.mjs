@@ -12,7 +12,8 @@ const rpc=async(client,name,args)=>{const {data,error}=await client.rpc(name,arg
 let browser;
 try{
  for(const c of clients)assert.equal((await c.auth.signInAnonymously()).error,null);
- const room=await rpc(student,'lab_join',{p_room:null,p_name:'Inicial QA',p_title:'QA identidade e reais '+Date.now()});
+ await rpc(student,'lab_open_admin');const room=await rpc(student,'lab_join',{p_room:null,p_name:'Inicial QA',p_title:'QA identidade e reais '+Date.now()});
+ await rpc(student,'lab_admin',{p_operation:'logout',p_room:room.id});
  await rpc(peer,'lab_join',{p_room:room.id,p_name:'Colega QA'});
  browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=swiftshader']});const context=await browser.newContext({viewport:{width:1280,height:900}});
  const auth=(await student.auth.getSession()).data.session;await context.addInitScript(session=>localStorage.setItem('hardware-coop.auth',JSON.stringify(session)),auth);

@@ -8,7 +8,7 @@ const client=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,
 let browser;
 try{
  const auth=await client.auth.signInAnonymously();assert.equal(auth.error,null);
- const joined=await client.rpc('lab_join',{p_room:null,p_name:'QA Offline',p_title:'QA continuidade offline '+Date.now()});assert.equal(joined.error,null);const room=joined.data;
+ assert.equal((await client.rpc('lab_open_admin')).error,null);const joined=await client.rpc('lab_join',{p_room:null,p_name:'QA Offline',p_title:'QA continuidade offline '+Date.now()});assert.equal(joined.error,null);const room=joined.data;assert.equal((await client.rpc('lab_admin',{p_operation:'logout',p_room:room.id})).error,null);
  const local=fresh();Object.assign(local[0],{tests:[0,1],diagnosed:true,repaired:true,validated:true});
  browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=swiftshader']});const context=await browser.newContext();
  await context.addInitScript(({session,local})=>{if(!localStorage.getItem('offline.qa.seed')){localStorage.setItem('hardware-coop.auth',JSON.stringify(session));localStorage.setItem('laboratorioHardware80.v1',JSON.stringify(local));localStorage.setItem('offline.qa.seed','1');}},{session:auth.data.session,local});

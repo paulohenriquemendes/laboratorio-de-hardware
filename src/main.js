@@ -142,7 +142,7 @@ $('#downloadReport').onclick=()=>{
  const url=URL.createObjectURL(new Blob([report],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='laboratorio-hardware-relatorio.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 };
 setupTeam();setupNotes({getSession:()=>online,onOpen:()=>keys.clear()});
-const offlineUI=setupOffline({getSession:()=>online,isBusy:()=>onlineBusy,practice:practiceIndividual,onOpen:()=>keys.clear()});
+const offlineUI=setupOffline({getSession:()=>online,isBusy:()=>onlineBusy,hasInvite:()=>validRoom(new URL(location.href).searchParams.get('sala')),practice:practiceIndividual,onOpen:()=>keys.clear()});
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});updateHUD();$('#welcome').showModal();frame();
 // Read-only diagnostics for reproducible browser verification.
 window.oficina={get state(){return {appearance:player.userData.appearance,focusedPeer,online:online?{room:online.room?.id,round:online.room?.round,connected:online.connected,peers:[...remotePlayers.values()].map(p=>({name:p.name,x:p.group.position.x,z:p.group.position.z,appearance:p.group.userData.appearance,pc:p.pc,score:online.scoreFor(p.userId),label:p.tagText})),scores:structuredClone(online.scores),rows:structuredClone(onlineRows)}:null,position:{x:player.position.x,z:player.position.z},camera:{x:camera.position.x,y:camera.position.y,z:camera.position.z},angle,near,overview,computerColors:beacons.map(b=>b.tower.material.color.getHexString()),stations:stations.map(s=>({...s})),benchCount:benches.length,moving:limbs[0].leg.rotation.x,progress:structuredClone(progress),score:scoreOf(progress)}}};
@@ -169,7 +169,7 @@ function syncAvatars(peers){
 }
 function setupTeam(){
  let roomParam=new URL(location.href).searchParams.get('sala');
- $('#roomHint').textContent=roomParam?'Este convite leva à turma do seu professor. Preencha seu nome completo e turma para o registro. Escolha um apelido para encontrar seus colegas.':'Você entrará no laboratório aberto. Para uma turma específica, use o convite enviado pelo professor.';
+ $('#roomHint').textContent=roomParam?'Este convite leva à turma do seu professor. Preencha seu nome completo e turma para o registro. Escolha um apelido para encontrar seus colegas.':'Para entrar com colegas, abra o link da turma enviado pelo professor. Sem convite, use a prática individual.';
  try{$('#nickname').value=localStorage.getItem('hardware.nickname')||''}catch{}
  const button=document.createElement('button');button.id='teamButton';button.textContent='Minha turma';$('.stats').append(button);
  button.onclick=()=>{keys.clear();updateTeam();wardrobe.open();$('#teamDialog').showModal()};
@@ -181,7 +181,7 @@ function setupTeam(){
  $('#copyRoom').onclick=async()=>{if(!online?.room)return;const url=new URL(location.href);url.searchParams.set('sala',online.room.id);$('#roomLink').value=url.href;try{await navigator.clipboard.writeText(url.href);toast('Link da sala copiado!')}catch{$('#roomLink').select();toast('Selecione e copie o link da sala.')}};
  const enter=async create=>{
   if(!navigator.onLine){$('#joinError').textContent='Sem internet. Escolha Praticar offline para continuar neste aparelho.';return;}if(onlineBusy)return;roomParam=new URL(location.href).searchParams.get('sala');const identity=registration.read();if(!identity)return;const name=identity.nickname;
-  if(!create&&roomParam&&!validRoom(roomParam)){$('#joinError').textContent='O link da sala é inválido. Confira o endereço recebido.';return;}
+  if(!validRoom(roomParam)){$('#joinError').textContent='Abra o convite enviado pelo professor para entrar em uma turma. Sem convite, você pode praticar individualmente.';return;}
   if(online){await online.leave();online=null;}
   localProgress??=structuredClone(progress);onlineRows=[];onlineBusy=true;$('#joinError').textContent='Conectando…';$('#joinTeam').disabled=true;
   const session=new OnlineLab({
