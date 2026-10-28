@@ -60,3 +60,9 @@ Algumas fichas possuem a seção **Experimentar**. Nos dez desafios iniciais sob
 Se a conexão cair durante a turma online, o aviso **Praticar neste aparelho** permite sair para a prática individual sem esperar pela rede. Essa ficha é separada da turma: os resultados já confirmados no servidor continuam lá e reaparecem ao entrar novamente. O progresso individual anterior é retomado. Personagens dos colegas, envios de participação/anotações e relatórios administrativos precisam de internet. Com a conexão restabelecida, o aluno decide quando voltar à turma; não há mistura automática de notas locais e registros do servidor.
 
 Evite modo anônimo e não apague dados do site. Navegadores podem remover o armazenamento por falta de espaço; confira a mensagem e o modo avião antes da aula. A preparação é por navegador, perfil e aparelho. Um primeiro acesso completamente sem rede não consegue baixar o jogo. O navegador verifica atualizações quando há internet; somente uma versão com todos os arquivos baixados substitui a anterior. Recarregue conectado para usar a atualização.
+
+## Ilustrações dos sintomas
+
+Ao inspecionar qualquer um dos 80 computadores, a ficha mostra uma animação curta do sintoma ou um diagrama animado do enunciado. Use **Pausar / Reproduzir** e **Rever** para observar o comportamento com a turma. As ilustrações reproduzem o relato antes do reparo; valores e classificações apresentados no enunciado podem estar errados e precisam ser investigados. Elas não substituem as evidências nem apresentam o diagnóstico.
+
+As animações não têm áudio, usam desenhos locais e ficam disponíveis no modo offline depois de preparar o jogo com internet. Param após poucos segundos. Com a preferência de movimento reduzido do aparelho, começam pausadas e podem ser reproduzidas pelo aluno.

@@ -24,7 +24,8 @@
     "test:offline:transition": "node offline-transition.test.mjs",
     "test:identity:economy": "node identity-economy.test.mjs",
     "test:local:visuals": "node local-visuals.test.mjs",
-    "test:classrooms": "node admin-classrooms.test.mjs"
+    "test:classrooms": "node admin-classrooms.test.mjs",
+    "test:animations": "node symptom-animation.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

@@ -1,3 +1,12 @@
+## Ilustrações animadas dos 80 sintomas — 28/10/2026
+
+- Todas as fichas têm uma ilustração do relato; hardware, periféricos, redes e fundamentos usam desenhos adequados ao tema, sem mostrar o reparo.
+- Teste de navegador aprovado para os 80 IDs estáveis em larguras de 320, 390 e 1280 pixels: SVG acessível, sem estouro horizontal e sem mídia externa.
+- Ficha real: animação preservada ao consultar evidência; controles Pausar/Reproduzir e Rever aprovados; cursor do mouse apresenta saltos e para ao pausar.
+- Preferência de movimento reduzido inicia a ilustração pausada. Animações finitas de poucos segundos, sem áudio e sem laço de renderização JavaScript.
+- Testes de celular aprovados, com resolução de desafio e navegação. Cache offline aprovado após recarregar sem rede, incluindo reprodução da ilustração, desafio e persistência.
+- 116 testes de regras e build aprovados. Acréscimo total aproximado de 10 KB compactados aos arquivos de jogo e estilos, sem vídeos para baixar.
+
 ## Revisão de 28/10/2026
 
 - Entrada simplificada: nome completo e nome do personagem. Turma obtida pelo convite; sem campo de turma na entrada ou nas anotações.
