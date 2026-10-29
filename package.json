@@ -1,5 +1,5 @@
 {
-  "name": "oficina-3d",
+  "name": "missao-hardware",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -27,7 +27,8 @@
     "test:classrooms": "node admin-classrooms.test.mjs",
     "test:animations": "node symptom-animation.test.mjs",
     "test:classroom:updates": "node classroom-updates.test.mjs",
-    "test:teaching": "node teaching-tools.test.mjs"
+    "test:teaching": "node teaching-tools.test.mjs",
+    "test:branding": "node branding.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

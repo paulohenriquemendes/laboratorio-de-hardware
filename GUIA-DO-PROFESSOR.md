@@ -1,8 +1,8 @@
-# Laboratório de Hardware — guia do professor
+# Missão Hardware — guia do professor
 
 ## Acesso administrativo
 
-Abra https://paulohenriquemendes.github.io/laboratorio-de-hardware/admin/ . A administração abre diretamente, sem chave, conforme solicitado. O jogo não mostra um atalho administrativo. Quem descobrir esse endereço também poderá consultar dados e reiniciar turmas. **Sair da administração** retorna ao jogo; abrir o endereço novamente permite entrar de novo. O endereço antigo `admin.html` redireciona para `/admin/`.
+Abra https://paulohenriquemendes.github.io/missao-hardware/admin/ . A administração abre diretamente, sem chave, conforme solicitado. O jogo não mostra um atalho administrativo. Quem descobrir esse endereço também poderá consultar dados e reiniciar turmas. **Sair da administração** retorna ao jogo; abrir o endereço novamente permite entrar de novo. O endereço antigo `admin.html` redireciona para `/admin/`.
 
 ## Turmas e convites
 
@@ -91,3 +91,7 @@ Na primeira entrada de uma sessão de aluno, o tutorial acompanha o movimento, a
 Há oito áreas amarelas sinalizadas com cabos, ferramentas ou peças no piso, fora da entrada e dos pontos de uso dos computadores. Ao pisar, um aviso vermelho explica o incidente simulado e o custo de uma consulta médica fictícia: **até R$ 10**, limitado ao dinheiro disponível. Não há saldo negativo. Permanecer sobre a área não gera descontos repetidos; existe também um intervalo mínimo de oito segundos entre incidentes aceitos pelo servidor.
 
 Os custos são salvos por aluno, turma e rodada, inclusive após recarregar. A carteira e o placar mostram o saldo após os custos. As recompensas conquistadas em desafios, respostas e conclusões não são apagadas; os desbloqueios por conquistas também são preservados. Na avaliação por período, custos ficam separados das recompensas. Ao iniciar uma nova rodada, a nova carteira começa sem os custos da anterior, cujo histórico permanece guardado. Todo o dinheiro e o atendimento são fictícios; o objetivo é lembrar de manter a circulação do laboratório livre de riscos.
+
+## Nome do jogo e links
+
+O nome da aplicação, logotipo, ícone, administração e relatórios é **Missão Hardware**. As placas do cenário continuam com **Laboratório de Hardware**. O novo endereço é https://paulohenriquemendes.github.io/missao-hardware/ . Os convites já compartilhados pelos endereços anteriores continuam válidos e redirecionam com o mesmo identificador de turma. Não é necessário criar novamente as turmas. Recarregue com internet para receber a marca e preparar o cache do novo caminho.

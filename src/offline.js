@@ -1,7 +1,7 @@
 import '../offline.css';
 export function setupOffline({getSession,isBusy,hasInvite,onOpen}){
  const info=document.createElement('section');info.id='offlineInfo';info.className='offline-info';
- info.innerHTML='<h2>Carregamento mais leve</h2><p id="offlineStatus" role="status">Preparando os arquivos do laboratório…</p><p>Abra o convite antes da aula e aguarde a preparação dos arquivos. Os desenhos e animações ficam neste navegador para reduzir os downloads. Para entrar na turma, resolver desafios e enviar a participação, mantenha a conexão. Se ela cair, aguarde a reconexão ou use Reconectar em Minha turma.</p><button id="prepareOffline" type="button">Verificar arquivos / tentar novamente</button>';
+ info.innerHTML='<h2>Carregamento mais leve</h2><p id="offlineStatus" role="status">Preparando os arquivos do Missão Hardware…</p><p>Abra o convite antes da aula e aguarde a preparação dos arquivos. Os desenhos e animações ficam neste navegador para reduzir os downloads. Para entrar na turma, resolver desafios e enviar a participação, mantenha a conexão. Se ela cair, aguarde a reconexão ou use Reconectar em Minha turma.</p><button id="prepareOffline" type="button">Verificar arquivos / tentar novamente</button>';
  document.querySelector('.join-team').after(info);
  const open=document.createElement('button');open.id='offlineHelp';open.textContent='Carregamento';document.querySelector('.stats').append(open);open.onclick=()=>{onOpen();document.querySelector('#welcome').showModal();info.scrollIntoView({block:'start'})};
  const banner=document.createElement('div');banner.id='offlineBanner';banner.hidden=true;banner.setAttribute('role','status');banner.innerHTML='<span></span>';document.body.append(banner);

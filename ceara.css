@@ -9,3 +9,5 @@ dialog button:hover{background:#e7f3e9;border-color:#008241}dialog button:focus-
 .stats button,#touch button{background:#264c39;border-color:#68957a;color:#f3faf5}.stats button:hover,#touch button:hover{background:#35664b}
 .brand{font-size:18px;letter-spacing:.2px;line-height:1.15;gap:12px}.brand b{font-size:25px}.brand-mark{width:50px;height:50px}.brand small{font-size:8px;letter-spacing:1.5px;margin-top:6px}@media(max-width:700px){.brand{font-size:12px}.brand b{font-size:17px}.brand-mark{width:36px;height:36px}.brand small{display:none}}@media(max-width:420px){.brand{font-size:10px;gap:6px}.brand b{font-size:14px}.brand-mark{width:30px;height:30px}}
 .brand{background:#142d25f2;border:1px solid #7ba68d55;border-radius:12px;padding:9px 12px}@media(max-width:600px){.brand{padding:6px 8px}}
+
+.welcome-brand{display:block;width:min(360px,100%);height:auto;margin:0 0 20px}.brand small{font-size:7px;letter-spacing:.8px}

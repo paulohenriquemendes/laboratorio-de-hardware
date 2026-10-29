@@ -1,3 +1,11 @@
+## Marca Missão Hardware e novo endereço — 28/10/2026
+
+- Nome e logotipo atualizados em cabeçalho, entrada, administração, ícone, relatórios e metadados de compartilhamento. Novo símbolo vetorial e assinatura da marca; nenhum serviço de imagens externo.
+- As três placas 3D continuam com LABORATÓRIO DE HARDWARE. IDs das turmas, respostas, autenticação e armazenamento foram preservados.
+- Novo endereço principal: https://paulohenriquemendes.github.io/missao-hardware/ . Os caminhos anteriores redirecionam conservando parâmetros de turma, fragmentos e rota administrativa. O site novo é publicado antes de ativar os redirecionamentos antigos.
+- Teste da marca em 320, 390 e 1280 pixels: título, logo, miniatura da marca, exportação com novo nome e ausência de estouro horizontal. Cache inclui logo, assinatura e script de compatibilidade.
+- As verificações anteriores abaixo documentam a evolução do jogo sob seu nome anterior.
+
 ## Ferramentas de ensino e segurança simulada — 28/10/2026
 
 - Feedback educativo para alternativas incorretas nos 80 desafios, mantendo a regra de desconto e a liberdade de nova tentativa. Testes cobrem diagnóstico, reparo e conceito.

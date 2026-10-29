@@ -1,4 +1,4 @@
-name: Publicar Laboratório de Hardware
+name: Publicar Missão Hardware
 on:
   push:
     branches: [main]

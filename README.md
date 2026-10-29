@@ -1,10 +1,10 @@
-# Laboratório de Hardware
+# Missão Hardware
 
 Jogo educativo 3D para aulas de arquitetura e manutenção de computadores. Feito com Three.js e Vite. O site fica no GitHub Pages; o modo colaborativo usa Supabase Auth, Postgres e Realtime, em projeto gratuito separado. Não exige e-mail ou senha dos alunos.
 
-**Jogar:** https://paulohenriquemendes.github.io/laboratorio-de-hardware/
+**Jogar:** https://paulohenriquemendes.github.io/missao-hardware/
 
-**Repositório:** https://github.com/paulohenriquemendes/oficina-3d
+**Repositório:** https://github.com/paulohenriquemendes/missao-hardware
 
 ## Laboratório
 
@@ -43,13 +43,13 @@ Servidor de desenvolvimento na porta 4180. O projeto pc-lab e sua porta 4174 sã
 
 ```powershell
 npm run build
-npx vite preview --host 127.0.0.1 --port 4181 --strictPort --base /oficina-3d/
+npx vite preview --host 127.0.0.1 --port 4181 --strictPort
 ```
 
 Em outro terminal, nesta pasta:
 
 ```powershell
-$env:GAME_URL="http://127.0.0.1:4181/oficina-3d/"
+$env:GAME_URL="http://127.0.0.1:4181/"
 npm test
 npm run test:expansion
 npm run test:production
@@ -129,3 +129,7 @@ Aplique as migrações `20261025154550_student_notes.sql` e `20261026153045_stud
 ## Acesso administrativo por URL — 26/10/2026
 
 Por solicitação expressa do responsável, `/admin/` abre o painel sem chave. A rota antiga `admin.html` redireciona para ela e o jogo não exibe atalho de administração. A migração `20261026160455_url_admin_access.sql` permite que uma sessão anônima autenticada obtenha acesso administrativo automaticamente. Portanto, conhecer a URL permite consultar identificação, respostas e anotações e reiniciar turmas. As referências anteriores a acesso exclusivo por chave descrevem a versão anterior. Nenhuma chave privada foi incorporada ao código.
+
+## Marca e endereços anteriores
+
+A aplicação se chama **Missão Hardware**. O ambiente 3D continua identificado nas placas como **Laboratório de Hardware**. Os repositórios anteriores são mantidos para redirecionar convites antigos, preservando o caminho de administração, os parâmetros de turma e os fragmentos da URL. Nenhum identificador de turma, resposta ou chave de armazenamento foi renomeado. Como os três endereços estão na mesma origem do GitHub Pages, a sessão do aluno é compartilhada; cada caminho prepara seu próprio cache de arquivos.

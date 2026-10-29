@@ -6,7 +6,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {cases} from './src/cases.js';
 let update=false,failAssets=false,assetRequests=0;
-const base='/laboratorio-de-hardware/';
+const base='/missao-hardware/';
 const server=createServer(async(req,res)=>{
  try{
   const pathname=new URL(req.url,'http://localhost').pathname;
