@@ -18,5 +18,5 @@ export function createFaultScreens(cases){
  });
  const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;texture.generateMipmaps=false;texture.minFilter=THREE.LinearFilter;texture.magFilter=THREE.LinearFilter;
  const material=new THREE.MeshBasicMaterial({map:texture,toneMapped:false});
- return {material,geometry(id){const geometry=new THREE.PlaneGeometry(.84,.52),uv=geometry.attributes.uv,col=id%cols,row=Math.floor(id/cols);for(let i=0;i<uv.count;i++)uv.setXY(i,(col+(uv.getX(i)*126+1)/128)/cols,1-(row+((1-uv.getY(i))*78+1)/80)/rows);return geometry;},count:cases.length};
+ return {material,geometry(id){const geometry=new THREE.PlaneGeometry(.84,.52),uv=geometry.attributes.uv,col=id%cols,row=Math.floor(id/cols);for(let i=0;i<uv.count;i++)uv.setXY(i,(col+(uv.getX(i)*126+1)/128)/cols,1-(row+((1-uv.getY(i))*78+1)/100)/rows);return geometry;},count:cases.length};
 }

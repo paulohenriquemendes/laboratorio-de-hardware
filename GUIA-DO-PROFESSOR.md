@@ -150,3 +150,13 @@ No painel `/admin/`, em participação, abra **Mapa de dificuldades da turma**. 
 O mapa acompanha a rodada e o filtro de período da participação, possui atualização manual e exportação CSV. A taxa é por resposta, não uma porcentagem de alunos reprovados. Ela orienta a revisão da aula, sem substituir a avaliação do professor.
 
 **Ver respostas** inclui etapas e escolhas da bancada prática e perguntas feitas aos clientes. A planilha de participação separa conclusões e recompensas das práticas das recompensas dos PCs e clientes. A carteira utiliza todos os ganhos e despesas; os relatórios preservam os valores conquistados para avaliação.
+
+## Atualização para 100 computadores
+
+O laboratório passou a ter **100 computadores**, com 15 bancadas centrais de quatro PCs e 40 computadores nas bancadas de parede. Uma terceira área integrada recebeu as cinco bancadas novas; as placas continuam identificadas como Laboratório de Hardware.
+
+A numeração foi reorganizada: os primeiros vinte desafios trabalham reconhecimento de periféricos e componentes, alimentação, refrigeração, cabos e preparação segura. Em seguida vêm os fundamentos anteriores e, no final, os diagnósticos mais complexos. A lista lateral e os relatórios utilizam a numeração atual. Registros de texto antigos podem mencionar a numeração anterior; as respostas e conclusões continuam associadas aos mesmos exercícios, sem apagar histórico.
+
+Os vinte desafios novos usam IDs internos adicionais. Os 80 exercícios anteriores não foram substituídos. Seus valores e os ganhos já conquistados foram preservados, mesmo com a mudança de numeração. Os novos desafios básicos rendem R$ 20 cada; o máximo dos 100 PCs é R$ 5.200, sem contar clientes e bancada prática. O painel de dinheiro usa R$ ou reais, sem repetir o qualificativo anterior.
+
+No visual do personagem, **Careca** é gratuito e substitui o antigo Ondulado rock. **Metal · Headbanger** substitui Cachos metal, com cabelo longo e liso até a região da cintura. **Franja alternativa** foi mantida. As opções continuam com prévias e salvamento na turma. Recarregue a página com internet para receber o novo cenário e as novas opções.

@@ -17,4 +17,4 @@ export const workshopLessons=[
 ];
 export function workshopLesson(id,round=1){const base=workshopLessons[id];if(!base)return null;const variant=base.variants?Math.max(0,Math.floor(round)-1)%base.variants.length:0;return {...base,...(base.variants?.[variant]||{}),variant};}
 export function workshopReward(id,errors){return Math.max(20,workshopLessons[id].reward-Math.max(0,errors)*5);}
-export const relatedWorkshop={0:3,1:4,8:5,10:6,17:1,20:6,24:6,25:2,26:2,37:6,60:0,61:0,62:0,65:0,79:7};
+export const relatedWorkshop={0:3,1:4,8:5,10:6,17:1,20:6,24:6,25:2,26:2,37:6,60:0,61:0,62:0,65:0,79:7,80:0,81:0,82:0,83:0,84:0,85:0,86:0,87:0,88:0,89:0,90:0,91:0,92:0,93:0,94:0,95:0,96:0,97:0,98:0,99:0};

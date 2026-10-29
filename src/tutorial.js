@@ -4,7 +4,7 @@ const steps=[
  ['Consulte as duas evidências','Leia o relato e use os dois botões de teste. Os resultados ficam no Caderno de evidências.','[data-test]:not(:disabled)'],
  ['Escolha o diagnóstico','Compare os dois resultados antes de escolher uma hipótese. Se errar, leia a orientação e tente novamente.','[data-diagnosis]:not(:disabled)'],
  ['Escolha a solução','Agora selecione o procedimento que trata a causa confirmada. A atividade é uma simulação.','[data-repair]'],
- ['Valide o reparo','Use Verificar solução e concluir. A recompensa fictícia e a conclusão serão registradas na turma.','[data-action="validate"]'],
+ ['Valide o reparo','Use Verificar solução e concluir. A recompensa e a conclusão serão registradas na turma.','[data-action="validate"]'],
  ['Responda ao conceito','A pergunta final ajuda a entender o motivo do reparo. Ela não desconta dinheiro ao errar.','[data-challenge]'],
  ['Envie sua participação','Abra Minha participação para avisar o professor. Seu nome completo e a turma já estão registrados.','#notesButton'],
  ['Confirme o envio ao professor','Clique em Enviar minha participação ao professor. Você pode continuar resolvendo outros computadores depois.','#submitParticipation']

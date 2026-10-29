@@ -8,7 +8,7 @@ export function periodBounds(from,through){
 export function csvCell(value){let text=String(value??'');if(/^\s*[=+@\-]|^[\t\r]/.test(text))text="'"+text;return '"'+text.replaceAll('"','""')+'"';}
 export function evaluationCsv(students,round,period=null){
  const headers=['Nome completo','Turma','Apelido','Rodada',period?'Desafios praticados no período':'Desafios iniciados','Desafios concluídos','Conceitos concluídos','Recompensas obtidas nos PCs (BRL fictício)','Envio da participação'];
- if(period)headers.push('Erros registrados no período','Respostas registradas no período','Primeira atividade','Última atividade','Período (Fortaleza)','Incidentes simulados no período','Custos fictícios de incidentes (BRL)');
+ if(period)headers.push('Erros registrados no período','Respostas registradas no período','Primeira atividade','Última atividade','Período (Fortaleza)','Incidentes simulados no período','Custos de incidentes (R$)');
  const display=value=>value?new Date(value).toLocaleString('pt-BR',{timeZone:'America/Fortaleza'}):'';
  headers.push('Clientes atendidos','Pagamentos de clientes (BRL fictício)','Compras de comemorações (BRL fictício)','Práticas concluídas','Recompensas de práticas (BRL fictício)');
  const rows=[headers,...students.map(s=>{const row=[s.full_name||'Não identificado',s.class_name||'',s.nickname,round,s.practiced,s.solved,s.concepts,s.score,display(s.submitted_at)];if(period)row.push(s.errors,s.responses,display(s.first_activity),display(s.last_activity),period.label,s.incidents||0,s.incident_costs||0);row.push(s.extra_solved||0,s.bonus||0,s.celebration_costs||0,s.workshop_solved||0,s.workshop_bonus||0);return row;})];

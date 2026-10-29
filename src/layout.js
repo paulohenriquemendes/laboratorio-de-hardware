@@ -6,11 +6,11 @@ const makeWing=(offset,idOffset)=>{
  const lateral=[-1,1].flatMap((side,k)=>Array.from({length:10},(_,j)=>({id:idOffset+21+k*10+j,bench:(offset?'Fundamentos · ':'')+(side<0?'Parede A':'Parede B'),zone:'wall',wing:offset?2:1,side,facing:-side,x:offset+side*11.5,z:-15.3+j*3.4,chairX:offset+side*9.7,useX:offset+side*8.6,useZ:-15.3+j*3.4})));
  return {benches,stations:[...central,...lateral]};
 };
-const first=makeWing(0,0),second=makeWing(28,40);
-export const benches=[...first.benches,...second.benches];
-const positions=[...first.stations,...second.stations];
+const first=makeWing(0,0),second=makeWing(28,40),third=makeWing(56,80);
+export const benches=[...first.benches,...second.benches,...third.benches];
+const positions=[...first.stations,...second.stations,...third.stations.filter(s=>s.zone==='central')];
 export const stations=positions.map((_,caseId)=>({...positions[pcNumber(caseId)-1]}));
-export const room={minX:-12.6,maxX:40.6,z:19.2};
+export const room={minX:-12.6,maxX:68.6,z:19.2};
 export const spawn={x:3.9,z:18.4};
 export function blocked(x,z){return x<room.minX||x>room.maxX||Math.abs(z)>room.z||benches.some(b=>Math.abs(x-b.x)<b.width/2+.3&&Math.abs(z-b.z)<b.depth/2+.3)||[0,28].some(offset=>Math.abs(Math.abs(x-offset)-11.5)<1.1&&Math.abs(z)<17.4)||stations.some(s=>Math.abs(x-s.chairX)<.65&&Math.abs(z-s.z)<.65);}
 export function nearestStation(x,z){let index=-1,distance=1.1;stations.forEach((s,i)=>{const d=Math.hypot(s.useX-x,s.useZ-z);if(d<distance){distance=d;index=i}});return index;}

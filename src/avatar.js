@@ -18,12 +18,12 @@ export function createHair(parent){
  part(6,new THREE.BoxGeometry(.43,.13,.42),0,1.96,0);for(const side of [-1,1])part(6,new THREE.CylinderGeometry(.07,.055,.65,10),side*.24,1.68,.18);
  const quiff=new THREE.BoxGeometry(.43,.26,.3);part(7,quiff,0,2.02,-.07);part(7,new THREE.BoxGeometry(.43,.15,.2),0,1.93,.13);
  // Generic rock styles: broad silhouettes remain legible on small screens.
- part(8,new THREE.BoxGeometry(.45,.15,.43),0,1.98,0);for(const side of [-1,1])for(let i=0;i<4;i++)part(8,new THREE.SphereGeometry(.13,8,6),side*(.22+i%2*.025),1.88-i*.13,.1);
  part(9,new THREE.BoxGeometry(.42,.19,.43),0,2.0,0);for(let i=-1;i<=1;i++)part(9,new THREE.BoxGeometry(.13,.62,.16),i*.13,1.66,.23);
  part(10,new THREE.BoxGeometry(.43,.17,.4),0,1.96,0);part(10,new THREE.BoxGeometry(.42,.2,.25),0,2.08,-.08);part(10,new THREE.BoxGeometry(.36,.15,.2),0,2.18,-.14);
  part(11,new THREE.BoxGeometry(.42,.1,.4),0,1.96,0);for(let i=0;i<5;i++)part(11,new THREE.ConeGeometry(.08,.32,5),(i-2)*.09,2.15,(i%2?-.09:.08));
  part(12,new THREE.BoxGeometry(.43,.16,.44),0,1.98,0);for(let i=0;i<4;i++)part(12,new THREE.BoxGeometry(.12,.18+i*.04,.07),-.16+i*.09,1.89-i*.025,-.22);part(12,new THREE.BoxGeometry(.1,.45,.3),.23,1.75,.07);
- part(13,new THREE.BoxGeometry(.45,.16,.43),0,1.99,.03);for(const side of [-1,1])for(let i=0;i<5;i++)part(13,new THREE.SphereGeometry(.14,8,6),side*.25,1.91-i*.12,.1+(i%2)*.04);part(13,new THREE.BoxGeometry(.46,.62,.18),0,1.65,.23);
+ part(13,new THREE.BoxGeometry(.46,.16,.44),0,1.99,.01);part(13,new THREE.BoxGeometry(.49,1.0,.16),0,1.47,.23);for(const side of [-1,1]){part(13,new THREE.BoxGeometry(.12,.92,.29),side*.25,1.5,.08);part(13,new THREE.BoxGeometry(.09,.78,.07),side*.20,1.52,-.22);}
+
  parent._hairMaterial=material;applyAppearance(parent,{style:0,color:hairColors[1]});return hair;
 }
 export function applyAppearance(parent,value){const a=normalizeAppearance(value);const hair=parent.getObjectByName('studentHair');if(!hair)return;parent._hairMaterial??=new THREE.MeshStandardMaterial({roughness:.9});parent._hairMaterial.color.set(a.color);for(const child of hair.children){child.material=parent._hairMaterial;child.visible=child.userData.hairStyle===a.style;}parent.traverse(child=>{if(child.userData.cosmetic)child.visible=!!a[child.userData.cosmetic];if(child.userData.cosmetic==='bracelets')child.scale.set(a.strong?1.2:1,1,a.strong?1.2:1);if(child.userData.uniformPants)child.visible=!a.greenSkirt&&!a.bluePants;if(child.userData.uniformShoe)child.visible=!a.sandals;if(['tattoo','tattooBolt','tattooStar','nails','bracelets'].includes(child.userData.cosmetic)){child.userData.baseZ??=child.position.z;child.position.z=child.userData.baseZ+(a.strong?Math.sign(child.userData.baseZ)*.035:0)}});parent.userData.appearance=a;}

@@ -157,3 +157,13 @@ A migração `20261029173058_interactive_workshop_and_learning_analytics.sql` ma
 `src/reputation.js` calcula títulos por conclusões; gastos não reduzem reputação. `src/learning-map.js` mostra o mapa exclusivo do professor com denominador por resposta, indicação de amostra pequena e CSV. Identificação e histórico continuam na sessão e no modelo administrativo já existentes.
 
 `npm run test:workshop` verifica identificação, montagem por arraste de ponteiro e toque real em viewport móvel, alternativa por teclado, limpeza, jumper, geração de som e transcrição, inspeção, conectores, cenário surpresa, persistência, carteira, reputação e histórico/mapa administrativo com serviços simulados. `workshop-backend.test.sql` valida as funções com o papel authenticated, deduplicação, privacidade, relatórios, intervalos e reinício em transação com ROLLBACK. Não deixa dados de teste em turmas reais.
+
+## Expansão para 100 e revisão de visuais
+
+Os casos novos são acrescentados nos IDs 80–99 em `src/beginner-cases.js`; os IDs anteriores permanecem imutáveis. `src/challenge-order.js` apresenta os novos conteúdos básicos antes da sequência pedagógica anterior. `legacyOrder` mantém a referência dos valores antigos: `src/economy.js` preserva os ganhos dos primeiros 80 IDs e acrescenta R$ 20 por desafio novo, totalizando R$ 5.200. A migração de progresso local aceita arrays de 80 e acrescenta os 20 estados vazios.
+
+O cenário possui três áreas conectadas, quinze bancadas centrais e quarenta posições de parede. Todas as 100 posições são navegáveis, com limites e visão geral adaptados ao novo tamanho. O estilo 8 foi reaproveitado como Careca gratuito, e o 13 como Metal · Headbanger, mantendo os identificadores de visual aceitos pelo servidor. A franja alternativa permanece no estilo 12.
+
+As migrações `20261029182438_expand_100_and_avatar_refresh.sql` e `20261029183359_currency_wording_cleanup.sql` ampliam restrições, catálogo e operações para cem PCs, adicionam tarefas nas rodadas atuais sem tocar nas anteriores e ajustam mensagens e o desbloqueio de Careca. Os pagamentos antigos não são recalculados nem sobrescritos.
+
+`expansion-100-backend.test.sql` verifica criação e reinício de turmas com 100 tarefas, resolução dos 20 exercícios novos, deduplicação, Careca sem saldo e preservação da carteira/histórico em transação com ROLLBACK. `npm run test:expansion:100` verifica cenário, ordenação, prévias, salvamento e mapa em telas de computador e celular sem criar dados reais.
