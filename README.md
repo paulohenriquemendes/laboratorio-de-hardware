@@ -177,3 +177,12 @@ O renderizador usa modelos com base, teclado, touchpad, dobradiça e tela integr
 A migração `20261029201835_notebook_bench.sql` amplia validações e criação/reinício para 104 estações, acrescenta as respostas e os quatro registros das rodadas atuais e mantém o histórico anterior. `notebook-backend.test.sql` testa as quatro resoluções, penalidade, pagamento sem duplicação, conclusão independente por um segundo aluno e preservação do histórico após reiniciar, em transação com ROLLBACK.
 
 `npm run test:notebooks` verifica acesso físico aos quatro equipamentos, resolução completa, resposta incorreta, carteira, cor de conclusão e leitura móvel com serviços simulados. Os testes não criam alunos ou respostas em turmas reais.
+
+
+## Menu e desenho do cenário
+
+O menu reúne oito destinos: Ver laboratório, Meu progresso, Minha turma, Meu visual, Minha participação, Bancada prática, Clientes extras e Ajustes. Meu visual possui abas Aparência e Comemorações; a reputação fica em Meu progresso. Ajustes reúne gráficos, carregamento e tutorial. O antigo botão de interrogação foi removido.
+
+`batchComputerBodies` mantém cores de conclusão independentes por instância, compartilhando chamadas de desenho dos 104 computadores e dos círculos de aproximação. Os círculos são agrupados por região para permitir descartar regiões fora da câmera; placas distantes ficam ocultas na caminhada e reaparecem no mapa. As telas compartilham uma geometria e um atlas, com UVs atualizadas apenas quando muda a conclusão. A lista lateral preserva seu DOM em atualizações sem mudanças, e mensagens de posição não reaplicam um visual idêntico. Miniaturas do catálogo são geradas conforme entram na área visível, uma por quadro, com cache limitado.
+
+`interface-performance.test.mjs` verifica navegação, abas com teclado, prévias adiadas, ajustes, reputação e DOM estável em computador e celular. `scene-performance.test.mjs` verifica coordenadas globais e mudança independente de cor após o agrupamento. Os testes usam serviços simulados e não alteram registros das turmas.

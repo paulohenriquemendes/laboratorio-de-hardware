@@ -175,3 +175,12 @@ Os notebooks são as estações **101 a 104**, com desafios próprios:
 A bancada segue do caso mais simples ao mais complexo. As intervenções internas em bateria, tela e dobradiça são descritas como atividades da assistência responsável, conforme o fabricante; não se orienta abrir células, forçar a tampa ou fazer reparos improvisados. A orientação de ventilação é consistente com as recomendações de [uso de notebook da HP](https://support.hp.com/us-en/document/ish_1997200-1415423-16).
 
 O total principal passa a ser **100 PCs + 4 notebooks = 104 desafios**, com até R$ 5.420 nessas estações, sem contar clientes e bancada prática. Os valores e resultados anteriores dos 100 PCs continuam preservados. Cada aluno pode resolver os notebooks individualmente, mesmo que já estejam verdes por uma conclusão de um colega. Autoria, respostas, carteira, mapa do professor e histórico usam o mesmo fluxo dos demais equipamentos.
+
+
+### Menu simplificado
+
+- **Meu visual**: escolha cabelos e acessórios em Aparência; compre ou selecione animações na aba Comemorações.
+- **Meu progresso**: consulte suas conquistas e abra Minha reputação.
+- **Ajustes**: altere os gráficos, confira o carregamento ou reabra o tutorial guiado.
+
+O botão de interrogação foi retirado. No celular, use Menu para acessar essas opções; os gráficos leves continuam sendo a configuração inicial.

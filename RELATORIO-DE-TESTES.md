@@ -242,3 +242,14 @@ admin-classrooms.test.mjs aprovado: criação negada a sessão normal por lab_jo
 
 ## Campo direto para escrever o nome da turma — 28/10/2026
 Formulário de nome sempre visível no topo do painel; botão Criar turma e gerar link. Removida a seleção suspensa visível; consulta a turmas anteriores fica recolhida em botões por nome. Convite só aparece quando existe turma. Teste de interface com respostas simuladas: nome digitado preservado na turma criada, link correspondente gerado e copiado, seletor oculto e tela móvel de 390 px sem transbordamento. Nenhuma turma real foi criada para esse teste, preservando a base que o proprietário pediu para limpar.
+
+
+## Menu e desempenho — 29/10/2026
+
+Removido o botão de interrogação. Comemorações integra Meu visual, com abas acessíveis por teclado e preservação da seleção de aparência ao trocar de aba. Reputação foi reunida a Meu progresso; gráficos, carregamento e tutorial ficam em Ajustes. O catálogo gera prévias visíveis sob demanda, com cache limitado.
+
+Agrupamento por instâncias das carcaças e círculos mantém a cor individual de cada computador, incluindo notebooks. Os círculos são separados por região para permitir descarte fora da câmera. As telas usam um único atlas e geometria com atualização de UV por conclusão. Atualizações de presença não reaplicam aparências idênticas nem recriam a lista lateral sem alterações.
+
+Comparação local na entrada da mesma turma simulada, Edge headless com SwiftShader, gráficos leves e viewport 1280×900: 223 → 125 chamadas de desenho e 125 → 86 geometrias na GPU. Em 390×844: 116 → 87 chamadas e 84 → 68 geometrias. Esses números representam redução de trabalho de renderização, não uma promessa de FPS. As amostras curtas de FPS foram 22 → 20 no computador e 29 → 29 no celular emulado; não demonstraram ganho de quadros neste renderizador por software. Falta medição em aparelhos físicos e com turma inteira.
+
+162 testes unitários aprovados, incluindo coordenadas e cores independentes após agrupamento. Testes de navegador verificaram menu em computador/celular, abas, prévias adiadas, compra e persistência de comemorações, salvamento de aparência, resolução dos 104 desafios, controles de toque, cache e administração com serviços simulados. Nenhum registro real de aluno foi criado ou apagado durante estes testes.
