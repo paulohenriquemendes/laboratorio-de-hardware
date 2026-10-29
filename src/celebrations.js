@@ -1,0 +1,20 @@
+export const celebrationStyles=[{id:0,name:'Pulo de vitória',price:0},{id:1,name:'Saltinho para trás',price:200},{id:2,name:'Dancinha do técnico',price:350},{id:3,name:'Mortal de comemoração',price:600}];
+export function setupCelebration({rig,limbs,reducedMotion=()=>false}){
+ let active=false,time=0,style=0;
+ function reset(){rig.position.set(0,0,0);rig.rotation.set(0,0,0);active=false;}
+ return {start(value=0){if(active)return;style=celebrationStyles[value]?.id??0;time=0;active=true;},update(dt){if(!active)return;time=Math.min(1,time+Math.max(0,Math.min(dt,.05))/1.65);const wave=Math.sin(time*Math.PI),reduced=reducedMotion();rig.position.set(0,reduced?0:Math.abs(Math.sin(time*Math.PI*(style===0?3:2)))*.3,0);rig.rotation.set(0,0,0);
+  if(!reduced&&style===1){rig.position.z=wave*.25;rig.rotation.x=-wave*.2;}
+  if(!reduced&&style===2){rig.rotation.z=Math.sin(time*Math.PI*8)*.15;rig.position.x=Math.sin(time*Math.PI*6)*.12;}
+  if(!reduced&&style===3){const spin=time*2*Math.PI;rig.rotation.x=-spin;rig.position.y=1+wave*.55-Math.cos(spin);rig.position.z=Math.sin(spin);}
+  for(const {arm,leg,side} of limbs){arm.rotation.x=reduced?-.45:-1.6*wave+(style===2?Math.sin(time*20)*side*.6:0);leg.rotation.x=reduced?0:style===2?Math.sin(time*20)*side*.2:0;}
+  if(time===1){for(const {arm,leg} of limbs){arm.rotation.x=0;leg.rotation.x=0;}reset();}
+ },reset,get active(){return active;},get state(){return {active,style,time};}};
+}
+export function setupCelebrationShop({getSession,getWallet,preview,notify}){
+ const $=s=>document.querySelector(s),dialog=document.createElement('dialog');dialog.id='celebrationShop';dialog.setAttribute('aria-labelledby','celebrationShopTitle');dialog.innerHTML='<button class="close" aria-label="Fechar comemorações">×</button><span class="eyebrow">SEU JEITO DE COMEMORAR</span><h1 id="celebrationShopTitle">Comemorações</h1><p>O pulo de vitória é gratuito. Os outros estilos são comprados uma única vez por rodada, usando somente dinheiro fictício da carteira.</p><p id="celebrationBalance"></p><div id="celebrationCards" class="wardrobe-grid"></div><p id="celebrationStatus" role="status"></p><button id="tryCelebration">Experimentar a comemoração atual</button>';document.body.append(dialog);dialog.querySelector('.close').onclick=()=>dialog.close();
+ const button=document.createElement('button');button.id='celebrationButton';button.textContent='Comemorações';$('.stats').append(button);let busy=false;
+ function render(){const session=getSession(),profile=session?.celebrations||{selected:0,owned:[0]};$('#celebrationBalance').textContent='Carteira: '+getWallet().toLocaleString('pt-BR',{style:'currency',currency:'BRL'});const host=$('#celebrationCards');host.replaceChildren();
+  for(const item of celebrationStyles){const owned=profile.owned.includes(item.id),selected=profile.selected===item.id,card=document.createElement('button');card.className='celebration-card';card.dataset.celebration=item.id;card.disabled=busy||(!owned&&getWallet()<item.price);card.setAttribute('aria-pressed',String(selected));card.innerHTML='<svg viewBox="0 0 120 100" role="img" aria-label="'+item.name+'"><g class="celebration-figure celebration-preview-'+item.id+'"><circle cx="60" cy="27" r="10"/><path d="M60 38v28m0-18-22-13m22 13 22-13M60 66l-17 23m17-23 17 23"/></g></svg>';const title=document.createElement('strong'),cost=document.createElement('span');title.textContent=item.name;cost.textContent=selected?'Em uso':owned?'Usar este estilo':'Comprar por R$ '+item.price+' fictícios';card.append(title,cost);card.onclick=async()=>{if(busy)return;busy=true;render();try{await session.setCelebration(item.id,!owned);$('#celebrationStatus').textContent=owned?'Comemoração selecionada.':'Compra registrada. O estilo está disponível nesta rodada.';}catch(e){$('#celebrationStatus').textContent=e.message;}finally{busy=false;render();}};host.append(card);}
+ }
+ button.onclick=()=>{if(!getSession()?.connected){notify('Entre na turma para escolher uma comemoração.');return;}render();dialog.showModal();};$('#tryCelebration').onclick=()=>{dialog.close();preview(getSession()?.celebrations?.selected||0);};return {dialog,render};
+}

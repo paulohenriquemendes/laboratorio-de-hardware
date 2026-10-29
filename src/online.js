@@ -7,7 +7,7 @@ export function validRoom(value){return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0
 export function cleanName(value){return String(value||'').replace(/[<>\x00-\x1f]/g,'').trim().slice(0,24)}
 export function validPose(p){return p&&Number.isFinite(p.x)&&p.x>=bounds.minX&&p.x<=bounds.maxX&&Number.isFinite(p.z)&&Math.abs(p.z)<=20&&Number.isFinite(p.angle)&&Math.abs(p.angle)<100}
 export class OnlineLab {
- constructor(callbacks){this.cb=callbacks;this.client=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:'hardware-coop.auth',persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});this.rows=new Map();this.scores=[];this.expenses=0;this.refreshSerial=0;this.peers=new Map();this.connected=false;this.activePc=-1;this.closed=false;this.lastSend=0;this.lastPose=null;this.instance=crypto.randomUUID();}
+ constructor(callbacks){this.cb=callbacks;this.client=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:'hardware-coop.auth',persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});this.rows=new Map();this.scores=[];this.expenses=0;this.bonus=0;this.customers=[];this.celebrations={selected:0,owned:[0]};this.activeCustomer=-1;this.refreshSerial=0;this.peers=new Map();this.connected=false;this.activePc=-1;this.closed=false;this.lastSend=0;this.lastPose=null;this.instance=crypto.randomUUID();}
  status(message){this.cb.status(message,this.connected)}
  async enter(name,room=OPEN_ROOM,title=null,identity=null){
   this.status('Conectando à sala…');
@@ -19,7 +19,7 @@ export class OnlineLab {
   const profile=await this.client.rpc('lab_wardrobe',{p_room:this.room.id});if(profile.error)throw profile.error;this.appearance=profile.data;
   await this.client.realtime.setAuth(session.access_token);
   await this.connect();
-  this.timer=setInterval(async()=>{if(!this.connected||this.closed)return;try{if(this.activePc>=0)await this.action(this.activePc,'renew');await this.refresh();}catch(e){this.status(e.message||'Falha ao sincronizar. Tentando novamente…')}},20000);
+  this.timer=setInterval(async()=>{if(!this.connected||this.closed)return;try{if(this.activePc>=0)await this.action(this.activePc,'renew');if(this.activeCustomer>=0)try{await this.customerAction(this.activeCustomer,'renew');}catch{this.activeCustomer=-1;}await this.refresh();}catch(e){this.status(e.message||'Falha ao sincronizar. Tentando novamente…')}},20000);
   return this.room;
  }
  async connect(){
@@ -28,6 +28,7 @@ export class OnlineLab {
   this.channel=this.client.channel('lab:'+this.room.id,{config:{private:true,presence:{key:this.instance},broadcast:{self:false}}});
   const channel=this.channel;
   this.channel.on('presence',{event:'sync'},()=>this.syncPeers()).on('broadcast',{event:'pose'},({payload})=>{if(payload?.instance===this.instance||!validPose(payload))return;const peer=this.peers.get(payload.instance);if(peer){Object.assign(peer,payload,{name:peer.name,userId:peer.userId,instance:peer.instance});this.cb.peers([...this.peers.values()]);}})
+   .on('broadcast',{event:'celebrate'},({payload})=>{if(this.peers.has(payload?.instance)&&Number.isInteger(payload.style)&&payload.style>=0&&payload.style<=3)this.cb.celebrate?.(payload.instance,payload.style);})
    .on('broadcast',{event:'wallet'},()=>this.scheduleRefresh())
    .on('broadcast',{event:'contact'},({payload})=>{const peer=this.peers.get(payload?.instance);const now=performance.now();if(payload?.target===this.instance&&peer&&now-(this.lastContactReceived||0)>220){this.lastContactReceived=now;this.cb.push?.(peer);}})
    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'lab_rooms',filter:'id=eq.'+this.room.id},()=>{void this.refresh().catch(()=>this.status('Não foi possível atualizar a rodada. Reconecte.'))})
@@ -53,12 +54,12 @@ export class OnlineLab {
   const serial=++this.refreshSerial;
   const {data,error}=await this.client.rpc('lab_snapshot',{p_room:this.room.id});if(error)throw error;
   if(this.closed||serial!==this.refreshSerial||data.room.round<this.room.round)return;
-  if(data.room.round!==this.room.round){this.room.round=data.room.round;this.rows.clear();this.scores=[];this.activePc=-1;this.cb.round?.(data.room.round);void this.track();}
+  if(data.room.round!==this.room.round){this.room.round=data.room.round;this.rows.clear();this.scores=[];this.activePc=-1;this.activeCustomer=-1;this.cb.round?.(data.room.round);void this.track();}
   this.room.competition_mode=data.room.competition_mode||'ranking';
-  this.expenses=Number(data.expenses)||0;
+  this.expenses=Number(data.expenses)||0;this.bonus=Number(data.bonus)||0;this.bonusSolved=Number(data.bonus_solved)||0;this.customers=data.customers||[];this.celebrations=data.celebrations||{selected:0,owned:[0]};if(Number.isFinite(Number(data.server_time)))this.serverOffset=Number(data.server_time)*1000-Date.now();
   this.scores=data.scores;
   for(const row of data.tasks){const previous=this.rows.get(row.pc);this.rows.set(row.pc,previous&&previous.revision>row.revision?{...row,progress:previous.progress,revision:previous.revision}:row);}
-  this.cb.tasks([...this.rows.values()]);
+  this.cb.tasks([...this.rows.values()]);this.cb.customers?.();
  }
  accept(row){if(row.user_id!==this.userId||row.round!==this.room?.round||row.room_id!==this.room?.id||!Number.isInteger(row.pc)||row.pc<0||row.pc>79)return;const previous=this.rows.get(row.pc);if(previous&&previous.revision>=row.revision)return;this.rows.set(row.pc,{...previous,...row});this.cb.tasks([...this.rows.values()]);}
  syncPeers(){const next=new Map();for(const entries of Object.values(this.channel.presenceState()))for(const entry of entries){if(entry.instance===this.instance||typeof entry.instance!=='string')continue;const prior=this.peers.get(entry.instance);next.set(entry.instance,{...entry,...(prior?{x:prior.x,z:prior.z,angle:prior.angle}:{}),name:cleanName(entry.name)});}this.peers=next;this.cb.peers([...next.values()]);}
@@ -72,9 +73,17 @@ export class OnlineLab {
   if(result.error&&(!result.status||result.status>=500))result=await this.client.rpc('lab_action_v3',params);
   if(result.error)throw result.error;if(result.data.task.round!==this.room.round)throw new Error('A rodada mudou. Abra o computador novamente.');this.accept(result.data.task);if(kind==='validate')await this.refresh();return result.data;
  }
+ celebrate(style){if(this.connected)void this.channel.send({type:'broadcast',event:'celebrate',payload:{instance:this.instance,style}});}
+ async setCelebration(style,buy=false){if(!this.connected)throw new Error('Aguarde a reconexão.');const {data,error}=await this.client.rpc('lab_celebration',{p_room:this.room.id,p_style:style,p_buy:buy});if(error)throw error;this.celebrations=data;await this.refresh();if(this.connected)void this.channel.send({type:'broadcast',event:'wallet',payload:{}});return data;}
+ async customerAction(id,kind,choice=null,position=null,request=crypto.randomUUID()){
+  if(!this.connected)throw new Error('Aguarde a reconexão para atender clientes.');
+  const params={p_room:this.room.id,p_round:this.room.round,p_customer:id,p_kind:kind,p_choice:choice,p_request:request,p_x:position?.x??null,p_z:position?.z??null};let result=await this.client.rpc('lab_customer_action',params);if(result.error&&(!result.status||result.status>=500))result=await this.client.rpc('lab_customer_action',params);if(result.error)throw result.error;
+  if(kind==='claim')this.activeCustomer=id;if(kind==='release'||kind==='validate')this.activeCustomer=-1;await this.refresh();if(!['renew','test','diagnosis','repair'].includes(kind)&&this.connected)void this.channel.send({type:'broadcast',event:'wallet',payload:{}});return result.data;
+ }
+ async releaseCustomer(id=this.activeCustomer){if(this.activeCustomer===id)this.activeCustomer=-1;if(id>=0&&this.connected)try{await this.customerAction(id,'release');}catch{/* Server lease expires if disconnected. */}}
  async setAppearance(value){const a=normalizeAppearance(value);const {data,error}=await this.client.rpc('lab_wardrobe',{p_room:this.room.id,p_appearance:a});if(error)throw error;this.appearance=data;if(this.connected)await this.channel.track({instance:this.instance,userId:this.userId,name:this.room.nickname,appearance:this.appearance,pc:this.activePc,...(this.lastPose||{x:3.9,z:18.4,angle:0})});return data;}
  async claim(pc){await this.action(pc,'claim');this.activePc=pc;await this.track();}
  async track(){if(this.connected)await this.channel.send({type:'broadcast',event:'pose',payload:{instance:this.instance,pc:this.activePc,...(this.lastPose||{x:3.9,z:18.4,angle:0})}});if(this.connected&&performance.now()-(this.lastTrack||0)>7000){this.lastTrack=performance.now();await this.channel.track({instance:this.instance,userId:this.userId,name:this.room.nickname,appearance:this.appearance,pc:this.activePc,...(this.lastPose||{x:3.9,z:18.4,angle:0})});}}
  async release(){const pc=this.activePc;this.activePc=-1;if(pc>=0&&this.connected){try{await this.action(pc,'release')}catch{ /* Lease expires on the server if the connection was lost. */ }}await this.track();}
- async leave(){this.closed=true;clearInterval(this.timer);clearTimeout(this.refreshTimer);await this.release();this.connected=false;if(this.channel)await this.client.removeChannel(this.channel);this.client.auth.stopAutoRefresh();this.peers.clear();this.cb.peers([]);}
+ async leave(){this.closed=true;clearInterval(this.timer);clearTimeout(this.refreshTimer);await this.release();await this.releaseCustomer();this.connected=false;if(this.channel)await this.client.removeChannel(this.channel);this.client.auth.stopAutoRefresh();this.peers.clear();this.cb.peers([]);}
 }

@@ -107,3 +107,13 @@ Fios elétricos mostram arcos azuis em movimento, e o fogo usa chamas estilizada
 Na primeira parte do laboratório, o risco elétrico fica entre os PCs 18 e 19, no corredor à direita da entrada. O fogo simulado fica entre os PCs 02 e 03, no corredor esquerdo, mais ao fundo. Na segunda parte, os mesmos tipos aparecem entre os PCs 58/59 e 42/43.
 
 As placas **RISCO ELÉTRICO** e **PERIGO: FOGO** ficam acima das áreas para facilitar a identificação. Os raios e as chamas foram ampliados para permanecerem perceptíveis na câmera padrão, inclusive no celular. As áreas amarelas acompanham a dimensão dos efeitos; a entrada e os pontos de uso dos computadores continuam livres.
+
+## Clientes extras e comemorações
+
+Quatro clientes fictícios circulam no corredor da entrada, com etiquetas roxas, roupas casuais e notebooks: Bia (criadora de vídeos), Caio (DJ), Lúcia (bibliotecária) e Theo (jogador). **Menu → Clientes extras** mostra os pedidos e quem já os atendeu. O aluno precisa caminhar até o cliente e usar **Atender**; a primeira reserva confirmada pelo servidor ganha o chamado. Uma reserva dura dois minutos e é renovada durante o atendimento. Fechar o chamado o libera imediatamente; uma desconexão permite a expiração automática.
+
+Cada cliente paga uma única vez por turma e rodada, entre R$ 160 e R$ 260 fictícios antes dos descontos. O aluno investiga duas evidências, escolhe diagnóstico e solução e valida o resultado. Cada erro desconta R$ 5 do pagamento, até o mínimo de R$ 120. Isso é um atendimento extra: os 80 PCs continuam disponíveis individualmente para todos. O nome de quem atendeu fica visível na etiqueta, na lista de clientes e na atividade da turma. Os pagamentos entram na carteira e no placar, respeitando o modo de competição escolhido.
+
+Ao concluir um PC com sua questão conceitual, ou entregar um atendimento extra, o personagem comemora. Em **Menu → Comemorações**, o aluno vê as prévias e escolhe entre pulo gratuito, saltinho para trás (R$ 200), dancinha do técnico (R$ 350) e mortal (R$ 600). São compras com dinheiro fictício, uma vez por estilo e rodada; repetir a seleção não cobra novamente. Compras diminuem o saldo da carteira, sem apagar conquistas ou respostas. Colegas conectados veem a animação. O modo de movimento reduzido elimina saltos e giros.
+
+No painel administrativo, a participação informa PCs concluídos e clientes atendidos, além das recompensas totais. **Ver respostas** inclui as alternativas dos atendimentos extras. A exportação CSV separa recompensas dos PCs, quantidade de clientes, pagamentos extras e gastos em comemorações; o filtro de período também se aplica a esses registros. Reiniciar a rodada disponibiliza os quatro clientes e a loja novamente, preservando os históricos anteriores.

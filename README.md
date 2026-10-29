@@ -139,3 +139,11 @@ A aplicação se chama **Missão Hardware**. O ambiente 3D continua identificado
 O repositório principal `missao-hardware` valida o código, compila os arquivos e atualiza a branch `gh-pages`. O GitHub Pages publica essa branch com `.nojekyll`. O workflow solicita a compilação nativa do Pages após o push; o resultado aparece também na execução `pages build and deployment`. `version.json` identifica o commit de origem. Os repositórios anteriores executam as verificações de código e mantêm os sites de compatibilidade já publicados, que redirecionam ao endereço principal.
 
 Esse fluxo substitui a criação direta de deployments por artefato, que ficou bloqueada pelo GitHub mesmo após o deployment anterior constar como concluído. O endereço público e o banco de dados foram preservados.
+
+## Clientes itinerantes e comemorações
+
+`src/customers.js` renderiza quatro NPCs e os chamados de `src/customer-cases.js`, com rotas determinísticas sincronizadas pelo relógio do servidor. O servidor arbitra reserva exclusiva, proximidade, sequência de investigação, renovação, expiração, pagamento e deduplicação. As tabelas privadas e funções estão na migração `20261029015855_celebrations_and_wandering_customers.sql`. Os IDs dos 80 PCs permanecem intactos.
+
+`src/celebrations.js` anima uma camada visual interna do avatar, preservando a posição usada nas colisões. Compras são serializadas com incidentes e atendimentos pelo bloqueio do membro da turma; saldo e desbloqueios utilizam o mesmo livro de registros. O snapshot respeita os modos de competição. Relatórios e CSV incluem pagamentos extras e compras por rodada/período.
+
+`npm run test:customers` verifica clientes, pagamento, compra, comemoração própria e remota, persistência e celular com serviços simulados. `customers-celebrations.unit.test.mjs` verifica rotas, conteúdo, retorno da animação e movimento reduzido. `customer-backend.test.sql` valida o banco em uma transação com `ROLLBACK`, sem deixar turmas, pagamentos ou respostas de teste.
