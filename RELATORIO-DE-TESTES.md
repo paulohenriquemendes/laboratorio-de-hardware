@@ -1,3 +1,7 @@
+## Recuperação da publicação — 28/10/2026
+
+O GitHub recusou o envio direto do artefato citando um deployment anterior em andamento, embora a consulta retornasse `succeed` e o cancelamento fosse recusado por já estar finalizado. A republicação dos arquivos pela branch `gh-pages` e compilação nativa do Pages concluiu com sucesso. O workflow agora usa esse caminho para o repositório principal, com teste de regras antes de publicar, e registra o commit em `version.json`. Os redirecionamentos anteriores permanecem no mesmo domínio e as turmas não foram alteradas.
+
 ## Visibilidade do fogo e da eletricidade — 28/10/2026
 
 - Conferência na versão publicada identificou que os efeitos pequenos ficavam encobertos pelo personagem na câmera padrão.

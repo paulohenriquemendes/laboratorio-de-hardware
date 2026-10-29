@@ -133,3 +133,9 @@ Por solicitação expressa do responsável, `/admin/` abre o painel sem chave. A
 ## Marca e endereços anteriores
 
 A aplicação se chama **Missão Hardware**. O ambiente 3D continua identificado nas placas como **Laboratório de Hardware**. Os repositórios anteriores são mantidos para redirecionar convites antigos, preservando o caminho de administração, os parâmetros de turma e os fragmentos da URL. Nenhum identificador de turma, resposta ou chave de armazenamento foi renomeado. Como os três endereços estão na mesma origem do GitHub Pages, a sessão do aluno é compartilhada; cada caminho prepara seu próprio cache de arquivos.
+
+## Publicação automática
+
+O repositório principal `missao-hardware` valida o código, compila os arquivos e atualiza a branch `gh-pages`. O GitHub Pages publica essa branch com `.nojekyll`. O workflow solicita a compilação nativa do Pages após o push; o resultado aparece também na execução `pages build and deployment`. `version.json` identifica o commit de origem. Os repositórios anteriores executam as verificações de código e mantêm os sites de compatibilidade já publicados, que redirecionam ao endereço principal.
+
+Esse fluxo substitui a criação direta de deployments por artefato, que ficou bloqueada pelo GitHub mesmo após o deployment anterior constar como concluído. O endereço público e o banco de dados foram preservados.

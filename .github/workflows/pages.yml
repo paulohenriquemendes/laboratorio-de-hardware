@@ -5,10 +5,8 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
 concurrency:
-  group: pages
+  group: mission-static-pages
   cancel-in-progress: false
 jobs:
   build:
@@ -22,17 +20,40 @@ jobs:
       - run: npm ci
       - run: npm run test:unit
       - run: npm run build
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-artifact@v4
+        if: github.repository == 'paulohenriquemendes/missao-hardware'
         with:
+          name: missao-hardware-static
           path: dist
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+  publish:
+    if: github.repository == 'paulohenriquemendes/missao-hardware'
     needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
     steps:
-      - name: Publicar
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: missao-hardware-static
+          path: dist
+      - name: Atualizar branch de arquivos estáticos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          touch dist/.nojekyll
+          node -e "require('fs').writeFileSync('dist/version.json', JSON.stringify({name:'Missão Hardware',commit:process.env.GITHUB_SHA})+'\n')"
+          gh auth setup-git
+          git -C dist init --initial-branch=gh-pages
+          git -C dist remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -C dist fetch origin gh-pages
+          git -C dist reset --soft FETCH_HEAD
+          git -C dist config user.name 'github-actions[bot]'
+          git -C dist config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C dist add -A
+          git -C dist commit -m "Publica Missão Hardware ${GITHUB_SHA}"
+          git -C dist push origin HEAD:gh-pages
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds" --jq '{status,url}'
