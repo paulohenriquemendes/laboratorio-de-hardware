@@ -117,3 +117,36 @@ Cada cliente paga uma única vez por turma e rodada, entre R$ 160 e R$ 260 fict�
 Ao concluir um PC com sua questão conceitual, ou entregar um atendimento extra, o personagem comemora. Em **Menu → Comemorações**, o aluno vê as prévias e escolhe entre pulo gratuito, saltinho para trás (R$ 200), dancinha do técnico (R$ 350) e mortal (R$ 600). São compras com dinheiro fictício, uma vez por estilo e rodada; repetir a seleção não cobra novamente. Compras diminuem o saldo da carteira, sem apagar conquistas ou respostas. Colegas conectados veem a animação. O modo de movimento reduzido elimina saltos e giros.
 
 No painel administrativo, a participação informa PCs concluídos e clientes atendidos, além das recompensas totais. **Ver respostas** inclui as alternativas dos atendimentos extras. A exportação CSV separa recompensas dos PCs, quantidade de clientes, pagamentos extras e gastos em comemorações; o filtro de período também se aplica a esses registros. Reiniciar a rodada disponibiliza os quatro clientes e a loja novamente, preservando os históricos anteriores.
+
+## Bancada prática: atividades interativas
+
+Em **Menu → Bancada prática**, o aluno encontra oito atividades extras, com conclusão e respostas registradas para o professor:
+
+1. **Conheça as peças:** identifica CPU, RAM, chipset, SSD SATA, placa-mãe e fonte por ilustrações técnicas locais.
+2. **Monte o computador:** arrasta CPU, RAM e conectores aos pontos de uma placa didática. No celular, pode arrastar ou selecionar a peça e tocar no encaixe; teclado também é aceito.
+3. **Cuide da memória RAM:** prepara a bancada, escolhe material apropriado, limpa as áreas marcadas, confirma secagem e encaixa a RAM. A secagem é simbólica, sem estabelecer tempo seguro para peças reais. Limpeza não repara chips defeituosos.
+4. **Teste virtual da fonte:** identifica PS_ON e COM no ATX padrão de 24 pinos, posiciona um jumper virtual, observa um testador e discute as limitações do teste de partida. O procedimento é exclusivamente virtual; em hardware real exige orientação do professor/técnico e o procedimento do fabricante. Nunca se abre a fonte.
+5. **Escute o POST:** reproduz bipes com som gerado pelo navegador. Possui transcrição e manual fictício MH-EDU v1; os códigos não são apresentados como universais.
+6. **Encontre o cabo solto:** identifica visualmente o conector SATA de dados fora do encaixe e o reconecta na simulação, preservando os dados.
+7. **Cabos no lugar certo:** diferencia CPU_FAN, CPU/EPS e conectores de outras funções.
+8. **Diagnóstico surpresa:** uma bancada virtual apresenta o mesmo sintoma sem imagem, com causas diferentes conforme a rodada. São três cenários em rotação: RAM mal assentada, entrada do monitor e alimentação auxiliar da CPU. A solução depende das evidências daquela rodada.
+
+Alguns PCs exibem **Abrir prática interativa relacionada**. As oito atividades são extras: suas bancadas e resultados didáticos não substituem as evidências das fichas dos 80 PCs. Não se altera o histórico dos computadores nem se atribui um reparo a outro cenário automaticamente.
+
+As recompensas vão de R$ 40 a R$ 100 fictícios antes de descontos, com R$ 5 por erro e mínimo de R$ 20. Cada atividade paga uma vez por aluno/turma/rodada. Fechar e reabrir retoma a etapa salva. A nova rodada disponibiliza as atividades novamente, preservando os registros antigos. Todos os desenhos e sons são gerados localmente, sem baixar fotos, vídeos ou arquivos de áudio externos.
+
+Os roteiros de segurança tomam como referência as orientações de [limpeza de RAM da Corsair](https://help.corsair.com/hc/en-us/articles/34383413781777-RAM-FAQ) e [teste de fonte da Corsair](https://help.corsair.com/hc/en-us/articles/360025085372-PSU-How-to-test-a-PSU-Power-Supply-Unit). A atividade reforça que partida e ventoinha não certificam todos os parâmetros de uma fonte sob carga.
+
+## Conversas e reputação
+
+Durante a investigação de um cliente, abra **Converse com…**. Cada personalidade responde a três perguntas sobre o contexto, as mudanças percebidas e os testes já feitos. As perguntas ficam no histórico, sem substituir os dois testes necessários ao diagnóstico.
+
+Em **Menu → Minha reputação**, os títulos progridem por conclusões de PCs, clientes e práticas: Aprendiz, Assistente (5), Técnico iniciante (15), Técnico (35), Especialista (65) e Mestre da bancada (85). Gastos e incidentes não retiram conquistas. Há distintivos para identificação de peças, montagem, RAM, bipes e investigação. A reputação é por rodada; nos modos de competição restritos, não se revela a evolução de outros alunos.
+
+## Mapa de dificuldades e avaliação das práticas
+
+No painel `/admin/`, em participação, abra **Mapa de dificuldades da turma**. O mapa reúne PCs, clientes e práticas, mostrando participantes, conclusões, quantidade de respostas e erros. Ordena pela taxa de erro e informa quando a amostra tem menos de cinco respostas. Sem respostas avaliáveis, não atribui dificuldade zero nem uma nota.
+
+O mapa acompanha a rodada e o filtro de período da participação, possui atualização manual e exportação CSV. A taxa é por resposta, não uma porcentagem de alunos reprovados. Ela orienta a revisão da aula, sem substituir a avaliação do professor.
+
+**Ver respostas** inclui etapas e escolhas da bancada prática e perguntas feitas aos clientes. A planilha de participação separa conclusões e recompensas das práticas das recompensas dos PCs e clientes. A carteira utiliza todos os ganhos e despesas; os relatórios preservam os valores conquistados para avaliação.

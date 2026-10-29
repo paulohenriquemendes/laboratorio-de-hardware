@@ -1,0 +1,6 @@
+export const customerQuestions=[
+ [['Em qual aplicativo a câmera falha?','No teste de câmera aparece meu rosto. Na chamada pelo navegador, não aparece.'],['Aparece algum aviso?','O site diz que o acesso à câmera foi negado.'],['O que você quer preservar?','Minha apresentação e meus arquivos. Não quero perder tudo por causa da chamada!']],
+ [['O que mudou antes do silêncio?','Conectei uma tela HDMI para mostrar a playlist.'],['O som falha em todos os testes?','O teste dos alto-falantes internos toca normalmente.'],['Essa tela tem caixas de som?','Não! É só uma tela, mas parece que a música foi enviada para ela.']],
+ [['Esse carregador veio com o notebook?','Não. Peguei um carregador de celular porque o conector encaixava.'],['Qual aviso aparece?','Carregador de baixa potência. A bateria continua caindo enquanto trabalho.'],['O que ocorreu com um carregador compatível?','No teste com o carregador compatível, o notebook carregou normalmente.']],
+ [['Quais teclas estão diferentes?','J, K e L estão escrevendo números. As outras letras parecem normais.'],['Acontece em outro teclado?','No teclado externo, tudo funciona.'],['Você ativou alguma função do teclado?','Acho que apertei Num Lock antes da partida. Não sabia que podia mudar essas letras!']]
+];

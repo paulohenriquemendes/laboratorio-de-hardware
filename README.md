@@ -147,3 +147,13 @@ Esse fluxo substitui a criação direta de deployments por artefato, que ficou b
 `src/celebrations.js` anima uma camada visual interna do avatar, preservando a posição usada nas colisões. Compras são serializadas com incidentes e atendimentos pelo bloqueio do membro da turma; saldo e desbloqueios utilizam o mesmo livro de registros. O snapshot respeita os modos de competição. Relatórios e CSV incluem pagamentos extras e compras por rodada/período.
 
 `npm run test:customers` verifica clientes, pagamento, compra, comemoração própria e remota, persistência e celular com serviços simulados. `customers-celebrations.unit.test.mjs` verifica rotas, conteúdo, retorno da animação e movimento reduzido. `customer-backend.test.sql` valida o banco em uma transação com `ROLLBACK`, sem deixar turmas, pagamentos ou respostas de teste.
+
+## Bancada prática e análise pedagógica
+
+Oito atividades em `src/workshop-content.js` usam SVGs locais (`src/hardware-art.js`), Pointer Events com alternativa por toque/teclado e Web Audio (`src/beep-audio.js`). A UI está em `src/workshop.js`. O diagnóstico surpresa é uma bancada adicional com três variantes por rodada; os IDs e dados dos 80 computadores permanecem inalterados. O texto identifica os contextos separados, evitando usar uma medição didática como evidência de outro PC.
+
+A migração `20261029173058_interactive_workshop_and_learning_analytics.sql` mantém catálogo, etapas e eventos privados. O servidor valida a sequência, calcula recompensas, deduplica requisições e serializa a carteira com compras e incidentes. Os ganhos são integrados aos snapshots, desbloqueios, relatórios e filtros por período. As conversas acrescentam eventos de perguntas aos clientes, sem pular testes.
+
+`src/reputation.js` calcula títulos por conclusões; gastos não reduzem reputação. `src/learning-map.js` mostra o mapa exclusivo do professor com denominador por resposta, indicação de amostra pequena e CSV. Identificação e histórico continuam na sessão e no modelo administrativo já existentes.
+
+`npm run test:workshop` verifica identificação, montagem por arraste de ponteiro e toque real em viewport móvel, alternativa por teclado, limpeza, jumper, geração de som e transcrição, inspeção, conectores, cenário surpresa, persistência, carteira, reputação e histórico/mapa administrativo com serviços simulados. `workshop-backend.test.sql` valida as funções com o papel authenticated, deduplicação, privacidade, relatórios, intervalos e reinício em transação com ROLLBACK. Não deixa dados de teste em turmas reais.

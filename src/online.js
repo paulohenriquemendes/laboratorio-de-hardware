@@ -7,7 +7,7 @@ export function validRoom(value){return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0
 export function cleanName(value){return String(value||'').replace(/[<>\x00-\x1f]/g,'').trim().slice(0,24)}
 export function validPose(p){return p&&Number.isFinite(p.x)&&p.x>=bounds.minX&&p.x<=bounds.maxX&&Number.isFinite(p.z)&&Math.abs(p.z)<=20&&Number.isFinite(p.angle)&&Math.abs(p.angle)<100}
 export class OnlineLab {
- constructor(callbacks){this.cb=callbacks;this.client=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:'hardware-coop.auth',persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});this.rows=new Map();this.scores=[];this.expenses=0;this.bonus=0;this.customers=[];this.celebrations={selected:0,owned:[0]};this.activeCustomer=-1;this.refreshSerial=0;this.peers=new Map();this.connected=false;this.activePc=-1;this.closed=false;this.lastSend=0;this.lastPose=null;this.instance=crypto.randomUUID();}
+ constructor(callbacks){this.cb=callbacks;this.client=createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:'hardware-coop.auth',persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});this.rows=new Map();this.scores=[];this.expenses=0;this.bonus=0;this.customers=[];this.workshops=[];this.workshopSolved=0;this.workshopBonus=0;this.celebrations={selected:0,owned:[0]};this.activeCustomer=-1;this.refreshSerial=0;this.peers=new Map();this.connected=false;this.activePc=-1;this.closed=false;this.lastSend=0;this.lastPose=null;this.instance=crypto.randomUUID();}
  status(message){this.cb.status(message,this.connected)}
  async enter(name,room=OPEN_ROOM,title=null,identity=null){
   this.status('Conectando à sala…');
@@ -56,7 +56,7 @@ export class OnlineLab {
   if(this.closed||serial!==this.refreshSerial||data.room.round<this.room.round)return;
   if(data.room.round!==this.room.round){this.room.round=data.room.round;this.rows.clear();this.scores=[];this.activePc=-1;this.activeCustomer=-1;this.cb.round?.(data.room.round);void this.track();}
   this.room.competition_mode=data.room.competition_mode||'ranking';
-  this.expenses=Number(data.expenses)||0;this.bonus=Number(data.bonus)||0;this.bonusSolved=Number(data.bonus_solved)||0;this.customers=data.customers||[];this.celebrations=data.celebrations||{selected:0,owned:[0]};if(Number.isFinite(Number(data.server_time)))this.serverOffset=Number(data.server_time)*1000-Date.now();
+  this.expenses=Number(data.expenses)||0;this.bonus=Number(data.bonus)||0;this.bonusSolved=Number(data.bonus_solved)||0;this.workshops=data.workshops||[];this.workshopSolved=Number(data.workshop_solved)||0;this.workshopBonus=Number(data.workshop_bonus)||0;this.customers=data.customers||[];this.celebrations=data.celebrations||{selected:0,owned:[0]};if(Number.isFinite(Number(data.server_time)))this.serverOffset=Number(data.server_time)*1000-Date.now();
   this.scores=data.scores;
   for(const row of data.tasks){const previous=this.rows.get(row.pc);this.rows.set(row.pc,previous&&previous.revision>row.revision?{...row,progress:previous.progress,revision:previous.revision}:row);}
   this.cb.tasks([...this.rows.values()]);this.cb.customers?.();
@@ -81,6 +81,9 @@ export class OnlineLab {
   if(kind==='claim')this.activeCustomer=id;if(kind==='release'||kind==='validate')this.activeCustomer=-1;await this.refresh();if(!['renew','test','diagnosis','repair'].includes(kind)&&this.connected)void this.channel.send({type:'broadcast',event:'wallet',payload:{}});return result.data;
  }
  async releaseCustomer(id=this.activeCustomer){if(this.activeCustomer===id)this.activeCustomer=-1;if(id>=0&&this.connected)try{await this.customerAction(id,'release');}catch{/* Server lease expires if disconnected. */}}
+ async workshopAction(lesson,choice,request=crypto.randomUUID()){
+  if(!this.connected)throw new Error('Reconecte para registrar a prática.');const params={p_room:this.room.id,p_round:this.room.round,p_lesson:lesson,p_step:this.workshops.find(w=>w.lesson===lesson)?.step||0,p_choice:choice,p_request:request};let result=await this.client.rpc('lab_workshop_action',params);if(result.error&&(!result.status||result.status>=500))result=await this.client.rpc('lab_workshop_action',params);if(result.error)throw result.error;await this.refresh();if(result.data.round!==this.room.round)throw new Error('A rodada mudou. Reabra a atividade.');if(result.data.completed&&this.connected)void this.channel.send({type:'broadcast',event:'wallet',payload:{}});return result.data;
+ }
  async setAppearance(value){const a=normalizeAppearance(value);const {data,error}=await this.client.rpc('lab_wardrobe',{p_room:this.room.id,p_appearance:a});if(error)throw error;this.appearance=data;if(this.connected)await this.channel.track({instance:this.instance,userId:this.userId,name:this.room.nickname,appearance:this.appearance,pc:this.activePc,...(this.lastPose||{x:3.9,z:18.4,angle:0})});return data;}
  async claim(pc){await this.action(pc,'claim');this.activePc=pc;await this.track();}
  async track(){if(this.connected)await this.channel.send({type:'broadcast',event:'pose',payload:{instance:this.instance,pc:this.activePc,...(this.lastPose||{x:3.9,z:18.4,angle:0})}});if(this.connected&&performance.now()-(this.lastTrack||0)>7000){this.lastTrack=performance.now();await this.channel.track({instance:this.instance,userId:this.userId,name:this.room.nickname,appearance:this.appearance,pc:this.activePc,...(this.lastPose||{x:3.9,z:18.4,angle:0})});}}
