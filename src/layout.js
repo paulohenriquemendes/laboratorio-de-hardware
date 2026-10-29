@@ -7,8 +7,10 @@ const makeWing=(offset,idOffset)=>{
  return {benches,stations:[...central,...lateral]};
 };
 const first=makeWing(0,0),second=makeWing(28,40),third=makeWing(56,80);
-export const benches=[...first.benches,...second.benches,...third.benches];
-const positions=[...first.stations,...second.stations,...third.stations.filter(s=>s.zone==='central')];
+export const notebookBench={id:16,x:64.1,z:3.5,width:3,depth:3.8,device:'notebook'};
+export const benches=[...first.benches,...second.benches,...third.benches,notebookBench];
+const notebookStations=[-1,1].flatMap((side,k)=>[-.85,.85].map((dz,j)=>({id:101+k*2+j,bench:16,zone:'notebook',device:'notebook',wing:3,side,facing:side,x:notebookBench.x+side*.75,z:notebookBench.z+dz,chairX:notebookBench.x+side*2.05,useX:notebookBench.x+side*3.1,useZ:notebookBench.z+dz})));
+const positions=[...first.stations,...second.stations,...third.stations.filter(s=>s.zone==='central'),...notebookStations];
 export const stations=positions.map((_,caseId)=>({...positions[pcNumber(caseId)-1]}));
 export const room={minX:-12.6,maxX:68.6,z:19.2};
 export const spawn={x:3.9,z:18.4};

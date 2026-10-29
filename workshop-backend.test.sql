@@ -34,7 +34,7 @@ begin
  if jsonb_array_length(result->'progress'->'tests')<>0 then raise exception 'Conversation skipped investigation';end if;
  insert into hardware_private.admin_sessions(user_id,expires_at) values(uid,now()+interval '1 hour');
  result:=public.lab_learning_map(room);
- if jsonb_array_length(result->'items')<>112 or not exists(select 1 from jsonb_array_elements(result->'items') r where r->>'kind'='workshop' and (r->>'item')::integer=0 and (r->>'errors')::integer=1 and (r->>'answers')::integer=7 and (r->>'solved')::integer=1) then raise exception 'Incorrect difficulty map';end if;
+ if jsonb_array_length(result->'items')<>116 or not exists(select 1 from jsonb_array_elements(result->'items') r where r->>'kind'='workshop' and (r->>'item')::integer=0 and (r->>'errors')::integer=1 and (r->>'answers')::integer=7 and (r->>'solved')::integer=1) then raise exception 'Incorrect difficulty map';end if;
  result:=public.lab_student_report(room,1);if (result->'students'->0->>'workshop_solved')::integer<>8 or (result->'students'->0->>'workshop_bonus')::integer<>555 then raise exception 'Teacher totals missing';end if;
  result:=public.lab_evaluation_report(room,1,now()-interval '1 day',now()+interval '1 day');if (result->'students'->0->>'workshop_bonus')::integer<>555 then raise exception 'Period totals missing';end if;
  result:=public.lab_workshop_report(room,1,uid);if jsonb_array_length(result->'events')<25 then raise exception 'Practice history missing';end if;

@@ -160,3 +160,18 @@ A numeração foi reorganizada: os primeiros vinte desafios trabalham reconhecim
 Os vinte desafios novos usam IDs internos adicionais. Os 80 exercícios anteriores não foram substituídos. Seus valores e os ganhos já conquistados foram preservados, mesmo com a mudança de numeração. Os novos desafios básicos rendem R$ 20 cada; o máximo dos 100 PCs é R$ 5.200, sem contar clientes e bancada prática. O painel de dinheiro usa R$ ou reais, sem repetir o qualificativo anterior.
 
 No visual do personagem, **Careca** é gratuito e substitui o antigo Ondulado rock. **Metal · Headbanger** substitui Cachos metal, com cabelo longo e liso até a região da cintura. **Franja alternativa** foi mantida. As opções continuam com prévias e salvamento na turma. Recarregue a página com internet para receber o novo cenário e as novas opções.
+
+## Bancada exclusiva de notebooks
+
+Uma bancada identificada como **Bancada de notebooks** ocupa o espaço à direita das bancadas da terceira área do laboratório. Há quatro notebooks abertos, com teclado e touchpad integrados, dois de cada lado. Os corredores dos dois lados permanecem livres. Não foram removidos nem deslocados os 100 PCs existentes.
+
+Os notebooks são as estações **101 a 104**, com desafios próprios:
+
+- **101 — Touchpad desativado:** comparar com mouse externo, conferir a configuração e validar movimentos/cliques. Até R$ 20.
+- **102 — Entradas de ar cobertas:** investigar o uso sobre uma superfície macia e comparar a ventilação em superfície rígida e plana. Até R$ 40.
+- **103 — Bateria com pouca autonomia:** distinguir carga atual, capacidade e desgaste confirmado pelo diagnóstico. Até R$ 60.
+- **104 — Imagem falha ao mover a tampa:** comparar saídas de vídeo e interpretar a confirmação técnica de cabo interno da tela. Até R$ 100.
+
+A bancada segue do caso mais simples ao mais complexo. As intervenções internas em bateria, tela e dobradiça são descritas como atividades da assistência responsável, conforme o fabricante; não se orienta abrir células, forçar a tampa ou fazer reparos improvisados. A orientação de ventilação é consistente com as recomendações de [uso de notebook da HP](https://support.hp.com/us-en/document/ish_1997200-1415423-16).
+
+O total principal passa a ser **100 PCs + 4 notebooks = 104 desafios**, com até R$ 5.420 nessas estações, sem contar clientes e bancada prática. Os valores e resultados anteriores dos 100 PCs continuam preservados. Cada aluno pode resolver os notebooks individualmente, mesmo que já estejam verdes por uma conclusão de um colega. Autoria, respostas, carteira, mapa do professor e histórico usam o mesmo fluxo dos demais equipamentos.

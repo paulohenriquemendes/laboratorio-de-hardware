@@ -5,8 +5,8 @@ import {chromium} from 'playwright';
 import {symptomScenes,symptomMarkup} from './src/symptom-animation.js';
 import {cases} from './src/cases.js';
 assert.equal(symptomScenes.length,cases.length);
-assert.equal(new Set(symptomScenes.map(s=>s.description)).size,100);
-for(let i=0;i<100;i++){assert.equal(symptomScenes[i].id,i);assert.match(symptomMarkup(i),/<svg/);assert.doesNotMatch(symptomMarkup(i),/https?:|<video|<iframe|<img/);}
+assert.equal(new Set(symptomScenes.map(s=>s.description)).size,104);
+for(let i=0;i<104;i++){assert.equal(symptomScenes[i].id,i);assert.match(symptomMarkup(i),/<svg/);assert.doesNotMatch(symptomMarkup(i),/https?:|<video|<iframe|<img/);}
 const browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=swiftshader']});
 fs.mkdirSync('test-results',{recursive:true});
 try{
@@ -18,11 +18,11 @@ try{
  await page.click('[data-motion=replay]');assert.equal(await page.locator('[data-motion=pause]').getAttribute('aria-pressed'),'false');
  await page.click('[data-test="0"]');assert.equal(await page.locator('#symptomAnimation figure').count(),1);assert.equal(await page.locator('#symptomAnimation').getAttribute('data-case-id'),'99');
  // Exercise the same rendering/control module against every stable case ID without changing progress.
- for(const name of ['beginner-cases.js','hardware-art.js'])await page.route('**/'+name,route=>route.fulfill({contentType:'text/javascript',body:fs.readFileSync('src/'+name,'utf8')}));const source=fs.readFileSync('src/symptom-animation.js','utf8');await page.route('**/__animation-test.js',route=>route.fulfill({contentType:'text/javascript',body:source}));
+ for(const name of ['beginner-cases.js','hardware-art.js','notebook-cases.js'])await page.route('**/'+name,route=>route.fulfill({contentType:'text/javascript',body:fs.readFileSync('src/'+name,'utf8')}));const source=fs.readFileSync('src/symptom-animation.js','utf8');await page.route('**/__animation-test.js',route=>route.fulfill({contentType:'text/javascript',body:source}));
  await page.evaluate(async()=>{window.animationTest=await import('/__animation-test.js');});
  for(const width of [320,390,1280]){
   await page.setViewportSize({width,height:844});
-  for(let id=0;id<100;id++){
+  for(let id=0;id<104;id++){
    await page.evaluate(id=>{document.querySelector('#symptomAnimation').dataset.caseId='';window.animationTest.showSymptomAnimation(id);},id);
    assert.equal(await page.locator('#symptomAnimation svg').count(),1);
    assert.ok(await page.locator('#symptomAnimation svg').getAttribute('aria-label'));
@@ -36,5 +36,5 @@ try{
  await page.click('[data-motion=pause]');const paused=await page.locator('.sa-cursor').evaluate(async e=>{const a=getComputedStyle(e).transform;await new Promise(r=>setTimeout(r,250));return [a,getComputedStyle(e).transform];});assert.equal(...paused);
  await page.emulateMedia({reducedMotion:'reduce'});await page.evaluate(()=>window.animationTest.showSymptomAnimation(9));assert.equal(await page.locator('[data-motion=pause]').getAttribute('aria-pressed'),'true');
  const states=await page.locator('#symptomAnimation svg *').evaluateAll(els=>els.filter(e=>getComputedStyle(e).animationName!=='none').map(e=>getComputedStyle(e).animationPlayState));assert.ok(states.length>0);assert.ok(states.every(s=>s==='paused'));
- assert.deepEqual(errors,[]);console.log('PASS 100 animações em 320/390/1280, ficha real, evidências, movimento irregular, pausa/rever e movimento reduzido; sem mídia externa');
+ assert.deepEqual(errors,[]);console.log('PASS 104 animações em 320/390/1280, ficha real, evidências, movimento irregular, pausa/rever e movimento reduzido; sem mídia externa');
 }finally{await browser.close();}

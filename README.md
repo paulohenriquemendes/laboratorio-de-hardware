@@ -167,3 +167,13 @@ O cenário possui três áreas conectadas, quinze bancadas centrais e quarenta p
 As migrações `20261029182438_expand_100_and_avatar_refresh.sql` e `20261029183359_currency_wording_cleanup.sql` ampliam restrições, catálogo e operações para cem PCs, adicionam tarefas nas rodadas atuais sem tocar nas anteriores e ajustam mensagens e o desbloqueio de Careca. Os pagamentos antigos não são recalculados nem sobrescritos.
 
 `expansion-100-backend.test.sql` verifica criação e reinício de turmas com 100 tarefas, resolução dos 20 exercícios novos, deduplicação, Careca sem saldo e preservação da carteira/histórico em transação com ROLLBACK. `npm run test:expansion:100` verifica cenário, ordenação, prévias, salvamento e mapa em telas de computador e celular sem criar dados reais.
+
+## Bancada de notebooks
+
+`src/notebook-cases.js` acrescenta quatro IDs imutáveis (100–103), com casos, conceitos, cenas de sintomas e recompensas próprias. Os 100 IDs anteriores, valores e posições continuam iguais. `src/layout.js` posiciona a bancada 16 em x=64.1, z=3.5, com quatro notebooks e corredores livres em ambos os lados, sem ampliar a sala.
+
+O renderizador usa modelos com base, teclado, touchpad, dobradiça e tela integrados, sem gabinete ou monitor separado. A conclusão deixa a base e a moldura verdes. A placa da bancada identifica o conjunto. Os quatro casos vão de configuração de touchpad a ventilação, desgaste da bateria e confirmação técnica do cabo da tela.
+
+A migração `20261029201835_notebook_bench.sql` amplia validações e criação/reinício para 104 estações, acrescenta as respostas e os quatro registros das rodadas atuais e mantém o histórico anterior. `notebook-backend.test.sql` testa as quatro resoluções, penalidade, pagamento sem duplicação, conclusão independente por um segundo aluno e preservação do histórico após reiniciar, em transação com ROLLBACK.
+
+`npm run test:notebooks` verifica acesso físico aos quatro equipamentos, resolução completa, resposta incorreta, carteira, cor de conclusão e leitura móvel com serviços simulados. Os testes não criam alunos ou respostas em turmas reais.

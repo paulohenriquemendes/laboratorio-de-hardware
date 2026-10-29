@@ -8,7 +8,7 @@ const originalNumbers = [
  21,38,1,2,18,27,28,3,39,4,24,12,14,34,13,36
 ];
 export const legacyOrder = Object.freeze(originalNumbers.map(n=>n-1));
-export const challengeOrder = Object.freeze([...Array.from({length:20},(_,i)=>80+i),...legacyOrder]);
+export const challengeOrder = Object.freeze([...Array.from({length:20},(_,i)=>80+i),...legacyOrder,...Array.from({length:4},(_,i)=>100+i)]);
 const numbers = new Map(challengeOrder.map((id,index)=>[id,index+1]));
 export const pcNumber = id => numbers.get(id);
 export const pcLabel = id => String(pcNumber(id)).padStart(2,'0');

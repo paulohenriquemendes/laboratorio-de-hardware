@@ -1,3 +1,4 @@
+import {notebookScenes} from './notebook-cases.js';
 import {beginnerScenes} from './beginner-cases.js';
 import {hardwareSvg} from './hardware-art.js';
 // Stable case IDs, not the displayed PC numbers. Illustrate observations without revealing repairs.
@@ -84,7 +85,7 @@ export const symptomScenes = [
  ['firmware','Roteiro de inicialização','Sistema → firmware','O fluxo segue a sequência anotada no roteiro, para o aluno conferir.']
 ].map(([kind,label,status,description],id)=>Object.freeze({id,kind,label,status,description}));
 
-symptomScenes.push(...beginnerScenes.map(Object.freeze));
+symptomScenes.push(...beginnerScenes.map(Object.freeze),...notebookScenes.map(Object.freeze));
 
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const text=(x,y,value,cls='')=>`<text x="${x}" y="${y}" class="${cls}">${esc(value)}</text>`;
@@ -92,7 +93,8 @@ const box=(x,y,w,h,cls='')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" 
 const monitor=(content='',cls='')=>`<g class="${cls}">${box(88,15,284,132,'sa-monitor')}${box(99,26,262,108,'sa-screen')}${content}<path d="M215 147v12h-30m30 0h60" class="sa-wire"/></g>`;
 const fan=(x=410,y=72,cls='')=>`<g transform="translate(${x} ${y})"><circle r="24" class="sa-device"/><g class="sa-fan ${cls}"><path d="M0 0C-30-30 22-32 0 0C30-30 32 22 0 0C30 30-22 32 0 0C-30 30-32-22 0 0"/></g><circle r="4" class="sa-dot"/></g>`;
 const file=(x,y,cls='')=>`<g class="${cls}">${box(x,y,44,48,'sa-file')}<path d="M${x+9} ${y+16}h26m-26 9h26m-26 9h18" class="sa-wire"/></g>`;
-function diagram(scene){if(scene.kind==='recognition')return '<g transform="translate(60 0)">'+hardwareSvg(scene.picture).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')+'</g>';
+function diagram(scene){if(scene.kind.startsWith('notebook-')){const base=`${box(100,16,270,133,'sa-monitor')}${box(111,27,248,109,'sa-screen')}<path d="M100 149 65 179H407L370 149Z" class="sa-device"/><path d="M199 169h80" class="sa-wire"/>`;const kind=scene.kind.slice(9);return base+(kind==='touchpad'?'<path d="M219 58v39l12-12 10 18 9-5-10-18h18Z" class="sa-device"/><path d="m211 159 17 15m0-15-17 15" class="sa-break"/>':kind==='heat'?'<path d="M140 173q-12-12 0-24m98 24q-12-12 0-24m88 24q-12-12 0-24" class="sa-wire sa-temperature"/>'+text(237,88,'↓ desempenho','sa-center'):kind==='battery'?box(165,59,130,44,'sa-device')+box(171,65,18,32,'sa-bit sa-disappear')+text(237,124,'Autonomia curta','sa-center'):'<rect x="111" y="27" width="248" height="109" class="sa-screen sa-disappear"/>'+text(237,90,'Imagem intermitente','sa-center'));}
+if(scene.kind==='recognition')return '<g transform="translate(60 0)">'+hardwareSvg(scene.picture).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')+'</g>';
  const k=scene.kind;
  if(k==='mouse')return monitor('<path d="M140 60l0 23 7-7 7 13 6-4-7-12 10-1z" class="sa-cursor"/>')+`<rect x="390" y="30" width="62" height="120" rx="16" class="sa-shiny"/><g class="sa-mouse"><rect x="404" y="55" width="32" height="49" rx="16" class="sa-device"/><path d="M420 55v18" class="sa-wire"/></g>`;
  if(k==='keyboard')return monitor(text(230,86,'A _ C _','sa-center sa-reveal'))+`<g transform="translate(100 164)">${box(0,0,260,32,'sa-device')}${['A','B','C','D'].map((v,i)=>`<g class="sa-key" style="--i:${i}">${box(i*62+8,4,52,23)}${text(i*62+34,21,v,'sa-center')}</g>`).join('')}</g>`;

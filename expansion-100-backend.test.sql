@@ -7,7 +7,7 @@ begin
  execute 'set local role authenticated';
  perform public.lab_open_admin();result:=public.lab_manage_rooms('QA100 rollback');room:=(result->>'id')::uuid;
  perform public.lab_join(room,'Aluno QA100');
- result:=public.lab_snapshot(room);if jsonb_array_length(result->'tasks')<>100 then raise exception 'New room does not have 100 tasks';end if;
+ result:=public.lab_snapshot(room);if jsonb_array_length(result->'tasks')<>104 then raise exception 'New room does not have 100 tasks';end if;
  result:=public.lab_wardrobe(room,'{"style":8,"color":"#171717"}'::jsonb);if (result->>'style')::integer<>8 then raise exception 'Bald style must be free';end if;
  for i in 80..99 loop
   perform public.lab_action_v3(room,1,i,'claim',null,gen_random_uuid());
@@ -24,7 +24,7 @@ begin
  if hardware_private.reward(0,0)<>100 or hardware_private.reward(40,0)<>20 or (select sum(hardware_private.reward(pc,0)) from generate_series(0,79) pc)<>4800 then raise exception 'Legacy rewards changed';end if;
  insert into public.lab_completions(room_id,round,pc,user_id,nickname,score) values(room,1,0,uid,'Aluno QA100',100);
  execute 'set local role authenticated';result:=public.lab_snapshot(room);if (result->'scores'->0->>'earned')::integer<>500 then raise exception 'Legacy wallet changed';end if;
- result:=public.lab_admin('reset',room,null,1);if jsonb_array_length(result->'tasks')<>100 then raise exception 'Reset does not create 100 tasks';end if;
+ result:=public.lab_admin('reset',room,null,1);if jsonb_array_length(result->'tasks')<>104 then raise exception 'Reset does not create 100 tasks';end if;
  result:=public.lab_snapshot(room);if jsonb_array_length(result->'scores')<>0 then raise exception 'New round inherited rewards';end if;
  result:=public.lab_admin('report',room,null,1);if (result->'scores'->0->>'earned')::integer<>500 then raise exception 'History lost';end if;
  execute 'reset role';
