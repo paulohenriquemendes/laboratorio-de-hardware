@@ -101,3 +101,9 @@ O nome da aplicação, logotipo, ícone, administração e relatórios é **Miss
 Ao tocar em qualquer uma das oito áreas de perigo, o aluno dá um salto curto e é afastado automaticamente para uma posição livre. O trajeto é verificado contra móveis, limites e outros personagens. O controle é liberado novamente após a aterrissagem; no celular, o aluno deve tocar novamente no controle para continuar. A reação é imediata e não espera a resposta da rede.
 
 Fios elétricos mostram arcos azuis em movimento, e o fogo usa chamas estilizadas em laranja e amarelo. Com movimento reduzido ativado no aparelho, os efeitos ficam estáticos e o afastamento ocorre sem salto vertical. O custo de novos incidentes caiu para até R$ 5 fictícios; valores históricos já registrados não são alterados. Continua existindo o intervalo de proteção contra descontos repetidos.
+
+## Onde encontrar fogo e fios elétricos
+
+Na primeira parte do laboratório, o risco elétrico fica entre os PCs 18 e 19, no corredor à direita da entrada. O fogo simulado fica entre os PCs 02 e 03, no corredor esquerdo, mais ao fundo. Na segunda parte, os mesmos tipos aparecem entre os PCs 58/59 e 42/43.
+
+As placas **RISCO ELÉTRICO** e **PERIGO: FOGO** ficam acima das áreas para facilitar a identificação. Os raios e as chamas foram ampliados para permanecerem perceptíveis na câmera padrão, inclusive no celular. As áreas amarelas acompanham a dimensão dos efeitos; a entrada e os pontos de uso dos computadores continuam livres.

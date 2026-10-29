@@ -1,3 +1,10 @@
+## Visibilidade do fogo e da eletricidade — 28/10/2026
+
+- Conferência na versão publicada identificou que os efeitos pequenos ficavam encobertos pelo personagem na câmera padrão.
+- Raios, cabo, chamas e áreas de advertência ampliados; quatro placas voltadas para a câmera identificam fogo e eletricidade. Apenas os pontos desses perigos foram deslocados meio metro dentro dos mesmos intervalos entre PCs, preservando IDs, histórico e circulação.
+- Percurso real de teclado até os dois tipos de perigo em tela de celular, com capturas antes/depois e verificação de animações e placas; sem erros de execução.
+- 126 testes de regras aprovados, incluindo distâncias dos 80 pontos de uso, busca de saída, colisão com colegas e movimento reduzido.
+
 ## Perigos animados e afastamento automático — 28/10/2026
 
 - Fios com arcos elétricos e focos de fogo estilizado no piso; animações reutilizam as mesmas malhas e materiais, sem novas alocações por quadro.

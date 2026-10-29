@@ -28,7 +28,8 @@
     "test:animations": "node symptom-animation.test.mjs",
     "test:classroom:updates": "node classroom-updates.test.mjs",
     "test:teaching": "node teaching-tools.test.mjs",
-    "test:branding": "node branding.test.mjs"
+    "test:branding": "node branding.test.mjs",
+    "test:hazard:visibility": "node hazard-visibility.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",
