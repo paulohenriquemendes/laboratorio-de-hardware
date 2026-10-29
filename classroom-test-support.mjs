@@ -25,7 +25,7 @@ export async function mockClassroom(context,{completed=false,tutorial=false}={})
   else if(name==='lab_incident'){
    if(state.incidentRequests.has(p.p_request))data={...state.incidentRequests.get(p.p_request),duplicate:true};
    else if(Date.now()-state.lastIncident<8000)data={cost:0,expenses:state.expenses,cooldown:true};
-   else{const cost=Math.min(10,Math.max(0,scoreOf(state.progress)-state.expenses));state.expenses+=cost;state.lastIncident=Date.now();data={cost,charged:cost>0,expenses:state.expenses,wallet:Math.max(0,scoreOf(state.progress)-state.expenses)};state.incidentRequests.set(p.p_request,data);}
+   else{const cost=Math.min(5,Math.max(0,scoreOf(state.progress)-state.expenses));state.expenses+=cost;state.lastIncident=Date.now();data={cost,charged:cost>0,expenses:state.expenses,wallet:Math.max(0,scoreOf(state.progress)-state.expenses)};state.incidentRequests.set(p.p_request,data);}
   }
   else if(name==='lab_open_admin'){state.admin=true;data={ok:true};}
   else if(name==='lab_manage_rooms')data=[room()];

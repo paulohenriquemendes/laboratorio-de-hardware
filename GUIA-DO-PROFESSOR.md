@@ -88,10 +88,16 @@ Na primeira entrada de uma sessão de aluno, o tutorial acompanha o movimento, a
 
 ## Segurança simulada e carteira fictícia
 
-Há oito áreas amarelas sinalizadas com cabos, ferramentas ou peças no piso, fora da entrada e dos pontos de uso dos computadores. Ao pisar, um aviso vermelho explica o incidente simulado e o custo de uma consulta médica fictícia: **até R$ 10**, limitado ao dinheiro disponível. Não há saldo negativo. Permanecer sobre a área não gera descontos repetidos; existe também um intervalo mínimo de oito segundos entre incidentes aceitos pelo servidor.
+Há oito áreas amarelas sinalizadas com fios elétricos animados, focos de fogo simulado, ferramentas ou peças no piso, fora da entrada e dos pontos de uso dos computadores. Ao pisar, um aviso vermelho explica o incidente simulado e o custo de uma consulta médica fictícia: **até R$ 5**, limitado ao dinheiro disponível. Não há saldo negativo. Permanecer sobre a área não gera descontos repetidos; existe também um intervalo mínimo de oito segundos entre incidentes aceitos pelo servidor.
 
 Os custos são salvos por aluno, turma e rodada, inclusive após recarregar. A carteira e o placar mostram o saldo após os custos. As recompensas conquistadas em desafios, respostas e conclusões não são apagadas; os desbloqueios por conquistas também são preservados. Na avaliação por período, custos ficam separados das recompensas. Ao iniciar uma nova rodada, a nova carteira começa sem os custos da anterior, cujo histórico permanece guardado. Todo o dinheiro e o atendimento são fictícios; o objetivo é lembrar de manter a circulação do laboratório livre de riscos.
 
 ## Nome do jogo e links
 
 O nome da aplicação, logotipo, ícone, administração e relatórios é **Missão Hardware**. As placas do cenário continuam com **Laboratório de Hardware**. O novo endereço é https://paulohenriquemendes.github.io/missao-hardware/ . Os convites já compartilhados pelos endereços anteriores continuam válidos e redirecionam com o mesmo identificador de turma. Não é necessário criar novamente as turmas. Recarregue com internet para receber a marca e preparar o cache do novo caminho.
+
+## Reação aos perigos animados
+
+Ao tocar em qualquer uma das oito áreas de perigo, o aluno dá um salto curto e é afastado automaticamente para uma posição livre. O trajeto é verificado contra móveis, limites e outros personagens. O controle é liberado novamente após a aterrissagem; no celular, o aluno deve tocar novamente no controle para continuar. A reação é imediata e não espera a resposta da rede.
+
+Fios elétricos mostram arcos azuis em movimento, e o fogo usa chamas estilizadas em laranja e amarelo. Com movimento reduzido ativado no aparelho, os efeitos ficam estáticos e o afastamento ocorre sem salto vertical. O custo de novos incidentes caiu para até R$ 5 fictícios; valores históricos já registrados não são alterados. Continua existindo o intervalo de proteção contra descontos repetidos.

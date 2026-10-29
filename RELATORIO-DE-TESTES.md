@@ -1,3 +1,11 @@
+## Perigos animados e afastamento automático — 28/10/2026
+
+- Fios com arcos elétricos e focos de fogo estilizado no piso; animações reutilizam as mesmas malhas e materiais, sem novas alocações por quadro.
+- Contato com qualquer perigo inicia salto curto e afastamento imediato, independente da confirmação financeira. O controle de movimento é interrompido até aterrissar; não há cobrança contínua enquanto o personagem permanece na área.
+- 128 cenários de aproximação (oito perigos, 16 direções) verificam saída livre, sem cruzar móveis. Testes incluem colega no destino preferido, ausência de saída válida e movimento reduzido sem salto.
+- Custos de novos incidentes: até R$ 5, limitados ao saldo disponível. Teste SQL revertido confirma valor novo, repetição idempotente, intervalo de proteção e preservação de respostas e rodadas anteriores.
+- 126 testes de regras aprovados; percurso de navegador confirmou salto/saída, aterrissagem fora do perigo, desconto e persistência da carteira, sem alterar turmas reais.
+
 ## Marca Missão Hardware e novo endereço — 28/10/2026
 
 - Nome e logotipo atualizados em cabeçalho, entrada, administração, ícone, relatórios e metadados de compartilhamento. Novo símbolo vetorial e assinatura da marca; nenhum serviço de imagens externo.
